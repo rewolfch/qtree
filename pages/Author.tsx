@@ -1,0 +1,128 @@
+
+import React from 'react';
+import { Linkedin, Mail, Globe, ShoppingCart, BookOpen, Calendar, ArrowRight, Video, ExternalLink } from 'lucide-react';
+import SEO from '../components/SEO';
+
+const Author: React.FC = () => {
+  return (
+    <div className="min-h-screen bg-slate-50 py-24">
+      <SEO 
+        title="Serge Baumberger" 
+        description="Autor des Quality Tree Frameworks, Co-CEO Infometis AG und Vordenker für modernes Quality Engineering."
+        imageUrl="https://cdn.prod.website-files.com/659bd602c8644fb17135bbe7/660c27367443119851a48cd0_Swarmie%20Profile%20-%20Serge%20Wolf.png"
+      />
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Profile Card */}
+        <div className="bg-white rounded-[3rem] shadow-sm border border-slate-200 overflow-hidden mb-20">
+          <div className="flex flex-col lg:flex-row">
+            
+            {/* Image Section */}
+            <div className="lg:w-5/12 relative min-h-[500px] lg:min-h-full bg-slate-900">
+              <img 
+                src="https://cdn.prod.website-files.com/659bd602c8644fb17135bbe7/660c27367443119851a48cd0_Swarmie%20Profile%20-%20Serge%20Wolf.png" 
+                alt="Serge Baumberger" 
+                className="absolute inset-0 w-full h-full object-cover grayscale opacity-90 mix-blend-luminosity"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+              <div className="absolute bottom-12 left-12">
+                 <h1 className="text-5xl font-black text-white mb-2 tracking-tight">Serge Baumberger</h1>
+                 <p className="text-brand-400 font-bold uppercase tracking-widest text-sm">Author | Co-CEO Infometis AG</p>
+              </div>
+            </div>
+
+            {/* Biography Content */}
+            <div className="lg:w-7/12 p-12 md:p-20 flex flex-col justify-center">
+              <div className="inline-flex items-center gap-2 bg-brand-50 text-brand-700 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-10 border border-brand-100">
+                Die Vision hinter dem Baum
+              </div>
+              
+              <div className="prose prose-slate prose-lg max-w-none text-slate-600 mb-12">
+                <p className="text-2xl font-bold text-slate-900 leading-snug mb-8">
+                  "Qualität ist kein Endzustand, sondern ein kontinuierlicher Wachstumsprozess, den man gestalten muss."
+                </p>
+                <p>
+                  Seit über zwei Jahrzehnten widmet sich Serge Baumberger der Transformation von IT-Organisationen. Als Co-CEO der Infometis AG begleitet er Unternehmen dabei, Softwarequalität nicht als technisches Problem, sondern als strategischen Wettbewerbsvorteil zu begreifen.
+                </p>
+                <p>
+                  Mit dem <strong>Quality Tree Framework</strong> hat er seine Erfahrungen aus hunderten Projekten in eine Methode übersetzt, die heute als Standardwerk für modernes Quality Engineering gilt.
+                </p>
+              </div>
+
+              {/* Booking & Social Integration */}
+              <div className="flex flex-col sm:flex-row items-center gap-6 pt-10 border-t border-slate-100">
+                <a 
+                  href="https://outlook.office.com/bookwithme/user/33e79517d09745e0a352cadfcab5ae3e@infometis.ch/meetingtype/WszQVIErKkasYuPPlsMhhg2?anonymous&ismsaljsauthenabled&ep=mlink" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="w-full sm:w-auto flex items-center justify-center bg-slate-900 hover:bg-brand-600 text-white px-8 py-4 rounded-2xl font-bold transition-all gap-3 shadow-xl active:scale-95"
+                >
+                  <Calendar className="h-5 w-5" /> Termin buchen
+                </a>
+                
+                <div className="flex gap-4">
+                  <a href="https://www.linkedin.com/in/sergewolf/" target="_blank" rel="noreferrer" className="flex items-center justify-center w-12 h-12 rounded-xl bg-slate-100 text-slate-600 hover:bg-[#0077b5] hover:text-white transition-all">
+                    <Linkedin className="h-5 w-5" />
+                  </a>
+                  <a href="mailto:info@quality-tree.com" className="flex items-center justify-center w-12 h-12 rounded-xl bg-slate-100 text-slate-600 hover:bg-brand-600 hover:text-white transition-all">
+                    <Mail className="h-5 w-5" />
+                  </a>
+                  <a href="https://www.infometis.ch" target="_blank" rel="noreferrer" className="flex items-center justify-center w-12 h-12 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-900 hover:text-white transition-all">
+                    <Globe className="h-5 w-5" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Story Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+           <div>
+              <h2 className="text-3xl font-black text-slate-900 mb-8">Danksagung & Inspiration.</h2>
+              <div className="prose prose-slate text-slate-600 space-y-6">
+                <p>
+                  Jeder Baum braucht festen Boden. Mein Dank gilt der <a href="https://www.infometis.ch" target="_blank" rel="noreferrer" className="text-brand-600 font-bold hover:underline">Infometis AG</a>, die mir den Raum gab, dieses Framework zu entwickeln und in echten Projekten zu verfeinern.
+                </p>
+                <p>
+                  Das Quality Tree Framework ist das Ergebnis tausender Diskussionen, gelöster Bugs und strategischer Weichenstellungen der letzten 25 Jahre. Es ist mein Versuch, all das Wissen, das mir geschenkt wurde, zurückzugeben – als klarer, wachsender Bauplan für andere.
+                </p>
+              </div>
+              
+              <div className="mt-12 p-8 bg-brand-50 rounded-[2rem] border border-brand-100">
+                 <p className="italic text-brand-900 font-medium">"Ein Baum wächst nicht über Nacht, aber mit der richtigen Struktur erreicht er Dimensionen, die zuvor unvorstellbar waren."</p>
+                 <div className="mt-4 flex items-center gap-3">
+                    <div className="w-8 h-px bg-brand-300"></div>
+                    <span className="text-xs font-bold text-brand-600 uppercase tracking-widest">Serge Baumberger</span>
+                 </div>
+              </div>
+           </div>
+           
+           <div className="relative">
+              <div className="absolute inset-0 bg-slate-200 rounded-[3rem] rotate-3 translate-x-4"></div>
+              <img 
+                src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                alt="Workshop Context" 
+                className="relative rounded-[3rem] shadow-xl w-full h-[500px] object-cover"
+              />
+              <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-3xl shadow-2xl border border-slate-100">
+                 <div className="flex items-center gap-4">
+                    <div className="bg-brand-600 text-white p-3 rounded-2xl">
+                       <Video className="h-6 w-6" />
+                    </div>
+                    <div>
+                       <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Next Talk</p>
+                       <p className="font-bold text-slate-900">Swiss Testing Day '25</p>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+export default Author;
