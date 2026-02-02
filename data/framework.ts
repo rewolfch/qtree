@@ -116,6 +116,37 @@ export const branches: Branch[] = [
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "book-preorder-amazon",
+    title: "Offiziell vorbestellbar: Das Quality Tree Framework auf Amazon",
+    date: "2026-02-01",
+    author: "Serge Baumberger",
+    imageUrl: "https://media.licdn.com/dms/image/v2/D4E22AQEcQRQUYYkbog/feedshare-shrink_1280/B4EZv2wVfBIEAc-/0/1769371425039?e=1771459200&v=beta&t=nfkc8LFvF8cBWKdVpMRaDUt3UblIiuw1QWvmKe4TwwQ",
+    excerpt: "Ein großer Meilenstein: Das Buch ist ab sofort bei Amazon gelistet. Sichern Sie sich jetzt Ihr Exemplar des strategischen Bauplans für Softwarequalität.",
+    content: `Der Moment, auf den wir hingearbeitet haben, ist da. Nach Monaten der Vorbereitung, des Schreibens und der Zusammenarbeit mit Springer Vieweg ist es nun offiziell: **Das Quality Tree Framework Buch ist bei Amazon gelistet und kann ab sofort vorbestellt werden.**
+
+[Hier geht es direkt zur Amazon-Seite](https://www.amazon.de/Das-Quality-Tree-Framework-Automatisierung/dp/3658510404)
+
+## Ein Bauplan für die Praxis, nicht für das Regal
+
+Warum dieses Buch? In meiner Arbeit mit über 100 QA-Teams habe ich immer wieder dasselbe Muster gesehen: Es fehlt nicht an Tools. Es fehlt nicht an Willen. Es fehlt an Struktur.
+
+Dieses Buch schließt genau diese Lücke. Es ist kein theoretischer Exkurs über Testmethoden, sondern ein strategisches Management-Buch für alle, die Softwarequalität skalieren müssen.
+
+**Was dich im Buch erwartet:**
+• **Die Strategie:** Wie du von manuellem Chaos zu einem strukturierten Qualitäts-Ökosystem kommst.
+• **Die 8 Dimensionen:** Detaillierte Deep-Dives in jede Astgabel des Baums – von CI/CD bis Test Management.
+• **90+ Praktiken:** Konkrete Schritte (Leaves), um von Level 1 auf Level 9 zu wachsen.
+• **AI & Future:** Wie sich der Quality Tree in Zeiten von Hyper-Automation und KI entwickelt.
+
+## Sichern Sie sich die erste Auflage
+
+Die Resonanz auf LinkedIn und den Konferenzen war überwältigend. Wenn du sicherstellen willst, dass du eines der ersten Exemplare in den Händen hältst, ist jetzt der richtige Zeitpunkt.
+
+Ich freue mich unglaublich darauf, diesen "Baum" bald in physischer Form in euren Händen (und hoffentlich in euren Organisationen) wachsen zu sehen.
+
+👉 [Jetzt auf Amazon vorbestellen](https://www.amazon.de/Das-Quality-Tree-Framework-Automatisierung/dp/3658510404)`
+  },
+  {
     id: "swiss-testing-day-2025",
     title: "Ausverkaufte Main Stage am Swiss Testing Day 2025",
     date: "2025-04-03",

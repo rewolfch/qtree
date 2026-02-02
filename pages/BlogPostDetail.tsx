@@ -68,14 +68,53 @@ const BlogPostDetail: React.FC = () => {
   const shareText = encodeURIComponent(post.title);
   const shareUrl = encodeURIComponent(currentUrl);
 
+  // Helper function to parse basic Markdown (Bold **text** and Links [text](url))
+  const parseMarkdown = (text: string) => {
+    // Split by bold syntax first: **text**
+    const parts = text.split(/(\*\*[^*]+\*\*)/g);
+    
+    return parts.map((part, index) => {
+      // Check if this part is bold
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={index} className="font-bold text-slate-900">{part.slice(2, -2)}</strong>;
+      }
+      
+      // If not bold, check for links: [text](url)
+      // We split by the link regex
+      const linkParts = part.split(/(\[[^\]]+\]\([^)]+\))/g);
+      
+      return (
+        <span key={index}>
+          {linkParts.map((subPart, subIndex) => {
+            const linkMatch = subPart.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+            if (linkMatch) {
+              return (
+                <a 
+                  key={subIndex} 
+                  href={linkMatch[2]} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-brand-600 hover:text-brand-800 underline decoration-brand-200 hover:decoration-brand-600 transition-all font-medium"
+                >
+                  {linkMatch[1]}
+                </a>
+              );
+            }
+            return subPart;
+          })}
+        </span>
+      );
+    });
+  };
+
   const renderContent = (content: string) => {
     return content.split('\n').map((line, index) => {
         const trimmed = line.trim();
         if (trimmed === '') return <div key={index} className="h-4"></div>;
-        if (trimmed.startsWith('### ')) return <h3 key={index} className="text-xl font-bold text-slate-900 mt-8 mb-4">{trimmed.replace('### ', '')}</h3>;
-        if (trimmed.startsWith('## ')) return <h2 key={index} className="text-2xl font-bold text-slate-800 mt-10 mb-5 pb-2 border-b border-slate-100">{trimmed.replace('## ', '')}</h2>;
-        if (trimmed.startsWith('• ') || trimmed.startsWith('- ')) return <li key={index} className="ml-4 list-disc text-slate-700 mb-2 pl-2">{trimmed.substring(2)}</li>
-        return <p key={index} className="mb-4 text-slate-700 leading-relaxed">{trimmed}</p>;
+        if (trimmed.startsWith('### ')) return <h3 key={index} className="text-xl font-bold text-slate-900 mt-8 mb-4">{parseMarkdown(trimmed.replace('### ', ''))}</h3>;
+        if (trimmed.startsWith('## ')) return <h2 key={index} className="text-2xl font-bold text-slate-800 mt-10 mb-5 pb-2 border-b border-slate-100">{parseMarkdown(trimmed.replace('## ', ''))}</h2>;
+        if (trimmed.startsWith('• ') || trimmed.startsWith('- ')) return <li key={index} className="ml-4 list-disc text-slate-700 mb-2 pl-2">{parseMarkdown(trimmed.substring(2))}</li>
+        return <p key={index} className="mb-4 text-slate-700 leading-relaxed">{parseMarkdown(trimmed)}</p>;
     });
   };
 
