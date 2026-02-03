@@ -1094,6 +1094,11 @@ const AppTool: React.FC = () => {
                   <button onClick={() => setIsGardenerMode(false)} className={`px-3 py-1 rounded text-xs font-medium transition-all ${!isGardenerMode ? 'bg-white dark:bg-slate-600 text-slate-900 dark:text-white shadow-sm border border-slate-200 dark:border-slate-500' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}>View</button>
                   <button onClick={() => setIsGardenerMode(true)} className={`px-3 py-1 rounded text-xs font-medium transition-all flex items-center ${isGardenerMode ? 'bg-emerald-600 text-white shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}><i className="fas fa-check-square mr-1.5"></i> Assess</button>
                 </div>
+                <div className="hidden lg:flex items-center space-x-4 ml-2 pl-4 border-l border-slate-300 dark:border-slate-700 h-6">
+                    <a href="https://qualitytreepro-836825617090.us-west1.run.app" target="_blank" rel="noopener noreferrer" className="text-xs font-bold text-emerald-600 hover:text-emerald-800 dark:text-emerald-500 dark:hover:text-emerald-400 uppercase tracking-wider transition-colors">PRO</a>
+                    <a href="https://www.quality-tree.com/#/author" className="text-xs font-bold text-slate-500 hover:text-emerald-700 dark:text-slate-400 dark:hover:text-emerald-400 uppercase tracking-wider transition-colors">About</a>
+                    <a href="https://www.quality-tree.com/#/author" className="text-xs font-bold text-slate-500 hover:text-emerald-700 dark:text-slate-400 dark:hover:text-emerald-400 uppercase tracking-wider transition-colors">Contact</a>
+                </div>
             </div>
         </div>
       </div>
