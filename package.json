@@ -1,3 +1,4 @@
+
 {
   "name": "quality-tree",
   "private": true,
@@ -9,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@google/genai": "^0.1.1",
+    "@google/genai": "^0.1.0",
     "canvas-confetti": "^1.9.2",
     "firebase": "^10.9.0",
     "lucide-react": "^0.363.0",
