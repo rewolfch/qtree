@@ -1,8 +1,6 @@
 
 import React, { useState, useEffect, useRef, useLayoutEffect, useMemo } from 'react';
-import { GoogleGenAI } from "@google/genai";
 import confetti from 'canvas-confetti';
-import { Link } from 'react-router-dom';
 import { rawConfig } from '../data/appToolData';
 import { useLanguage } from '../contexts/LanguageContext';
 import SEO from '../components/SEO';
@@ -317,9 +315,7 @@ const AppTool: React.FC = () => {
       };
   }).filter(n => n.branchId !== null);
 
-  // ... (State definitions remain mostly the same, removed for brevity but implicitly present)
   const [activeNodeId, setActiveNodeId] = useState<string | null>(null);
-  const [activeBranchId, setActiveBranchId] = useState<string | null>(null);
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
   const [isGardenerMode, setIsGardenerMode] = useState(false);
   const [viewMode, setViewMode] = useState<'map' | 'list'>('map');
@@ -330,18 +326,12 @@ const AppTool: React.FC = () => {
   const [warningData, setWarningData] = useState<any>({ isOpen: false, missingNodes: [] });
   const [projectData, setProjectData] = useState({ name: '', owner: '' });
   
-  const [showExportModal, setShowExportModal] = useState(false);
-  const [reportConfig, setReportConfig] = useState({ branches: appBranches.map(b=>b.id), showTrend: true });
-  
   const [isMobile, setIsMobile] = useState(false);
-  const [selectedMobileBranchId, setSelectedMobileBranchId] = useState<string | null>(null);
-  const [zoomLevel, setZoomLevel] = useState(1);
 
   const gridRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef(new Map());
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // ... (Effects and Helper functions like getProgress, updateNodeStatus, etc. remain the same)
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
     checkMobile();
@@ -353,11 +343,6 @@ const AppTool: React.FC = () => {
     const savedTheme = localStorage.getItem('qtree-theme');
     if (savedTheme === 'dark') { setIsDarkMode(true); document.documentElement.classList.add('dark'); }
   }, []);
-
-  const toggleTheme = () => {
-    if (isDarkMode) { document.documentElement.classList.remove('dark'); localStorage.setItem('qtree-theme', 'light'); setIsDarkMode(false); } 
-    else { document.documentElement.classList.add('dark'); localStorage.setItem('qtree-theme', 'dark'); setIsDarkMode(true); }
-  };
 
   useEffect(() => {
     const saved = localStorage.getItem('qtree-state');
@@ -481,7 +466,6 @@ const AppTool: React.FC = () => {
       if (event.target) event.target.value = '';
   };
 
-  // Render method simplified
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans selection:bg-emerald-100 print:bg-white flex flex-col">
       <SEO 
@@ -491,8 +475,6 @@ const AppTool: React.FC = () => {
       <input type="file" ref={fileInputRef} style={{display: 'none'}} onChange={handleFileChange} accept=".json" />
 
       <WarningModal data={warningData} onClose={() => setWarningData({ ...warningData, isOpen: false })} nodes={appNodes} />
-      
-      {/* ... Other modals ... */}
       
       {activeNodeId && (
         <DetailPopup node={activeNode} onClose={() => setActiveNodeId(null)} onStatusChange={(id: string, status: string, data: any) => handleStatusChangeAttempt(id, status, data, () => setActiveNodeId(null))} onOkrToggle={(idx: number) => toggleNodeOkr(activeNodeId, idx)} nodeState={getNodeState(activeNodeId)} isGardener={isGardenerMode} isMobile={isMobile} allNodes={appNodes} userState={userState} onNavigate={setActiveNodeId} branches={appBranches} ui={ui} />
@@ -534,8 +516,7 @@ const AppTool: React.FC = () => {
         <div className="flex-grow">
           {viewMode === 'map' ? (
              <div id="tree-grid-container" ref={gridRef} className={`relative w-full overflow-auto bg-slate-50 dark:bg-slate-950 pt-12 pb-32 px-8 min-h-screen print:hidden ${isMobile ? 'hidden' : 'block'}`}>
-                  {/* Grid implementation */}
-                  <div style={{ transform: zoomLevel === 1 ? 'none' : `scale(${zoomLevel})`, transformOrigin: 'top left', width: 'fit-content', minWidth: '100%', height: 'fit-content' }}>
+                  <div style={{ width: 'fit-content', minWidth: '100%', height: 'fit-content' }}>
                           <div className="relative inline-block min-w-full">
                               <ConnectingLines nodeRefs={nodeRefs} hoveredNode={hoveredNodeId} containerRef={gridRef} />
                               <div className="inline-grid gap-x-8 gap-y-8 relative z-10" style={{ gridTemplateColumns: `250px repeat(${levels.length}, minmax(160px, 1fr))` }}>
@@ -549,8 +530,7 @@ const AppTool: React.FC = () => {
                                   <React.Fragment key={branch.id}>
                                       <div className="sticky left-0 z-30 flex items-center bg-slate-50 dark:bg-slate-950 pr-4 border-r border-slate-200 dark:border-slate-800 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
                                           <div 
-                                              onClick={() => setActiveBranchId(branch.id)}
-                                              className="flex items-center space-x-3 w-full p-4 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-700 shadow-sm cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group"
+                                              className="flex items-center space-x-3 w-full p-4 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group"
                                           >
                                               <div className="w-8 h-8 rounded bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-700 dark:text-emerald-400 flex-shrink-0"><i className={`fas ${branch.icon}`}></i></div>
                                               <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 leading-tight flex-1">{branch.name}</h3>
@@ -558,7 +538,7 @@ const AppTool: React.FC = () => {
                                           </div>
                                       </div>
                                       {levels.map(level => {
-                                          const cellNodes = appNodes.filter((n: any) => n.branchId === branch.id && n.level === level.id - 1); // fix level index
+                                          const cellNodes = appNodes.filter((n: any) => n.branchId === branch.id && n.level === level.id - 1);
                                           return (
                                               <div key={`${branch.id}-${level.id}`} className="flex flex-col items-center justify-center space-y-2 min-h-[100px]">
                                                   {cellNodes.map((node: any) => {
