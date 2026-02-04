@@ -5,6 +5,7 @@ import { fetchPostById } from '../services/blogService';
 import { BlogPost } from '../types';
 import { ArrowLeft, Calendar, User, Linkedin, Twitter, Mail, Share2, TreeDeciduous, ArrowRight } from 'lucide-react';
 import SEO from '../components/SEO';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const PostSkeleton = () => (
   <div className="min-h-screen bg-slate-50 pb-16 animate-pulse">
@@ -35,6 +36,7 @@ const BlogPostDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [post, setPost] = useState<BlogPost | undefined>(undefined);
   const [loading, setLoading] = useState(true);
+  const { ui, t } = useLanguage();
 
   useEffect(() => {
     const loadPost = async () => {
@@ -54,33 +56,53 @@ const BlogPostDetail: React.FC = () => {
   if (!post) {
     return (
       <div className="min-h-screen bg-slate-50 py-12 flex flex-col items-center justify-center text-center px-4">
-        <SEO title="Artikel nicht gefunden" description="Der gesuchte Artikel existiert nicht." />
-        <h1 className="text-2xl font-bold text-slate-900 mb-4">Artikel nicht gefunden</h1>
-        <p className="text-slate-600 mb-8">Der gesuchte Blog-Artikel existiert leider nicht.</p>
+        <SEO title={ui("blog_detail.not_found_title")} description={ui("blog_detail.not_found_desc")} />
+        <h1 className="text-2xl font-bold text-slate-900 mb-4">{ui("blog_detail.not_found_title")}</h1>
+        <p className="text-slate-600 mb-8">{ui("blog_detail.not_found_desc")}</p>
         <Link to="/blog" className="text-brand-600 hover:text-brand-700 font-medium flex items-center justify-center">
-           <ArrowLeft className="h-4 w-4 mr-2" /> Zurück zum Blog
+           <ArrowLeft className="h-4 w-4 mr-2" /> {ui("blog_detail.back")}
         </Link>
       </div>
     );
   }
 
+  const postTitle = t(post.title);
+  const postExcerpt = t(post.excerpt);
+  const postContent = t(post.content);
+
   const currentUrl = window.location.href;
-  const shareText = encodeURIComponent(post.title);
+  const shareText = encodeURIComponent(postTitle);
   const shareUrl = encodeURIComponent(currentUrl);
 
-  // Helper function to parse basic Markdown (Bold **text** and Links [text](url))
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": postTitle,
+    "image": post.imageUrl ? [post.imageUrl] : [],
+    "datePublished": post.date,
+    "author": {
+      "@type": "Person",
+      "name": post.author
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Quality Tree Framework",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://lucide.dev/favicon.ico" 
+      }
+    },
+    "description": postExcerpt
+  };
+
   const parseMarkdown = (text: string) => {
-    // Split by bold syntax first: **text**
     const parts = text.split(/(\*\*[^*]+\*\*)/g);
     
     return parts.map((part, index) => {
-      // Check if this part is bold
       if (part.startsWith('**') && part.endsWith('**')) {
         return <strong key={index} className="font-bold text-slate-900">{part.slice(2, -2)}</strong>;
       }
       
-      // If not bold, check for links: [text](url)
-      // We split by the link regex
       const linkParts = part.split(/(\[[^\]]+\]\([^)]+\))/g);
       
       return (
@@ -121,19 +143,20 @@ const BlogPostDetail: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 pb-16">
       <SEO 
-        title={post.title} 
-        description={post.excerpt} 
+        title={postTitle} 
+        description={postExcerpt} 
         type="article" 
         imageUrl={post.imageUrl}
         author={post.author}
         publishedTime={post.date}
+        schema={schema}
       />
 
       {post.imageUrl && (
         <div className="w-full h-64 md:h-96 relative bg-slate-900">
            <img 
              src={post.imageUrl} 
-             alt={post.title} 
+             alt={postTitle} 
              className="w-full h-full object-cover opacity-80"
            />
            <div className="absolute inset-0 bg-gradient-to-t from-slate-50 via-transparent to-transparent"></div>
@@ -143,7 +166,7 @@ const BlogPostDetail: React.FC = () => {
       <div className={`max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 ${post.imageUrl ? '-mt-20 relative z-10' : 'pt-12'}`}>
         <div className="flex justify-between items-center mb-6">
           <Link to="/blog" className="inline-flex items-center text-slate-600 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full hover:text-brand-600 transition-colors group shadow-sm border border-slate-200/50">
-            <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" /> Zurück zum Blog
+            <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" /> {ui("blog_detail.back")}
           </Link>
         </div>
 
@@ -154,11 +177,11 @@ const BlogPostDetail: React.FC = () => {
                 <span className="flex items-center bg-slate-50 px-2 py-1 rounded"><Calendar className="h-4 w-4 mr-1.5 text-brand-500" /> {post.date}</span>
                 <span className="flex items-center bg-slate-50 px-2 py-1 rounded"><User className="h-4 w-4 mr-1.5 text-brand-500" /> {post.author}</span>
               </div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight tracking-tight">{post.title}</h1>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight tracking-tight">{postTitle}</h1>
             </header>
             
             <div className="prose prose-slate prose-lg max-w-none">
-              {renderContent(post.content)}
+              {renderContent(postContent)}
             </div>
             
             <div className="mt-12 bg-slate-50 rounded-xl p-6 border border-slate-100 flex flex-col md:flex-row items-center gap-6">
@@ -166,10 +189,10 @@ const BlogPostDetail: React.FC = () => {
                     <TreeDeciduous className="h-8 w-8" />
                 </div>
                 <div>
-                    <h3 className="text-lg font-bold text-slate-900 mb-1">Möchtest du tiefer eintauchen?</h3>
-                    <p className="text-slate-600 text-sm mb-3">Erkunde das Framework und verstehe die Zusammenhänge.</p>
+                    <h3 className="text-lg font-bold text-slate-900 mb-1">{ui("blog_detail.dive_deeper_title")}</h3>
+                    <p className="text-slate-600 text-sm mb-3">{ui("blog_detail.dive_deeper_desc")}</p>
                     <Link to="/framework" className="text-brand-600 hover:text-brand-800 font-semibold text-sm flex items-center">
-                        Zum Quality Tree Framework <ArrowRight className="h-4 w-4 ml-1" />
+                        {ui("blog_detail.to_framework")} <ArrowRight className="h-4 w-4 ml-1" />
                     </Link>
                 </div>
             </div>
@@ -179,7 +202,7 @@ const BlogPostDetail: React.FC = () => {
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center text-slate-700 font-medium">
             <Share2 className="h-5 w-5 mr-2 text-brand-600" />
-            Diesen Artikel teilen
+            {ui("blog_detail.share")}
           </div>
           <div className="flex gap-3">
             <a 

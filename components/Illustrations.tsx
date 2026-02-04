@@ -39,6 +39,7 @@ export const BranchDecoration: React.FC<IllustrationProps> = ({ className = "", 
             <circle cx="25" cy="50" r="10" />
             <circle cx="50" cy="50" r="12" />
             <circle cx="75" cy="50" r="10" />
+            <path d="M35 50 L38 50 M62 50 L65 50" />
           </g>
         );
       case "deployment":
@@ -46,6 +47,49 @@ export const BranchDecoration: React.FC<IllustrationProps> = ({ className = "", 
           <g fill="none" stroke={color} strokeWidth="2">
             <path d="M50 85 L50 15 M50 15 L35 35 M50 15 L65 35" />
             <circle cx="50" cy="15" r="15" strokeOpacity="0.2" />
+            <path d="M20 85 L80 85" strokeLinecap="round" />
+          </g>
+        );
+      case "test-automation":
+        return (
+          <g fill="none" stroke={color} strokeWidth="2">
+            <rect x="25" y="30" width="20" height="20" rx="4" />
+            <rect x="55" y="30" width="20" height="20" rx="4" />
+            <rect x="40" y="60" width="20" height="20" rx="4" />
+            <path d="M35 50 L40 60 M65 50 L60 60" />
+            <circle cx="50" cy="20" r="4" fill={color} />
+            <path d="M50 24 L50 35" />
+            <path d="M30 40 L35 40 M60 40 L65 40" strokeWidth="1" />
+          </g>
+        );
+      case "virtualization":
+        return (
+          <g fill="none" stroke={color} strokeWidth="2">
+            <path d="M20 65 Q 25 45 45 45 Q 65 45 75 65" strokeDasharray="4 4" />
+            <rect x="25" y="60" width="50" height="20" rx="4" />
+            <line x1="35" y1="70" x2="65" y2="70" opacity="0.5" />
+            <path d="M50 45 L50 25" strokeDasharray="2 2" />
+            <circle cx="50" cy="20" r="5" />
+          </g>
+        );
+      case "manual-testing":
+        return (
+          <g fill="none" stroke={color} strokeWidth="2">
+             <circle cx="45" cy="45" r="18" />
+             <path d="M58 58 L75 75" strokeWidth="4" strokeLinecap="round" />
+             <path d="M38 45 L42 50 L52 40" strokeLinecap="round" strokeLinejoin="round" />
+             <path d="M80 30 L85 25 M75 25 L80 20" opacity="0.5" />
+          </g>
+        );
+      case "test-mgmt":
+        return (
+          <g fill="none" stroke={color} strokeWidth="2">
+            <rect x="15" y="20" width="70" height="60" rx="4" opacity="0.3"/>
+            <path d="M25 70 L25 50" strokeWidth="4" strokeLinecap="round" />
+            <path d="M40 70 L40 35" strokeWidth="4" strokeLinecap="round" />
+            <path d="M55 70 L55 60" strokeWidth="4" strokeLinecap="round" />
+            <path d="M70 70 L70 25" strokeWidth="4" strokeLinecap="round" />
+            <path d="M25 50 L40 35 L55 60 L70 25" strokeWidth="1" opacity="0.5" />
           </g>
         );
       default:

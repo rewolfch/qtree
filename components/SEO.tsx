@@ -10,6 +10,7 @@ interface SEOProps {
   imageUrl?: string;
   author?: string;
   publishedTime?: string;
+  schema?: Record<string, any>;
 }
 
 const SEO: React.FC<SEOProps> = ({ 
@@ -18,7 +19,8 @@ const SEO: React.FC<SEOProps> = ({
   type = 'website', 
   imageUrl = 'https://media.springernature.com/full/springer-static/cover-hires/book/978-3-658-51040-4?as=webp',
   author = 'Serge Baumberger',
-  publishedTime
+  publishedTime,
+  schema
 }) => {
   const location = useLocation();
   const siteTitle = "Quality Tree Framework";
@@ -29,9 +31,6 @@ const SEO: React.FC<SEOProps> = ({
   
   // Construct the URL. Since the app uses HashRouter, we construct the URL 
   // to include the hash so deep links work correctly when clicked from Search.
-  // Logic: 
-  // Root -> https://www.quality-tree.com
-  // Subpage -> https://www.quality-tree.com/#/blog/my-post
   const currentPath = location.pathname === '/' ? '' : `/#${location.pathname}`;
   const currentUrl = `${domain}${currentPath}`;
 
@@ -59,6 +58,13 @@ const SEO: React.FC<SEOProps> = ({
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={imageUrl} />
       <meta name="twitter:url" content={currentUrl} />
+
+      {/* Schema Markup */}
+      {schema && (
+        <script type="application/ld+json">
+          {JSON.stringify(schema)}
+        </script>
+      )}
     </Helmet>
   );
 };

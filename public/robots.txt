@@ -1,0 +1,18 @@
+
+User-agent: *
+Allow: /
+
+# Explicitly allow AI Bots for Training & RAG
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+Sitemap: https://www.quality-tree.com/sitemap.xml

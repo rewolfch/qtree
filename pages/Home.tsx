@@ -1,15 +1,17 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-/* Added missing Linkedin and Mail icons to the lucide-react import list. */
 import { ArrowRight, Sprout, Layers, GitBranch, ShoppingCart, BookOpen, Star, CheckCircle2, TrendingUp, ShieldCheck, Users, Globe, Calendar, Video, ExternalLink, Search, Zap, Linkedin, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { LeafIcon, TrunkPath, RootSystem, SeedIcon, ForestIcon } from '../components/Illustrations';
 import SEO from '../components/SEO';
+import { useLanguage } from '../contexts/LanguageContext';
+import ScrollReveal from '../components/ScrollReveal';
 
 const Home: React.FC = () => {
   const [pulseScore, setPulseScore] = useState<number | null>(null);
   const [rootProgress, setRootProgress] = useState(0);
   const rootRef = useRef<HTMLDivElement>(null);
+  const { ui } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,8 +19,6 @@ const Home: React.FC = () => {
       const rect = rootRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       
-      // Calculate how much of the root section is in view
-      // We want progress to be 0 when top is at 80% of window, and 1 when top is at 20%
       const start = windowHeight * 0.8;
       const end = windowHeight * 0.2;
       const current = rect.top;
@@ -36,93 +36,112 @@ const Home: React.FC = () => {
     setPulseScore(val);
   };
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Quality Tree Framework",
+    "url": "https://www.quality-tree.com",
+    "logo": "https://lucide.dev/favicon.ico",
+    "sameAs": [
+      "https://www.linkedin.com/in/sergewolf/",
+      "https://www.infometis.ch"
+    ]
+  };
+
   return (
     <div className="flex flex-col min-h-screen font-sans bg-white overflow-x-hidden">
       <SEO 
-        title="Quality Tree Framework" 
-        description="Das strategische Bauplan für Softwarequalität, Automatisierung und CI/CD von Serge Baumberger. Transformieren Sie Ihre QA von manuellen Tests zu einem skalierbaren Ökosystem."
+        title={ui("nav.title")}
+        description={ui("hero.desc")}
+        schema={schema}
       />
       
-      {/* Hero Section - Book Focused */}
+      {/* Hero Section */}
       <section className="relative bg-slate-900 text-white pt-24 pb-32 lg:pt-32 lg:pb-48 overflow-hidden">
-        {/* Abstract Background Decor */}
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay animate-pulse-slow"></div>
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-900/95 to-brand-900/20"></div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
             
-            {/* Left: Content */}
-            <div className="flex-1 text-center lg:text-left animate-fade-in-up">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-[10px] font-black uppercase tracking-[0.2em] mb-8 backdrop-blur-sm">
-                <span className="flex h-2 w-2 rounded-full bg-brand-400 animate-pulse"></span>
-                Jetzt als Bestseller erhältlich
-              </div>
+            <div className="flex-1 text-center lg:text-left">
+              <ScrollReveal animation="fade-right" delay={100}>
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-[10px] font-black uppercase tracking-[0.2em] mb-8 backdrop-blur-sm">
+                  <span className="flex h-2 w-2 rounded-full bg-brand-400 animate-pulse"></span>
+                  {ui("hero.badge")}
+                </div>
+              </ScrollReveal>
               
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-[0.9] tracking-tighter">
-                Qualität ist <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-emerald-200">Wachstum.</span>
-              </h1>
+              <ScrollReveal animation="fade-up" delay={300}>
+                <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-[0.9] tracking-tighter">
+                  {ui("hero.title_start")} <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-emerald-200">{ui("hero.title_end")}</span>
+                </h1>
+              </ScrollReveal>
               
-              <p className="text-xl md:text-2xl text-slate-300 mb-10 leading-relaxed max-w-2xl font-light">
-                Das <strong>Quality Tree Framework</strong> von Serge Baumberger. Der strategische Bauplan für moderne Softwarequalität, Automatisierung und echtes Business-Wachstum.
-              </p>
+              <ScrollReveal animation="fade-up" delay={500}>
+                <p className="text-xl md:text-2xl text-slate-300 mb-10 leading-relaxed max-w-2xl font-light">
+                  {ui("hero.desc")}
+                </p>
+              </ScrollReveal>
               
-              <div className="flex flex-col sm:flex-row items-center gap-4 lg:gap-6">
-                <a 
-                  href="https://www.amazon.de/Das-Quality-Tree-Framework-Automatisierung/dp/3658510404" 
-                  target="_blank" 
-                  rel="noreferrer" 
-                  className="w-full sm:w-auto group bg-brand-600 hover:bg-brand-500 text-white px-8 py-5 rounded-2xl font-black text-lg flex items-center justify-center gap-3 transition-all shadow-2xl shadow-brand-900/40 hover:-translate-y-1"
-                >
-                  <ShoppingCart className="h-6 w-6" /> Buch bestellen
-                </a>
-                <Link 
-                  to="/framework" 
-                  className="w-full sm:w-auto text-white border border-white/20 hover:bg-white/10 px-8 py-5 rounded-2xl font-bold text-lg backdrop-blur-md flex items-center justify-center gap-3 transition-all hover:-translate-y-1"
-                >
-                  Das Framework entdecken
-                </Link>
-              </div>
+              <ScrollReveal animation="fade-up" delay={700}>
+                <div className="flex flex-col sm:flex-row items-center gap-4 lg:gap-6">
+                  <a 
+                    href="https://www.amazon.de/Das-Quality-Tree-Framework-Automatisierung/dp/3658510404" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="w-full sm:w-auto group bg-brand-600 hover:bg-brand-500 text-white px-8 py-5 rounded-2xl font-black text-lg flex items-center justify-center gap-3 transition-all shadow-2xl shadow-brand-900/40 hover:-translate-y-1"
+                  >
+                    <ShoppingCart className="h-6 w-6" /> {ui("hero.cta_book")}
+                  </a>
+                  <Link 
+                    to="/framework" 
+                    className="w-full sm:w-auto text-white border border-white/20 hover:bg-white/10 px-8 py-5 rounded-2xl font-bold text-lg backdrop-blur-md flex items-center justify-center gap-3 transition-all hover:-translate-y-1"
+                  >
+                    {ui("hero.cta_framework")}
+                  </Link>
+                </div>
+              </ScrollReveal>
 
-              <div className="mt-12 flex items-center justify-center lg:justify-start gap-8 opacity-60">
-                <div className="flex flex-col">
-                  <span className="text-2xl font-black text-white">90+</span>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Best Practices</span>
-                </div>
-                <div className="w-px h-10 bg-slate-700"></div>
-                <div className="flex flex-col">
-                  <span className="text-2xl font-black text-white">8</span>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Dimensionen</span>
-                </div>
-                <div className="w-px h-10 bg-slate-700"></div>
-                <div className="flex flex-col">
-                   <span className="flex items-center gap-1 text-2xl font-black text-white">4.8 <Star className="h-4 w-4 fill-brand-400 text-brand-400" /></span>
-                   <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Bewertung</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right: Book 3D Presentation */}
-            <div className="flex-1 relative animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-              <div className="relative group perspective-1000">
-                {/* Glow Effect */}
-                <div className="absolute inset-0 bg-brand-500 rounded-2xl blur-[100px] opacity-20 group-hover:opacity-30 transition-opacity translate-y-12"></div>
-                
-                {/* Book Image with 3D shadow */}
-                <div className="relative transform-gpu transition-transform duration-700 hover:rotate-y-[-10deg] hover:scale-105">
-                  <img 
-                    src="https://media.springernature.com/full/springer-static/cover-hires/book/978-3-658-51040-4?as=webp" 
-                    alt="Das Quality Tree Framework Buchcover" 
-                    className="w-[280px] md:w-[380px] mx-auto rounded-r-2xl shadow-[20px_20px_60px_-15px_rgba(0,0,0,0.7)] border-l-8 border-slate-800"
-                  />
-                  {/* Floating Elements */}
-                  <div className="absolute -top-6 -right-6 bg-white text-slate-900 p-4 rounded-2xl shadow-2xl border border-slate-100 hidden md:block animate-float">
-                     <span className="block text-xs font-black text-brand-600 uppercase tracking-widest">Bestseller</span>
-                     <span className="block font-bold">Springer Vieweg</span>
+              <ScrollReveal animation="fade-up" delay={900}>
+                <div className="mt-12 flex items-center justify-center lg:justify-start gap-8 opacity-60">
+                  <div className="flex flex-col">
+                    <span className="text-2xl font-black text-white">90+</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">{ui("hero.stat_practices")}</span>
+                  </div>
+                  <div className="w-px h-10 bg-slate-700"></div>
+                  <div className="flex flex-col">
+                    <span className="text-2xl font-black text-white">8</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">{ui("hero.stat_dimensions")}</span>
+                  </div>
+                  <div className="w-px h-10 bg-slate-700"></div>
+                  <div className="flex flex-col">
+                     <span className="flex items-center gap-1 text-2xl font-black text-white">4.8 <Star className="h-4 w-4 fill-brand-400 text-brand-400" /></span>
+                     <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">{ui("hero.stat_rating")}</span>
                   </div>
                 </div>
-              </div>
+              </ScrollReveal>
+            </div>
+
+            <div className="flex-1 relative">
+              <ScrollReveal animation="zoom-in" delay={600} duration={1200}>
+                <div className="relative group perspective-1000">
+                  <div className="absolute inset-0 bg-brand-500 rounded-2xl blur-[100px] opacity-20 group-hover:opacity-30 transition-opacity translate-y-12"></div>
+                  
+                  <div className="relative transform-gpu transition-transform duration-700 hover:rotate-y-[-10deg] hover:scale-105 animate-float">
+                    <img 
+                      src="https://media.springernature.com/full/springer-static/cover-hires/book/978-3-658-51040-4?as=webp" 
+                      alt="Das Quality Tree Framework Buchcover" 
+                      className="w-[280px] md:w-[380px] mx-auto rounded-r-2xl shadow-[20px_20px_60px_-15px_rgba(0,0,0,0.7)] border-l-8 border-slate-800"
+                    />
+                    <div className="absolute -top-6 -right-6 bg-white text-slate-900 p-4 rounded-2xl shadow-2xl border border-slate-100 hidden md:block animate-float-delayed">
+                       <span className="block text-xs font-black text-brand-600 uppercase tracking-widest">Bestseller</span>
+                       <span className="block font-bold">Springer Vieweg</span>
+                    </div>
+                  </div>
+                </div>
+              </ScrollReveal>
             </div>
             
           </div>
@@ -132,12 +151,14 @@ const Home: React.FC = () => {
       {/* Trust Bar */}
       <section className="bg-white py-12 border-b border-slate-100">
          <div className="max-w-7xl mx-auto px-4">
-            <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700">
-               <span className="text-slate-900 font-black text-xl">Swiss Testing Day</span>
-               <span className="text-slate-900 font-black text-xl">Springer Vieweg</span>
-               <span className="text-slate-900 font-black text-xl">Infometis AG</span>
-               <span className="text-slate-900 font-black text-xl">Bank CIC</span>
-            </div>
+            <ScrollReveal animation="fade-up" delay={200}>
+              <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700">
+                 <span className="text-slate-900 font-black text-xl">Swiss Testing Day</span>
+                 <span className="text-slate-900 font-black text-xl">Springer Vieweg</span>
+                 <span className="text-slate-900 font-black text-xl">Infometis AG</span>
+                 <span className="text-slate-900 font-black text-xl">Bank CIC</span>
+              </div>
+            </ScrollReveal>
          </div>
       </section>
 
@@ -145,14 +166,17 @@ const Home: React.FC = () => {
       <section className="py-32 relative bg-slate-50/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-32">
-            <h2 className="text-5xl font-black text-slate-900 mb-6 tracking-tight">Vom Samen zum Wald.</h2>
-            <p className="text-slate-500 text-xl max-w-2xl mx-auto font-light leading-relaxed">
-              Softwarequalität ist kein statisches Ziel, sondern ein Ökosystem. Der Quality Tree gibt dir die Struktur, um dieses System zu steuern.
-            </p>
+            <ScrollReveal animation="fade-up">
+              <h2 className="text-5xl font-black text-slate-900 mb-6 tracking-tight">{ui("home.journey.title")}</h2>
+            </ScrollReveal>
+            <ScrollReveal animation="fade-up" delay={200}>
+              <p className="text-slate-500 text-xl max-w-2xl mx-auto font-light leading-relaxed">
+                {ui("home.journey.desc")}
+              </p>
+            </ScrollReveal>
           </div>
 
           <div className="relative space-y-48" ref={rootRef}>
-            {/* Roots Animation Connector */}
             <div className="absolute left-1/2 top-0 -translate-x-1/2 w-32 h-32 hidden lg:flex items-center justify-center -translate-y-full opacity-30 text-amber-500">
                <RootSystem progress={rootProgress} className="w-full h-full" />
             </div>
@@ -161,66 +185,78 @@ const Home: React.FC = () => {
               <TrunkPath className="h-full w-4 text-slate-300" />
             </div>
 
-            {/* Root Section */}
             <div className="relative flex flex-col lg:flex-row items-center gap-12 lg:gap-24 group">
                <div className="flex-1 lg:text-right order-2 lg:order-1">
-                  <span className="text-amber-500 font-black text-xs uppercase tracking-widest mb-4 block">Ebene 01</span>
-                  <h3 className="text-4xl font-black text-slate-900 mb-6">Wurzeln: Kultur & Werte</h3>
-                  <p className="text-slate-500 text-lg leading-relaxed max-w-lg lg:ml-auto font-light">
-                    Ohne die richtige Einstellung zur Qualität hilft die beste Technologie nicht. Wir pflanzen Prinzipien, die das Team über Jahre hinweg tragen.
-                  </p>
+                  <ScrollReveal animation="fade-right">
+                    <span className="text-amber-500 font-black text-xs uppercase tracking-widest mb-4 block">{ui("home.journey.level1")}</span>
+                    <h3 className="text-4xl font-black text-slate-900 mb-6">{ui("home.journey.roots.title")}</h3>
+                    <p className="text-slate-500 text-lg leading-relaxed max-w-lg lg:ml-auto font-light">
+                      {ui("home.journey.roots.desc")}
+                    </p>
+                  </ScrollReveal>
                </div>
-               <div className="w-24 h-24 lg:w-32 lg:h-32 bg-amber-500 rounded-[2.5rem] flex items-center justify-center text-white relative z-10 order-1 lg:order-2 shadow-2xl shadow-amber-500/20 group-hover:scale-110 transition-transform">
-                  <SeedIcon className="h-16 w-16" color="white" />
-               </div>
+               <ScrollReveal animation="zoom-in" delay={200} className="order-1 lg:order-2 z-10">
+                 <div className="w-24 h-24 lg:w-32 lg:h-32 bg-amber-500 rounded-[2.5rem] flex items-center justify-center text-white relative shadow-2xl shadow-amber-500/20 group-hover:scale-110 transition-transform duration-500">
+                    <SeedIcon className="h-16 w-16" color="white" />
+                 </div>
+               </ScrollReveal>
                <div className="flex-1 order-3"></div>
             </div>
 
-            {/* Trunk Section */}
             <div className="relative flex flex-col lg:flex-row items-center gap-12 lg:gap-24 group">
                <div className="flex-1 order-3 lg:order-1"></div>
-               <div className="w-24 h-24 lg:w-32 lg:h-32 bg-slate-800 rounded-[2.5rem] flex items-center justify-center text-white relative z-10 order-1 lg:order-2 shadow-2xl shadow-slate-900/20 group-hover:scale-110 transition-transform">
-                  <Layers className="h-14 w-14" />
-               </div>
+               <ScrollReveal animation="zoom-in" delay={200} className="order-1 lg:order-2 z-10">
+                 <div className="w-24 h-24 lg:w-32 lg:h-32 bg-slate-800 rounded-[2.5rem] flex items-center justify-center text-white relative shadow-2xl shadow-slate-900/20 group-hover:scale-110 transition-transform duration-500">
+                    <Layers className="h-14 w-14" />
+                 </div>
+               </ScrollReveal>
                <div className="flex-1 lg:text-left order-2 lg:order-3">
-                  <span className="text-slate-400 font-black text-xs uppercase tracking-widest mb-4 block">Ebene 02</span>
-                  <h3 className="text-4xl font-black text-slate-900 mb-6">Stamm: Architektur & CI/CD</h3>
-                  <p className="text-slate-500 text-lg leading-relaxed max-w-lg font-light">
-                    Der Stamm ist das Rückgrat. Automatisierte Pipelines und eine skalierbare Architektur tragen die Last Ihrer digitalen Produkte.
-                  </p>
+                  <ScrollReveal animation="fade-left">
+                    <span className="text-slate-400 font-black text-xs uppercase tracking-widest mb-4 block">{ui("home.journey.level2")}</span>
+                    <h3 className="text-4xl font-black text-slate-900 mb-6">{ui("home.journey.trunk.title")}</h3>
+                    <p className="text-slate-500 text-lg leading-relaxed max-w-lg font-light">
+                      {ui("home.journey.trunk.desc")}
+                    </p>
+                  </ScrollReveal>
                </div>
             </div>
 
-            {/* Branch Section */}
             <div className="relative flex flex-col lg:flex-row items-center gap-12 lg:gap-24 group">
                <div className="flex-1 lg:text-right order-2 lg:order-1">
-                  <span className="text-brand-500 font-black text-xs uppercase tracking-widest mb-4 block">Ebene 03</span>
-                  <h3 className="text-4xl font-black text-slate-900 mb-6">Äste: Die 8 Themengebiete</h3>
-                  <p className="text-slate-500 text-lg leading-relaxed max-w-lg lg:ml-auto font-light">
-                    Von Deployment-Praktiken bis zum Test-Management. Wir strukturieren die Komplexität in greifbare Wissensbereiche.
-                  </p>
-                  <Link to="/framework" className="inline-flex items-center text-brand-600 font-bold mt-6 hover:gap-3 transition-all">
-                    Die Äste erkunden <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
+                  <ScrollReveal animation="fade-right">
+                    <span className="text-brand-500 font-black text-xs uppercase tracking-widest mb-4 block">{ui("home.journey.level3")}</span>
+                    <h3 className="text-4xl font-black text-slate-900 mb-6">{ui("home.journey.branches.title")}</h3>
+                    <p className="text-slate-500 text-lg leading-relaxed max-w-lg lg:ml-auto font-light">
+                      {ui("home.journey.branches.desc")}
+                    </p>
+                    <Link to="/framework" className="inline-flex items-center text-brand-600 font-bold mt-6 hover:gap-3 transition-all">
+                      {ui("home.journey.branches.link")} <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </ScrollReveal>
                </div>
-               <div className="w-24 h-24 lg:w-32 lg:h-32 bg-brand-600 rounded-[2.5rem] flex items-center justify-center text-white relative z-10 order-1 lg:order-2 shadow-2xl shadow-brand-600/20 group-hover:scale-110 transition-transform">
-                  <GitBranch className="h-14 w-14" />
-               </div>
+               <ScrollReveal animation="zoom-in" delay={200} className="order-1 lg:order-2 z-10">
+                 <div className="w-24 h-24 lg:w-32 lg:h-32 bg-brand-600 rounded-[2.5rem] flex items-center justify-center text-white relative shadow-2xl shadow-brand-600/20 group-hover:scale-110 transition-transform duration-500">
+                    <GitBranch className="h-14 w-14" />
+                 </div>
+               </ScrollReveal>
                <div className="flex-1 order-3"></div>
             </div>
 
-            {/* Forest Section */}
             <div className="relative flex flex-col lg:flex-row items-center gap-12 lg:gap-24 group">
                <div className="flex-1 order-3 lg:order-1"></div>
-               <div className="w-24 h-24 lg:w-32 lg:h-32 bg-emerald-700 rounded-[2.5rem] flex items-center justify-center text-white relative z-10 order-1 lg:order-2 shadow-2xl shadow-emerald-700/20 group-hover:scale-110 transition-transform">
-                  <ForestIcon className="h-16 w-16" color="white" />
-               </div>
+               <ScrollReveal animation="zoom-in" delay={200} className="order-1 lg:order-2 z-10">
+                 <div className="w-24 h-24 lg:w-32 lg:h-32 bg-emerald-700 rounded-[2.5rem] flex items-center justify-center text-white relative shadow-2xl shadow-emerald-700/20 group-hover:scale-110 transition-transform duration-500">
+                    <ForestIcon className="h-16 w-16" color="white" />
+                 </div>
+               </ScrollReveal>
                <div className="flex-1 lg:text-left order-2 lg:order-3">
-                  <span className="text-emerald-600 font-black text-xs uppercase tracking-widest mb-4 block">Ebene 04</span>
-                  <h3 className="text-4xl font-black text-slate-900 mb-6">Wald: Der volle Umfang</h3>
-                  <p className="text-slate-500 text-lg leading-relaxed max-w-lg font-light">
-                    Das Ziel ist ein selbsterhaltendes Ökosystem. Mit 90 Praktiken erreichen Sie eine Qualität, die den Markt anführt.
-                  </p>
+                  <ScrollReveal animation="fade-left">
+                    <span className="text-emerald-600 font-black text-xs uppercase tracking-widest mb-4 block">{ui("home.journey.level4")}</span>
+                    <h3 className="text-4xl font-black text-slate-900 mb-6">{ui("home.journey.forest.title")}</h3>
+                    <p className="text-slate-500 text-lg leading-relaxed max-w-lg font-light">
+                      {ui("home.journey.forest.desc")}
+                    </p>
+                  </ScrollReveal>
                </div>
             </div>
           </div>
@@ -231,52 +267,55 @@ const Home: React.FC = () => {
       <section className="py-32 bg-slate-900 relative overflow-hidden">
         <div className="absolute inset-0 bg-brand-500/5 blur-[120px]"></div>
         <div className="max-w-4xl mx-auto px-4 relative z-10 text-center">
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-12 md:p-16">
-            <div className="w-16 h-16 bg-brand-500/20 rounded-2xl flex items-center justify-center text-brand-400 mx-auto mb-8">
-              <Zap className="h-8 w-8" />
-            </div>
-            <h2 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tight">Schnell-Check.</h2>
-            <p className="text-slate-400 mb-12 max-w-xl mx-auto font-light text-lg">
-              Wie hoch ist der Grad Ihrer Testautomatisierung im Durchschnitt? Finden Sie heraus, welcher Ast Ihres Trees zuerst Aufmerksamkeit braucht.
-            </p>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-               {[
-                 { label: "Manuell", val: 1 },
-                 { label: "< 25%", val: 2 },
-                 { label: "25 - 80%", val: 3 },
-                 { label: "> 80%", val: 4 }
-               ].map((opt) => (
-                 <button 
-                  key={opt.val} 
-                  onClick={() => calculatePulse(opt.val)}
-                  className={`p-5 rounded-2xl border-2 transition-all font-bold text-sm ${pulseScore === opt.val ? 'bg-brand-600 border-brand-500 text-white shadow-xl shadow-brand-600/20' : 'bg-slate-800 border-slate-700 text-slate-400 hover:border-slate-500'}`}
-                 >
-                   {opt.label}
-                 </button>
-               ))}
-            </div>
-
-            {pulseScore && (
-              <div className="mb-10 p-8 bg-brand-900/40 rounded-3xl border border-brand-500/30 animate-fade-in text-left">
-                <p className="text-brand-300 font-black text-xs uppercase tracking-widest mb-3">Ergebnis & Empfehlung</p>
-                <p className="text-white text-lg leading-relaxed font-light">
-                  {pulseScore <= 2 
-                    ? "Basis vorhanden, aber Skalierung fehlt. Ihr Tree braucht jetzt stabilere Wurzeln in der CI/CD Architektur. Lesen Sie Kapitel 4 im Buch für die passende Roadmap." 
-                    : "Exzellente Performance! Sie sind bereit für AI-gestütztes Testing. Kapitel 8 liefert Ihnen die notwendigen Deep Dives."}
-                </p>
+          <ScrollReveal animation="fade-up">
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-12 md:p-16 hover:bg-white/10 transition-colors duration-500">
+              <div className="w-16 h-16 bg-brand-500/20 rounded-2xl flex items-center justify-center text-brand-400 mx-auto mb-8 animate-pulse">
+                <Zap className="h-8 w-8" />
               </div>
-            )}
+              <h2 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tight">{ui("home.check.title")}</h2>
+              <p className="text-slate-400 mb-12 max-w-xl mx-auto font-light text-lg">
+                {ui("home.check.desc")}
+              </p>
+              
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+                 {[
+                   { label: "Manuell", val: 1 },
+                   { label: "< 25%", val: 2 },
+                   { label: "25 - 80%", val: 3 },
+                   { label: "> 80%", val: 4 }
+                 ].map((opt, idx) => (
+                   <ScrollReveal key={opt.val} animation="fade-up" delay={idx * 100}>
+                     <button 
+                      onClick={() => calculatePulse(opt.val)}
+                      className={`w-full p-5 rounded-2xl border-2 transition-all font-bold text-sm ${pulseScore === opt.val ? 'bg-brand-600 border-brand-500 text-white shadow-xl shadow-brand-600/20 scale-105' : 'bg-slate-800 border-slate-700 text-slate-400 hover:border-slate-500 hover:text-white'}`}
+                     >
+                       {opt.label}
+                     </button>
+                   </ScrollReveal>
+                 ))}
+              </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/app" className="inline-flex items-center gap-2 bg-white text-slate-900 px-8 py-4 rounded-xl font-black hover:bg-brand-500 hover:text-white transition-all">
-                Vollständiges Assessment <ArrowRight className="h-4 w-4" />
-              </Link>
-              <a href="https://www.amazon.de/Das-Quality-Tree-Framework-Automatisierung/dp/3658510404" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 bg-slate-800 text-white px-8 py-4 rounded-xl font-black hover:bg-slate-700 transition-all border border-slate-700">
-                Lösungsbuch kaufen
-              </a>
+              {pulseScore && (
+                <div className="mb-10 p-8 bg-brand-900/40 rounded-3xl border border-brand-500/30 animate-fade-in text-left">
+                  <p className="text-brand-300 font-black text-xs uppercase tracking-widest mb-3">{ui("home.check.result")}</p>
+                  <p className="text-white text-lg leading-relaxed font-light">
+                    {pulseScore <= 2 
+                      ? ui("home.check.low")
+                      : ui("home.check.high")}
+                  </p>
+                </div>
+              )}
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/app" className="inline-flex items-center gap-2 bg-white text-slate-900 px-8 py-4 rounded-xl font-black hover:bg-brand-500 hover:text-white transition-all transform hover:-translate-y-1 shadow-lg hover:shadow-brand-500/20">
+                  {ui("home.check.cta_app")} <ArrowRight className="h-4 w-4" />
+                </Link>
+                <a href="https://www.amazon.de/Das-Quality-Tree-Framework-Automatisierung/dp/3658510404" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 bg-slate-800 text-white px-8 py-4 rounded-xl font-black hover:bg-slate-700 transition-all border border-slate-700 hover:border-slate-600 transform hover:-translate-y-1">
+                  {ui("home.check.cta_book")}
+                </a>
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -285,57 +324,61 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-20 items-center">
             <div className="lg:w-1/2 relative">
-               <div className="absolute inset-0 bg-brand-50 rounded-[4rem] -rotate-3 translate-x-6 scale-95"></div>
-               <img 
-                src="https://cdn.prod.website-files.com/659bd602c8644fb17135bbe7/660c27367443119851a48cd0_Swarmie%20Profile%20-%20Serge%20Wolf.png" 
-                alt="Serge Baumberger" 
-                className="relative rounded-[3rem] shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000 w-full aspect-[4/5] object-cover border-8 border-white"
-               />
-               <div className="absolute -bottom-8 -right-8 bg-slate-900 text-white p-8 rounded-3xl shadow-2xl max-w-[240px] hidden md:block">
-                  <p className="text-sm font-light italic opacity-80 mb-4">"Wir bauen keine Software, wir bauen Vertrauen."</p>
-                  <p className="font-bold text-brand-400">Serge Baumberger</p>
-               </div>
+               <ScrollReveal animation="fade-right">
+                 <div className="absolute inset-0 bg-brand-50 rounded-[4rem] -rotate-3 translate-x-6 scale-95 transition-transform group-hover:rotate-0"></div>
+                 <img 
+                  src="https://cdn.prod.website-files.com/659bd602c8644fb17135bbe7/660c27367443119851a48cd0_Swarmie%20Profile%20-%20Serge%20Wolf.png" 
+                  alt="Serge Baumberger" 
+                  className="relative rounded-[3rem] shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000 w-full aspect-[4/5] object-cover border-8 border-white hover:scale-[1.02]"
+                 />
+                 <div className="absolute -bottom-8 -right-8 bg-slate-900 text-white p-8 rounded-3xl shadow-2xl max-w-[240px] hidden md:block">
+                    <p className="text-sm font-light italic opacity-80 mb-4">"Wir bauen keine Software, wir bauen Vertrauen."</p>
+                    <p className="font-bold text-brand-400">Serge Baumberger</p>
+                 </div>
+               </ScrollReveal>
             </div>
             
             <div className="lg:w-1/2">
-              <div className="inline-flex items-center gap-2 text-brand-600 font-black uppercase tracking-widest text-xs mb-8">
-                Der Kopf hinter dem System
-              </div>
-              <h2 className="text-5xl font-black text-slate-900 mb-8 leading-tight tracking-tight">Vom Workshop <br />zur Weltbühne.</h2>
-              <p className="text-xl text-slate-600 leading-relaxed mb-12 font-light">
-                Serge Baumberger (Co-CEO Infometis AG) hat in über 25 Jahren hunderte QA-Teams begleitet. Der Quality Tree ist die Essenz dieser experience – jetzt komprimiert in einem Buch und einer interaktiven App.
-              </p>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
-                <a 
-                  href="https://outlook.office.com/bookwithme/user/33e79517d09745e0a352cadfcab5ae3e@infometis.ch/meetingtype/WszQVIErKkasYuPPlsMhhg2?anonymous&ismsaljsauthenabled&ep=mlink" 
-                  target="_blank" rel="noreferrer" 
-                  className="flex flex-col p-6 rounded-3xl border border-slate-100 hover:border-brand-500 hover:shadow-xl transition-all group"
-                >
-                  <Calendar className="h-8 w-8 text-brand-600 mb-4" />
-                  <h4 className="font-bold text-slate-900">1:1 Gespräch</h4>
-                  <p className="text-slate-500 text-sm mt-2">Strategie-Checkup vereinbaren.</p>
-                </a>
-                <div className="flex flex-col p-6 rounded-3xl border border-slate-100 bg-slate-50 group">
-                  <Video className="h-8 w-8 text-slate-400 mb-4" />
-                  <h4 className="font-bold text-slate-900">Keynote Speaker</h4>
-                  <p className="text-slate-500 text-sm mt-2">Swiss Testing Day 2025.</p>
+              <ScrollReveal animation="fade-left">
+                <div className="inline-flex items-center gap-2 text-brand-600 font-black uppercase tracking-widest text-xs mb-8">
+                  Der Kopf hinter dem System
                 </div>
-              </div>
+                <h2 className="text-5xl font-black text-slate-900 mb-8 leading-tight tracking-tight">Vom Workshop <br />zur Weltbühne.</h2>
+                <p className="text-xl text-slate-600 leading-relaxed mb-12 font-light">
+                  Serge Baumberger (Co-CEO Infometis AG) hat in über 25 Jahren hunderte QA-Teams begleitet. Der Quality Tree ist die Essenz dieser experience – jetzt komprimiert in einem Buch und einer interaktiven App.
+                </p>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
+                  <a 
+                    href="https://outlook.office.com/bookwithme/user/33e79517d09745e0a352cadfcab5ae3e@infometis.ch/meetingtype/WszQVIErKkasYuPPlsMhhg2?anonymous&ismsaljsauthenabled&ep=mlink" 
+                    target="_blank" rel="noreferrer" 
+                    className="flex flex-col p-6 rounded-3xl border border-slate-100 hover:border-brand-500 hover:shadow-xl transition-all group hover:-translate-y-1"
+                  >
+                    <Calendar className="h-8 w-8 text-brand-600 mb-4" />
+                    <h4 className="font-bold text-slate-900">1:1 Gespräch</h4>
+                    <p className="text-slate-500 text-sm mt-2">Strategie-Checkup vereinbaren.</p>
+                  </a>
+                  <div className="flex flex-col p-6 rounded-3xl border border-slate-100 bg-slate-50 group hover:bg-white hover:shadow-lg transition-all">
+                    <Video className="h-8 w-8 text-slate-400 mb-4 group-hover:text-brand-600 transition-colors" />
+                    <h4 className="font-bold text-slate-900">Keynote Speaker</h4>
+                    <p className="text-slate-500 text-sm mt-2">Swiss Testing Day 2025.</p>
+                  </div>
+                </div>
 
-              <div className="flex items-center gap-8">
-                <Link to="/author" className="text-slate-900 font-black text-sm uppercase tracking-widest border-b-2 border-slate-900 pb-2 hover:text-brand-600 hover:border-brand-600 transition-all">
-                  Biographie lesen
-                </Link>
-                <div className="flex gap-4">
-                  <a href="https://www.linkedin.com/in/sergewolf/" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-brand-600 transition-colors">
-                    <Linkedin className="h-5 w-5" />
-                  </a>
-                  <a href="mailto:info@quality-tree.com" className="text-slate-400 hover:text-brand-600 transition-colors">
-                    <Mail className="h-5 w-5" />
-                  </a>
+                <div className="flex items-center gap-8">
+                  <Link to="/author" className="text-slate-900 font-black text-sm uppercase tracking-widest border-b-2 border-slate-900 pb-2 hover:text-brand-600 hover:border-brand-600 transition-all">
+                    Biographie lesen
+                  </Link>
+                  <div className="flex gap-4">
+                    <a href="https://www.linkedin.com/in/sergewolf/" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-brand-600 transition-colors transform hover:scale-110">
+                      <Linkedin className="h-5 w-5" />
+                    </a>
+                    <a href="mailto:info@quality-tree.com" className="text-slate-400 hover:text-brand-600 transition-colors transform hover:scale-110">
+                      <Mail className="h-5 w-5" />
+                    </a>
+                  </div>
                 </div>
-              </div>
+              </ScrollReveal>
             </div>
           </div>
         </div>
