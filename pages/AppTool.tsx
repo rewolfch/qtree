@@ -53,49 +53,6 @@ const ConnectingLines = ({ nodeRefs, hoveredNode, containerRef }: any) => {
   return <svg className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">{lines}</svg>;
 };
 
-const Hero = ({ onExplore, progress, nodeCount, completedCount, projectData, setProjectData, ui }: any) => (
-    <div className="bg-gradient-to-br from-emerald-50 to-white dark:from-slate-900 dark:to-slate-800 border-b border-emerald-100 dark:border-slate-700 py-16 px-4 md:px-8 text-center print:hidden">
-        <h1 className="text-4xl md:text-5xl font-serif font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
-            <span className="text-emerald-600">Quality Tree</span> {ui("app.welcome")}
-        </h1>
-        
-        <div className="max-w-md mx-auto bg-white dark:bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-100 dark:border-slate-700 mb-8 transform transition-all hover:scale-105">
-            <div className="flex justify-between text-sm text-slate-500 dark:text-slate-400 mb-2 font-medium">
-                <span>{ui("app.score")}</span>
-                <span>{progress}%</span>
-            </div>
-            <div className="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-3 mb-4 overflow-hidden">
-                <div className="bg-emerald-500 h-3 rounded-full transition-all duration-1000 ease-out" style={{ width: `${progress}%` }}></div>
-            </div>
-            <div className="flex justify-between items-center text-xs text-slate-400">
-                <span>{completedCount} / {nodeCount} {ui("app.leaves")}</span>
-                <i className="fas fa-leaf text-emerald-400"></i>
-            </div>
-        </div>
-
-        <div className="flex flex-col md:flex-row gap-4 justify-center max-w-lg mx-auto mb-8">
-            <input 
-                type="text" 
-                placeholder={ui("app.project_name")}
-                value={projectData.name}
-                onChange={(e) => setProjectData({...projectData, name: e.target.value})}
-                className="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 outline-none"
-            />
-            <input 
-                type="text" 
-                placeholder={ui("app.owner")}
-                value={projectData.owner}
-                onChange={(e) => setProjectData({...projectData, owner: e.target.value})}
-                className="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 outline-none"
-            />
-        </div>
-
-        <button onClick={onExplore} className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-full shadow-lg shadow-emerald-200 dark:shadow-none transition-all hover:-translate-y-1 active:scale-95">
-            {ui("app.start")}
-        </button>
-    </div>
-);
-
 const WarningModal = ({ data, onClose, nodes }: any) => {
     if (!data.isOpen) return null;
     return (
@@ -106,9 +63,12 @@ const WarningModal = ({ data, onClose, nodes }: any) => {
                         <i className="fas fa-exclamation-triangle"></i>
                     </div>
                     <div>
-                        <h3 className="text-lg font-bold text-slate-900 dark:text-white">Prerequisites Missing</h3>
+                        <h3 className="text-lg font-bold text-slate-900 dark:text-white">Voraussetzungen fehlen</h3>
                     </div>
                 </div>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+                    Du musst folgende Blätter abschließen, bevor du diesen Schritt erreichen kannst:
+                </p>
                 <ul className="list-disc pl-10 mb-6 space-y-1 text-sm text-slate-700 dark:text-slate-300">
                     {data.missingNodes.map((id: string) => {
                         const n = nodes.find((x: any) => x.id === id);
@@ -117,7 +77,7 @@ const WarningModal = ({ data, onClose, nodes }: any) => {
                 </ul>
                 <div className="flex justify-end">
                     <button onClick={onClose} className="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg font-medium transition-colors">
-                        OK
+                        Verstanden
                     </button>
                 </div>
             </div>
@@ -190,7 +150,7 @@ const DetailPopup = ({ node, onClose, onStatusChange, onOkrToggle, nodeState, is
                                   <h4 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3 flex items-center gap-2">
                                       <i className="fas fa-align-left text-slate-400"></i> {ui("app.description")}
                                   </h4>
-                                  <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl border border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
+                                  <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl border border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-300 leading-relaxed text-base">
                                       {node.description}
                                   </div>
                              </div>
@@ -274,6 +234,110 @@ const DetailPopup = ({ node, onClose, onStatusChange, onOkrToggle, nodeState, is
     );
 };
 
+const ListView = ({ branches, nodes, userState, onNodeClick, isGardener, onStatusChange, onBranchInfoClick }: any) => {
+    const [collapsed, setCollapsed] = useState<Record<string, boolean>>(() => {
+        const initial: Record<string, boolean> = {};
+        branches.forEach((b: any) => initial[b.id] = true);
+        return initial;
+    });
+
+    const toggleCollapse = (branchId: string) => {
+        setCollapsed(prev => ({ ...prev, [branchId]: !prev[branchId] }));
+    };
+
+    const allCollapsed = branches.every((b: any) => collapsed[b.id]);
+
+    const toggleAll = () => {
+        const newState: Record<string, boolean> = {};
+        branches.forEach((b: any) => newState[b.id] = !allCollapsed);
+        setCollapsed(newState);
+    };
+
+    return (
+        <div className="max-w-4xl mx-auto py-8 px-4 pb-32">
+            <div className="flex justify-end mb-6">
+                <button onClick={toggleAll} className="flex items-center text-sm font-bold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 bg-emerald-50 dark:bg-emerald-900/30 px-4 py-2 rounded-lg transition-colors">
+                    <i className={`fas ${allCollapsed ? 'fa-expand-arrows-alt' : 'fa-compress-arrows-alt'} mr-2`}></i>
+                    {allCollapsed ? 'Alles ausklappen' : 'Alles einklappen'}
+                </button>
+            </div>
+            {branches.map((branch: any) => {
+                const branchNodes = nodes.filter((n: any) => n.branchId === branch.id).sort((a: any,b: any) => a.level - b.level);
+                const completed = branchNodes.filter((n: any) => userState[n.id]?.status === 'completed').length;
+                const progress = Math.round((completed / branchNodes.length) * 100) || 0;
+                const isCollapsed = collapsed[branch.id];
+
+                return (
+                    <div key={branch.id} className="mb-8 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+                        <div 
+                        onClick={() => toggleCollapse(branch.id)}
+                        className="p-6 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors select-none group"
+                        >
+                            <div className="flex items-center">
+                                <div className="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl mr-4 pointer-events-none">
+                                    <i className={`fas ${branch.icon}`}></i>
+                                </div>
+                                <div>
+                                    <h2 className="text-xl font-serif font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                    {branch.name}
+                                    <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center ml-2 pointer-events-none">
+                                        <i className={`fas fa-chevron-${isCollapsed ? 'down' : 'up'} text-xs text-slate-500`}></i>
+                                    </div>
+                                    </h2>
+                                    <div className="flex items-center text-sm text-slate-500 dark:text-slate-400 mt-1 pointer-events-none">
+                                        <span className="bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded text-xs font-bold mr-2">{branchNodes.length} Nodes</span>
+                                        <span>{completed} abgeschlossen</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="w-full md:w-48 pointer-events-none">
+                                <div className="flex justify-between text-xs mb-1 font-bold text-slate-500">
+                                    <span>Progress</span>
+                                    <span>{progress}%</span>
+                                </div>
+                                <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2">
+                                    <div className="bg-emerald-500 h-2 rounded-full" style={{ width: `${progress}%` }}></div>
+                                </div>
+                            </div>
+                        </div>
+                        {!isCollapsed && (
+                        <div className="divide-y divide-slate-100 dark:divide-slate-800 animate-slide-up">
+                            {branchNodes.map((node: any) => {
+                                const state = userState[node.id] || { status: 'locked' };
+                                const isNA = state.status === 'not-relevant';
+                                return (
+                                    <div key={node.id} onClick={() => onNodeClick(node.id)} className={`p-4 cursor-pointer flex items-center justify-between group transition-colors ${isNA ? 'bg-slate-50 dark:bg-slate-950 opacity-70' : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'}`}>
+                                        <div className="flex items-center gap-4">
+                                            <div className={`w-8 h-8 rounded flex items-center justify-center text-xs font-bold border ${state.status === 'completed' ? 'bg-emerald-500 border-emerald-500 text-white' : isNA ? 'bg-slate-200 border-slate-300 text-slate-500 dark:bg-slate-800 dark:border-slate-700' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-400'}`}>
+                                                {state.status === 'completed' ? <i className="fas fa-check"></i> : isNA ? <i className="fas fa-ban"></i> : `L${node.level}`}
+                                            </div>
+                                            <div>
+                                                <div className={`font-medium ${isNA ? 'text-slate-500 dark:text-slate-500 line-through decoration-slate-400' : 'text-slate-800 dark:text-slate-200 group-hover:text-emerald-600 dark:group-hover:text-emerald-400'} transition-colors`}>{node.title}</div>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center">
+                                            {isGardener && !isNA && (
+                                                <div className="flex mr-4 gap-1" onClick={e => e.stopPropagation()}>
+                                                    <button onClick={() => onStatusChange(node.id, 'locked')} className={`w-6 h-6 rounded flex items-center justify-center text-xs ${state.status === 'locked' ? 'bg-slate-200 text-slate-600' : 'text-slate-300 hover:bg-slate-100'}`}><i className="fas fa-lock"></i></button>
+                                                    <button onClick={() => onStatusChange(node.id, 'in-progress')} className={`w-6 h-6 rounded flex items-center justify-center text-xs ${state.status === 'in-progress' ? 'bg-amber-100 text-amber-600' : 'text-slate-300 hover:bg-amber-50'}`}><i className="fas fa-spinner"></i></button>
+                                                    <button onClick={() => onStatusChange(node.id, 'completed')} className={`w-6 h-6 rounded flex items-center justify-center text-xs ${state.status === 'completed' ? 'bg-emerald-100 text-emerald-600' : 'text-slate-300 hover:bg-emerald-50'}`}><i className="fas fa-check"></i></button>
+                                                </div>
+                                            )}
+                                            {isNA && <span className="text-[10px] uppercase font-bold text-slate-400 mr-4 border border-slate-200 rounded px-2 py-0.5">N/A</span>}
+                                            <i className="fas fa-chevron-right text-slate-300 dark:text-slate-600 group-hover:translate-x-1 transition-transform"></i>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        )}
+                    </div>
+                )
+            })}
+        </div>
+    );
+};
+
 const AppTool: React.FC = () => {
   const { t, ui } = useLanguage();
   
@@ -307,7 +371,7 @@ const AppTool: React.FC = () => {
           title: t(cell.label), 
           description: t(cell.tooltip),
           acceptanceCriteria: cell.acceptanceCriteria || [],
-          level: col - 1,
+          level: col, // Col is now 1-based, Level 1 is Col 1.
           branchId: branch ? branch.id : null,
           row: row,
           col: col,
@@ -320,7 +384,6 @@ const AppTool: React.FC = () => {
   const [isGardenerMode, setIsGardenerMode] = useState(false);
   const [viewMode, setViewMode] = useState<'map' | 'list'>('map');
   const [userState, setUserState] = useState<any>({});
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   
   const [warningData, setWarningData] = useState<any>({ isOpen: false, missingNodes: [] });
@@ -341,7 +404,7 @@ const AppTool: React.FC = () => {
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('qtree-theme');
-    if (savedTheme === 'dark') { setIsDarkMode(true); document.documentElement.classList.add('dark'); }
+    if (savedTheme === 'dark') { document.documentElement.classList.add('dark'); }
   }, []);
 
   useEffect(() => {
@@ -444,7 +507,29 @@ const AppTool: React.FC = () => {
     return appNodes.filter((n: any) => n.title.toLowerCase().includes(searchQuery.toLowerCase()));
   }, [searchQuery, appNodes]);
 
-  const handleLoadClick = () => { if (fileInputRef.current) fileInputRef.current.click(); };
+  const handleSaveProject = () => {
+      const data = {
+          version: "1.0",
+          timestamp: new Date().toISOString(),
+          projectData,
+          userState
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `quality-tree-${projectData.name ? projectData.name.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'project'}-${new Date().toISOString().slice(0,10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+  };
+
+  const handleLoadClick = () => {
+      if (fileInputRef.current) {
+          fileInputRef.current.click();
+      }
+  };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
@@ -466,6 +551,10 @@ const AppTool: React.FC = () => {
       if (event.target) event.target.value = '';
   };
 
+  const completedCount = getCompletedCount();
+  const totalNodes = appNodes.length;
+  const progressPercent = getProgress();
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans selection:bg-emerald-100 print:bg-white flex flex-col">
       <SEO 
@@ -480,24 +569,61 @@ const AppTool: React.FC = () => {
         <DetailPopup node={activeNode} onClose={() => setActiveNodeId(null)} onStatusChange={(id: string, status: string, data: any) => handleStatusChangeAttempt(id, status, data, () => setActiveNodeId(null))} onOkrToggle={(idx: number) => toggleNodeOkr(activeNodeId, idx)} nodeState={getNodeState(activeNodeId)} isGardener={isGardenerMode} isMobile={isMobile} allNodes={appNodes} userState={userState} onNavigate={setActiveNodeId} branches={appBranches} ui={ui} />
       )}
 
-      <div className="toolbar sticky top-[64px] left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm h-14 transition-all duration-200 print:hidden">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 h-full flex justify-between items-center">
-            <div className="relative w-64">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i className="fas fa-search text-slate-400 text-xs"></i></div>
-                <input type="text" placeholder={ui("app.search_nodes")} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="block w-full pl-8 pr-3 py-1.5 border border-slate-200 dark:border-slate-700 rounded-lg leading-5 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 sm:text-xs transition-colors" />
-                {searchQuery && filteredSearchNodes.length > 0 && (
-                  <div className="absolute top-full mt-1 w-full bg-white dark:bg-slate-800 rounded-md shadow-lg border border-slate-200 dark:border-slate-700 max-h-60 overflow-y-auto z-50">
-                    {filteredSearchNodes.map((node: any) => (
-                      <div key={node.id} className="px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer text-xs border-b border-slate-50 dark:border-slate-700 last:border-0" onClick={() => { setActiveNodeId(node.id); setSearchQuery(''); }}>
-                          <div className="font-bold text-slate-800 dark:text-slate-200">{node.title}</div>
-                          <div className="text-[10px] text-slate-500 dark:text-slate-400">{node.branchId} • L{node.level}</div>
-                      </div>
-                    ))}
-                  </div>
-                )}
+      <div className="toolbar sticky top-[64px] left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm h-auto py-2 transition-all duration-200 print:hidden flex flex-col gap-2">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 w-full flex flex-col md:flex-row justify-between items-center gap-4">
+            
+            {/* Left: Project Data + Progress */}
+            <div className="flex items-center gap-4 w-full md:w-auto">
+                 <div className="flex gap-2">
+                    <input 
+                        type="text" 
+                        placeholder={ui("app.project_name")}
+                        value={projectData.name}
+                        onChange={(e) => setProjectData({...projectData, name: e.target.value})}
+                        className="px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm w-32 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    />
+                    <input 
+                        type="text" 
+                        placeholder={ui("app.owner")}
+                        value={projectData.owner}
+                        onChange={(e) => setProjectData({...projectData, owner: e.target.value})}
+                        className="px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm w-28 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    />
+                 </div>
+                 
+                 {/* Progress Indicator */}
+                 <div className="flex items-center gap-3 bg-slate-100 dark:bg-slate-800 rounded-full px-4 py-1.5 border border-slate-200 dark:border-slate-700">
+                    <div className="text-xs font-bold text-slate-600 dark:text-slate-300">
+                        {completedCount} / {totalNodes} Completed
+                    </div>
+                    <div className="w-24 h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                        <div className="h-full bg-emerald-500 transition-all duration-500" style={{ width: `${progressPercent}%` }}></div>
+                    </div>
+                 </div>
             </div>
 
-            <div className="flex items-center space-x-2 md:space-x-4">
+            <div className="flex items-center space-x-2 md:space-x-4 w-full md:w-auto justify-between md:justify-end">
+                {/* Search */}
+                <div className="relative w-full md:w-48">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i className="fas fa-search text-slate-400 text-xs"></i></div>
+                    <input type="text" placeholder={ui("app.search_nodes")} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="block w-full pl-8 pr-3 py-1.5 border border-slate-200 dark:border-slate-700 rounded-lg leading-5 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 sm:text-xs transition-colors" />
+                    {searchQuery && filteredSearchNodes.length > 0 && (
+                    <div className="absolute top-full mt-1 w-full bg-white dark:bg-slate-800 rounded-md shadow-lg border border-slate-200 dark:border-slate-700 max-h-60 overflow-y-auto z-50">
+                        {filteredSearchNodes.map((node: any) => (
+                        <div key={node.id} className="px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer text-xs border-b border-slate-50 dark:border-slate-700 last:border-0" onClick={() => { setActiveNodeId(node.id); setSearchQuery(''); }}>
+                            <div className="font-bold text-slate-800 dark:text-slate-200">{node.title}</div>
+                            <div className="text-[10px] text-slate-500 dark:text-slate-400">{node.branchId} • L{node.level}</div>
+                        </div>
+                        ))}
+                    </div>
+                    )}
+                </div>
+
+                <div className="flex items-center gap-2">
+                     <button onClick={handleSaveProject} className="p-2 bg-slate-100 dark:bg-slate-800 rounded hover:bg-emerald-100 hover:text-emerald-700 transition-colors" title="Save Project"><i className="fas fa-download"></i></button>
+                     <button onClick={handleLoadClick} className="p-2 bg-slate-100 dark:bg-slate-800 rounded hover:bg-emerald-100 hover:text-emerald-700 transition-colors" title="Load Project"><i className="fas fa-upload"></i></button>
+                </div>
+
                 <div className="hidden sm:flex items-center bg-slate-100 dark:bg-slate-800 rounded p-1 border border-slate-200 dark:border-slate-700">
                       <button onClick={() => setViewMode('map')} className={`w-8 h-7 flex items-center justify-center rounded text-xs transition-all ${viewMode === 'map' ? 'bg-white dark:bg-slate-600 text-emerald-700 dark:text-emerald-400 shadow-sm' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'}`} title={ui("app.view_map")}><i className="fas fa-project-diagram"></i></button>
                       <button onClick={() => setViewMode('list')} className={`w-8 h-7 flex items-center justify-center rounded text-xs transition-all ${viewMode === 'list' ? 'bg-white dark:bg-slate-600 text-emerald-700 dark:text-emerald-400 shadow-sm' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'}`} title={ui("app.view_list")}><i className="fas fa-list-ul"></i></button>
@@ -511,8 +637,6 @@ const AppTool: React.FC = () => {
       </div>
 
       <div className="flex-grow flex flex-col">
-        <Hero onExplore={scrollToTree} progress={getProgress()} nodeCount={appNodes.length} completedCount={getCompletedCount()} projectData={projectData} setProjectData={setProjectData} ui={ui} />
-
         <div className="flex-grow">
           {viewMode === 'map' ? (
              <div id="tree-grid-container" ref={gridRef} className={`relative w-full overflow-auto bg-slate-50 dark:bg-slate-950 pt-12 pb-32 px-8 min-h-screen print:hidden ${isMobile ? 'hidden' : 'block'}`}>
@@ -538,7 +662,7 @@ const AppTool: React.FC = () => {
                                           </div>
                                       </div>
                                       {levels.map(level => {
-                                          const cellNodes = appNodes.filter((n: any) => n.branchId === branch.id && n.level === level.id - 1);
+                                          const cellNodes = appNodes.filter((n: any) => n.branchId === branch.id && n.level === level.id);
                                           return (
                                               <div key={`${branch.id}-${level.id}`} className="flex flex-col items-center justify-center space-y-2 min-h-[100px]">
                                                   {cellNodes.map((node: any) => {
@@ -593,7 +717,7 @@ const AppTool: React.FC = () => {
                   </div>
              </div>
           ) : (
-              <div className="p-8 max-w-4xl mx-auto">{ui("app.list_view_placeholder")}</div>
+            <ListView branches={appBranches} nodes={appNodes} userState={userState} onNodeClick={setActiveNodeId} isGardener={isGardenerMode} onStatusChange={(id: string, status: string) => handleStatusChangeAttempt(id, status)} onBranchInfoClick={() => {}} />
           )}
         </div>
       </div>

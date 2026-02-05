@@ -80,6 +80,11 @@ const BlogPostDetail: React.FC = () => {
     "headline": postTitle,
     "image": post.imageUrl ? [post.imageUrl] : [],
     "datePublished": post.date,
+    "dateModified": post.date,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": currentUrl
+    },
     "author": {
       "@type": "Person",
       "name": post.author

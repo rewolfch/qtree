@@ -49,11 +49,20 @@ const Blog: React.FC = () => {
     t(post.content).toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": ui("seo.blog.title"),
+    "description": ui("blog.header_desc"),
+    "url": "https://www.quality-tree.com/#/blog"
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 py-24">
       <SEO 
         title={ui("seo.blog.title")}
         description={ui("blog.header_desc")}
+        schema={schema}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

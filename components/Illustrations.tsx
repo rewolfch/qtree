@@ -157,6 +157,124 @@ export const TrunkPath: React.FC<{ className?: string }> = ({ className = "" }) 
   </svg>
 );
 
+/**
+ * A comprehensive tree animation that reveals itself based on scroll progress.
+ * Covers 4 sections vertically.
+ */
+export const TheGrowingTree: React.FC<{ progress: number; className?: string }> = ({ progress, className = "" }) => {
+  // progress goes from 0.0 to 1.0
+  
+  // Calculations for staggered animation
+  // Trunk grows continuously: 0 -> 1
+  const trunkProgress = Math.min(1, Math.max(0, progress * 1.1)); 
+  
+  // Roots spread at start: 0 -> 0.2
+  const rootsProgress = Math.min(1, Math.max(0, progress * 5));
+  
+  // Branches spread in middle: 0.4 -> 0.8
+  const branchesProgress = Math.min(1, Math.max(0, (progress - 0.4) * 2.5));
+  
+  // Leaves/Canopy at end: 0.7 -> 1.0
+  const canopyProgress = Math.min(1, Math.max(0, (progress - 0.7) * 3.3));
+
+  // Stroke Dash Array Helpers
+  const draw = (val: number, max: number) => ({
+    strokeDasharray: max,
+    strokeDashoffset: max - (val * max)
+  });
+
+  return (
+    <svg className={className} viewBox="0 0 200 800" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      
+      {/* 1. ROOTS (Level 1 Area) - Top of SVG */}
+      <g className="text-amber-500" style={{ opacity: rootsProgress > 0 ? 1 : 0 }}>
+        {/* Main Root Down */}
+        <path d="M100 20 Q 100 40 100 60" stroke="currentColor" strokeWidth="3" strokeLinecap="round" style={draw(rootsProgress, 40)} />
+        {/* Side Roots */}
+        <path d="M100 40 Q 80 50 70 80" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" style={draw(rootsProgress, 50)} />
+        <path d="M100 40 Q 120 50 130 80" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" style={draw(rootsProgress, 50)} />
+      </g>
+
+      {/* 2. TRUNK (Spanning Level 1 to 4) */}
+      <g className={progress > 0.5 ? "text-brand-600 transition-colors duration-1000" : "text-slate-300 transition-colors duration-1000"}>
+         {/* Main Central Trunk Line */}
+         <path 
+           d="M100 60 C 100 150, 95 250, 100 350 C 105 450, 95 550, 100 650" 
+           stroke="currentColor" 
+           strokeWidth={progress > 0.5 ? 4 : 2} 
+           strokeLinecap="round"
+           fill="none"
+           style={{
+             ...draw(trunkProgress, 600),
+             transition: 'stroke-width 1s ease'
+           }}
+         />
+      </g>
+
+      {/* 3. BRANCHES (Level 3 Area) */}
+      <g className="text-brand-500">
+         {/* Right Big Branch */}
+         <path 
+           d="M100 350 Q 140 330 160 300" 
+           stroke="currentColor" 
+           strokeWidth="3" 
+           strokeLinecap="round" 
+           fill="none" 
+           style={draw(branchesProgress, 100)} 
+         />
+         {/* Left Big Branch */}
+         <path 
+           d="M100 380 Q 60 360 40 330" 
+           stroke="currentColor" 
+           strokeWidth="3" 
+           strokeLinecap="round" 
+           fill="none" 
+           style={draw(branchesProgress, 100)} 
+         />
+         
+         {/* Little sprouts on branches */}
+         <circle cx="160" cy="300" r={branchesProgress * 4} fill="currentColor" />
+         <circle cx="40" cy="330" r={branchesProgress * 4} fill="currentColor" />
+      </g>
+
+      {/* 4. FOREST / CANOPY (Level 4 Area) */}
+      <g className="text-emerald-600">
+         {/* Lower Branches */}
+         <path 
+           d="M100 550 Q 130 570 150 600" 
+           stroke="currentColor" 
+           strokeWidth="2" 
+           strokeLinecap="round" 
+           fill="none" 
+           style={draw(canopyProgress, 80)} 
+         />
+         <path 
+           d="M100 580 Q 70 600 50 630" 
+           stroke="currentColor" 
+           strokeWidth="2" 
+           strokeLinecap="round" 
+           fill="none" 
+           style={draw(canopyProgress, 80)} 
+         />
+         
+         {/* Leaves/Fruits */}
+         <circle cx="150" cy="600" r={canopyProgress * 6} fill="currentColor" opacity="0.8" />
+         <circle cx="50" cy="630" r={canopyProgress * 5} fill="currentColor" opacity="0.8" />
+         
+         {/* Final Ground Connection */}
+         <path 
+            d="M80 750 L 120 750"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            style={{ opacity: canopyProgress, transition: 'opacity 0.5s' }}
+         />
+      </g>
+
+    </svg>
+  );
+};
+
 export const SeedIcon: React.FC<IllustrationProps> = ({ className = "", color = "#f59e0b" }) => (
   <svg viewBox="0 0 24 24" fill="none" className={className} xmlns="http://www.w3.org/2000/svg">
     <path d="M12 2C8.13401 2 5 5.13401 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13401 15.866 2 12 2Z" fill={color} fillOpacity="0.2" stroke={color} strokeWidth="2" strokeLinejoin="round"/>

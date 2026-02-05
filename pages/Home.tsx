@@ -2,33 +2,45 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, Sprout, Layers, GitBranch, ShoppingCart, BookOpen, Star, CheckCircle2, TrendingUp, ShieldCheck, Users, Globe, Calendar, Video, ExternalLink, Search, Zap, Linkedin, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { LeafIcon, TrunkPath, RootSystem, SeedIcon, ForestIcon } from '../components/Illustrations';
+import { LeafIcon, TheGrowingTree, SeedIcon, ForestIcon } from '../components/Illustrations';
 import SEO from '../components/SEO';
 import { useLanguage } from '../contexts/LanguageContext';
 import ScrollReveal from '../components/ScrollReveal';
 
 const Home: React.FC = () => {
   const [pulseScore, setPulseScore] = useState<number | null>(null);
-  const [rootProgress, setRootProgress] = useState(0);
-  const rootRef = useRef<HTMLDivElement>(null);
+  const [treeProgress, setTreeProgress] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { ui } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!rootRef.current) return;
-      const rect = rootRef.current.getBoundingClientRect();
+      if (!containerRef.current) return;
+      
+      const rect = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
+      const elementHeight = rect.height;
       
-      const start = windowHeight * 0.8;
-      const end = windowHeight * 0.2;
-      const current = rect.top;
+      // Start animating when the top of the container enters the middle of the viewport
+      // End animating when the bottom of the container leaves the middle of the viewport
+      // This creates a smoother, continuous progression through the long container
       
-      let progress = (start - current) / (start - end);
+      const startOffset = windowHeight * 0.6; 
+      const scrolled = startOffset - rect.top;
+      const totalScrollable = elementHeight + (windowHeight * 0.2); // Add some buffer
+      
+      let progress = scrolled / totalScrollable;
+      
+      // Clamp between 0 and 1
       progress = Math.max(0, Math.min(1, progress));
-      setRootProgress(progress);
+      
+      setTreeProgress(progress);
     };
 
     window.addEventListener('scroll', handleScroll);
+    // Trigger once on mount
+    handleScroll();
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -58,8 +70,23 @@ const Home: React.FC = () => {
       
       {/* Hero Section */}
       <section className="relative bg-slate-900 text-white pt-24 pb-32 lg:pt-32 lg:pb-48 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay animate-pulse-slow"></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-900/95 to-brand-900/20"></div>
+        {/* Optimized Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
+            srcSet="
+              https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=60&w=640&auto=format&fit=crop 640w,
+              https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=70&w=1200&auto=format&fit=crop 1200w,
+              https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop 2072w
+            "
+            sizes="100vw"
+            alt=""
+            className="w-full h-full object-cover opacity-10 mix-blend-overlay animate-pulse-slow"
+            loading="eager"
+            fetchPriority="high"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-900/95 to-brand-900/20"></div>
+        </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
@@ -130,10 +157,15 @@ const Home: React.FC = () => {
                   <div className="absolute inset-0 bg-brand-500 rounded-2xl blur-[100px] opacity-20 group-hover:opacity-30 transition-opacity translate-y-12"></div>
                   
                   <div className="relative transform-gpu transition-transform duration-700 hover:rotate-y-[-10deg] hover:scale-105 animate-float">
+                    {/* Optimized Book Cover */}
                     <img 
                       src="https://media.springernature.com/full/springer-static/cover-hires/book/978-3-658-51040-4?as=webp" 
                       alt="Das Quality Tree Framework Buchcover" 
-                      className="w-[280px] md:w-[380px] mx-auto rounded-r-2xl shadow-[20px_20px_60px_-15px_rgba(0,0,0,0.7)] border-l-8 border-slate-800"
+                      width="380"
+                      height="548"
+                      loading="eager"
+                      fetchPriority="high"
+                      className="w-[280px] md:w-[380px] h-auto mx-auto rounded-r-2xl shadow-[20px_20px_60px_-15px_rgba(0,0,0,0.7)] border-l-8 border-slate-800"
                     />
                     <div className="absolute -top-6 -right-6 bg-white text-slate-900 p-4 rounded-2xl shadow-2xl border border-slate-100 hidden md:block animate-float-delayed">
                        <span className="block text-xs font-black text-brand-600 uppercase tracking-widest">Bestseller</span>
@@ -163,9 +195,9 @@ const Home: React.FC = () => {
       </section>
 
       {/* Interactive Growth Journey */}
-      <section className="py-32 relative bg-slate-50/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-32">
+      <section className="py-32 relative bg-slate-50/50 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-20">
             <ScrollReveal animation="fade-up">
               <h2 className="text-5xl font-black text-slate-900 mb-6 tracking-tight">{ui("home.journey.title")}</h2>
             </ScrollReveal>
@@ -176,13 +208,11 @@ const Home: React.FC = () => {
             </ScrollReveal>
           </div>
 
-          <div className="relative space-y-48" ref={rootRef}>
-            <div className="absolute left-1/2 top-0 -translate-x-1/2 w-32 h-32 hidden lg:flex items-center justify-center -translate-y-full opacity-30 text-amber-500">
-               <RootSystem progress={rootProgress} className="w-full h-full" />
-            </div>
-
-            <div className="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 hidden lg:block">
-              <TrunkPath className="h-full w-4 text-slate-300" />
+          <div className="relative space-y-48" ref={containerRef}>
+            
+            {/* The Central Growing Tree Animation */}
+            <div className="absolute inset-0 pointer-events-none hidden lg:block">
+               <TheGrowingTree progress={treeProgress} className="w-full h-full" />
             </div>
 
             <div className="relative flex flex-col lg:flex-row items-center gap-12 lg:gap-24 group">
@@ -195,18 +225,20 @@ const Home: React.FC = () => {
                     </p>
                   </ScrollReveal>
                </div>
-               <ScrollReveal animation="zoom-in" delay={200} className="order-1 lg:order-2 z-10">
-                 <div className="w-24 h-24 lg:w-32 lg:h-32 bg-amber-500 rounded-[2.5rem] flex items-center justify-center text-white relative shadow-2xl shadow-amber-500/20 group-hover:scale-110 transition-transform duration-500">
+               <ScrollReveal animation="zoom-in" delay={200} className="order-1 lg:order-2 z-10 relative">
+                 <div className="w-24 h-24 lg:w-32 lg:h-32 bg-amber-500 rounded-[2.5rem] flex items-center justify-center text-white relative shadow-2xl shadow-amber-500/20 group-hover:scale-110 transition-transform duration-500 z-10">
                     <SeedIcon className="h-16 w-16" color="white" />
                  </div>
+                 {/* Connection Point Hint */}
+                 <div className="absolute top-full left-1/2 -translate-x-1/2 h-20 w-0.5 bg-gradient-to-b from-amber-500/50 to-transparent lg:hidden"></div>
                </ScrollReveal>
                <div className="flex-1 order-3"></div>
             </div>
 
             <div className="relative flex flex-col lg:flex-row items-center gap-12 lg:gap-24 group">
                <div className="flex-1 order-3 lg:order-1"></div>
-               <ScrollReveal animation="zoom-in" delay={200} className="order-1 lg:order-2 z-10">
-                 <div className="w-24 h-24 lg:w-32 lg:h-32 bg-slate-800 rounded-[2.5rem] flex items-center justify-center text-white relative shadow-2xl shadow-slate-900/20 group-hover:scale-110 transition-transform duration-500">
+               <ScrollReveal animation="zoom-in" delay={200} className="order-1 lg:order-2 z-10 relative">
+                 <div className="w-24 h-24 lg:w-32 lg:h-32 bg-slate-800 rounded-[2.5rem] flex items-center justify-center text-white relative shadow-2xl shadow-slate-900/20 group-hover:scale-110 transition-transform duration-500 z-10">
                     <Layers className="h-14 w-14" />
                  </div>
                </ScrollReveal>
@@ -234,8 +266,8 @@ const Home: React.FC = () => {
                     </Link>
                   </ScrollReveal>
                </div>
-               <ScrollReveal animation="zoom-in" delay={200} className="order-1 lg:order-2 z-10">
-                 <div className="w-24 h-24 lg:w-32 lg:h-32 bg-brand-600 rounded-[2.5rem] flex items-center justify-center text-white relative shadow-2xl shadow-brand-600/20 group-hover:scale-110 transition-transform duration-500">
+               <ScrollReveal animation="zoom-in" delay={200} className="order-1 lg:order-2 z-10 relative">
+                 <div className="w-24 h-24 lg:w-32 lg:h-32 bg-brand-600 rounded-[2.5rem] flex items-center justify-center text-white relative shadow-2xl shadow-brand-600/20 group-hover:scale-110 transition-transform duration-500 z-10">
                     <GitBranch className="h-14 w-14" />
                  </div>
                </ScrollReveal>
@@ -244,8 +276,8 @@ const Home: React.FC = () => {
 
             <div className="relative flex flex-col lg:flex-row items-center gap-12 lg:gap-24 group">
                <div className="flex-1 order-3 lg:order-1"></div>
-               <ScrollReveal animation="zoom-in" delay={200} className="order-1 lg:order-2 z-10">
-                 <div className="w-24 h-24 lg:w-32 lg:h-32 bg-emerald-700 rounded-[2.5rem] flex items-center justify-center text-white relative shadow-2xl shadow-emerald-700/20 group-hover:scale-110 transition-transform duration-500">
+               <ScrollReveal animation="zoom-in" delay={200} className="order-1 lg:order-2 z-10 relative">
+                 <div className="w-24 h-24 lg:w-32 lg:h-32 bg-emerald-700 rounded-[2.5rem] flex items-center justify-center text-white relative shadow-2xl shadow-emerald-700/20 group-hover:scale-110 transition-transform duration-500 z-10">
                     <ForestIcon className="h-16 w-16" color="white" />
                  </div>
                </ScrollReveal>
@@ -341,11 +373,14 @@ const Home: React.FC = () => {
             <div className="lg:w-1/2">
               <ScrollReveal animation="fade-left">
                 <div className="inline-flex items-center gap-2 text-brand-600 font-black uppercase tracking-widest text-xs mb-8">
-                  Der Kopf hinter dem System
+                  {ui("home.author.badge")}
                 </div>
-                <h2 className="text-5xl font-black text-slate-900 mb-8 leading-tight tracking-tight">Vom Workshop <br />zur Weltbühne.</h2>
+                <h2 className="text-5xl font-black text-slate-900 mb-8 leading-tight tracking-tight">
+                  {ui("home.author.title").split(' ').slice(0, 2).join(' ')} <br />
+                  {ui("home.author.title").split(' ').slice(2).join(' ')}
+                </h2>
                 <p className="text-xl text-slate-600 leading-relaxed mb-12 font-light">
-                  Serge Baumberger (Co-CEO Infometis AG) hat in über 25 Jahren hunderte QA-Teams begleitet. Der Quality Tree ist die Essenz dieser experience – jetzt komprimiert in einem Buch und einer interaktiven App.
+                  {ui("home.author.desc")}
                 </p>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
@@ -355,19 +390,19 @@ const Home: React.FC = () => {
                     className="flex flex-col p-6 rounded-3xl border border-slate-100 hover:border-brand-500 hover:shadow-xl transition-all group hover:-translate-y-1"
                   >
                     <Calendar className="h-8 w-8 text-brand-600 mb-4" />
-                    <h4 className="font-bold text-slate-900">1:1 Gespräch</h4>
-                    <p className="text-slate-500 text-sm mt-2">Strategie-Checkup vereinbaren.</p>
+                    <h4 className="font-bold text-slate-900">{ui("home.author.meeting_title")}</h4>
+                    <p className="text-slate-500 text-sm mt-2">{ui("home.author.meeting_desc")}</p>
                   </a>
                   <div className="flex flex-col p-6 rounded-3xl border border-slate-100 bg-slate-50 group hover:bg-white hover:shadow-lg transition-all">
                     <Video className="h-8 w-8 text-slate-400 mb-4 group-hover:text-brand-600 transition-colors" />
-                    <h4 className="font-bold text-slate-900">Keynote Speaker</h4>
+                    <h4 className="font-bold text-slate-900">{ui("home.author.keynote_title")}</h4>
                     <p className="text-slate-500 text-sm mt-2">Swiss Testing Day 2025.</p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-8">
                   <Link to="/author" className="text-slate-900 font-black text-sm uppercase tracking-widest border-b-2 border-slate-900 pb-2 hover:text-brand-600 hover:border-brand-600 transition-all">
-                    Biographie lesen
+                    {ui("home.author.bio_link")}
                   </Link>
                   <div className="flex gap-4">
                     <a href="https://www.linkedin.com/in/sergewolf/" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-brand-600 transition-colors transform hover:scale-110">

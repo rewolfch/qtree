@@ -44,9 +44,9 @@ const Framework: React.FC = () => {
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-100 text-brand-700 text-[10px] font-black uppercase tracking-widest mb-6 border border-brand-200">
               Structure & Excellence
             </div>
-            <h1 className="text-5xl md:text-7xl font-black text-slate-900 mb-8 tracking-tighter">Das Framework.</h1>
+            <h1 className="text-5xl md:text-7xl font-black text-slate-900 mb-8 tracking-tighter">{ui("framework.title")}</h1>
             <p className="text-xl text-slate-500 leading-relaxed font-light">
-              8 Äste, 90 Praktiken. Finden Sie genau die Themenbereiche, die Ihr Team heute voranbringen.
+              {ui("framework.subtitle")}
             </p>
           </ScrollReveal>
         </div>

@@ -64,6 +64,16 @@ const uiTranslations: Record<string, Record<Language, string>> = {
   "home.check.cta_app": { de: "Vollständiges Assessment", en: "Full Assessment" },
   "home.check.cta_book": { de: "Lösungsbuch kaufen", en: "Buy Solution Book" },
 
+  "home.author.badge": { de: "Der Kopf hinter dem System", en: "The Mind Behind the System" },
+  "home.author.title": { de: "Vom Workshop zur Weltbühne.", en: "From Workshop to World Stage." },
+  "home.author.desc": { de: "Serge Baumberger (Co-CEO Infometis AG) hat in über 25 Jahren hunderte QA-Teams begleitet. Der Quality Tree ist die Essenz dieser Erfahrung – jetzt komprimiert in einem Buch und einer interaktiven App.", en: "Serge Baumberger (Co-CEO Infometis AG) has guided hundreds of QA teams over 25 years. The Quality Tree is the essence of this experience – now compressed into a book and an interactive app." },
+  "home.author.meeting_title": { de: "1:1 Gespräch", en: "1:1 Meeting" },
+  "home.author.meeting_desc": { de: "Strategie-Checkup vereinbaren.", en: "Schedule strategy checkup." },
+  "home.author.keynote_title": { de: "Keynote Speaker", en: "Keynote Speaker" },
+  "home.author.bio_link": { de: "Biographie lesen", en: "Read Biography" },
+
+  "framework.title": { de: "Das Framework.", en: "The Framework." },
+  "framework.subtitle": { de: "8 Äste, 90 Praktiken. Finden Sie genau die Themenbereiche, die Ihr Team heute voranbringen.", en: "8 Branches, 90 Practices. Find exactly the topics that move your team forward today." },
   "framework.search_placeholder": { de: "Nach Themen suchen (z.B. CI/CD, Automatisierung, AI...)", en: "Search topics (e.g., CI/CD, Automation, AI...)" },
   "framework.results": { de: "Ergebnisse", en: "Results" },
   "framework.no_results": { de: "Keine Äste gefunden", en: "No branches found" },
@@ -143,7 +153,7 @@ const uiTranslations: Record<string, Record<Language, string>> = {
 
   "seo.framework.title": { de: "Framework Explorer", en: "Framework Explorer" },
   "seo.framework.description": { de: "Erkunden Sie die Struktur des Quality Tree Frameworks.", en: "Explore the Quality Tree Framework structure." },
-  "seo.blog.title": { de: "Blog & Insights", en: "Blog & Insights" },
+  "seo.blog.title": { de: "Quality Engineering Blog & Strategie", en: "Quality Engineering Blog & Strategy" },
   "seo.app.title": { de: "Assessment App", en: "Assessment App" },
   "seo.app.description": { de: "Bewerten Sie Ihre Softwarequalität mit dem interaktiven Quality Tree Tool.", en: "Assess your software quality with the interactive Quality Tree tool." },
   "seo.faq.title": { de: "FAQ & Wissen", en: "FAQ & Knowledge" },
