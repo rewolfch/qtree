@@ -3,74 +3,157 @@ export const rawConfig = {
   "grid": { "rows": 30, "cols": 10 },
   "lanes": [
     { 
+      "id": "config-mgmt",
       "label": "Configuration Management", "startRow": 1, "endRow": 3, "targetCount": 12,
       "details": {
-        "description": { "de": "Das strukturelle Rückgrat für das Change-Management.", "en": "The structural backbone for change management." },
-        "importance": { "de": "Ohne dieses Fundament entstehen instabile Umgebungen.", "en": "Without this foundation, unstable environments arise." },
-        "gettingStarted": { "de": "Starten Sie mit Versionierung aller Artefakte.", "en": "Start by versioning all artifacts." },
-        "resources": []
+        "description": { 
+            "de": "Configuration Management (CM) bildet das Fundament für stabile Softwareentwicklung. Es stellt sicher, dass alle Artefakte (Code, Configs, Dokumentation) versioniert, nachvollziehbar und wiederherstellbar sind.", 
+            "en": "Configuration Management (CM) forms the foundation for stable software development. It ensures that all artifacts (code, configs, documentation) are versioned, traceable, and recoverable." 
+        },
+        "why": {
+            "de": "Ohne solides CM gibt es keine Reproduzierbarkeit. 'It works on my machine' wird zum Dauerzustand, Rollbacks sind unmöglich und Compliance ist nicht erreichbar.",
+            "en": "Without solid CM, there is no reproducibility. 'It works on my machine' becomes the norm, rollbacks are impossible, and compliance is unattainable."
+        },
+        "how": {
+            "de": "Beginnen Sie mit der strikten Versionierung aller Assets in einem SCM (z.B. Git). Führen Sie eine klare Branching-Strategie ein und nutzen Sie Tags für Releases.",
+            "en": "Start with strict versioning of all assets in an SCM (e.g., Git). Introduce a clear branching strategy and use tags for releases."
+        },
+        "resources": [
+            { "label": "Git Branching Strategies", "url": "#" },
+            { "label": "The Twelve-Factor App: Config", "url": "#" }
+        ]
       }
     },
     { 
+      "id": "unit-testing",
       "label": "Unit Testing", "startRow": 4, "endRow": 6, "targetCount": 6,
       "details": {
-        "description": { "de": "Die Wurzeln der Qualitätssicherung.", "en": "The roots of quality assurance." },
-        "importance": { "de": "Verhindert grobe Regressionen auf Code-Ebene.", "en": "Prevents major regressions at the code level." },
-        "gettingStarted": { "de": "Automatisieren Sie erste Unit-Tests.", "en": "Automate initial unit tests." },
+        "description": { 
+            "de": "Unit Testing verifiziert die kleinste testbare Einheit einer Software. Es ist das Sicherheitsnetz, das Refactoring erst möglich macht und teure Fehler früh abfängt.", 
+            "en": "Unit testing verifies the smallest testable unit of software. It is the safety net that makes refactoring possible and catches expensive bugs early." 
+        },
+        "why": {
+            "de": "Fehler, die während der Entwicklung gefunden werden, kosten einen Bruchteil dessen, was sie in Produktion kosten. Unit Tests dokumentieren zudem das erwartete Verhalten des Codes.",
+            "en": "Bugs found during development cost a fraction of what they cost in production. Unit tests also document the expected behavior of the code."
+        },
+        "how": {
+            "de": "Wählen Sie ein Standard-Framework (z.B. Jest, JUnit). Integrieren Sie Tests in den Build-Prozess. Starten Sie nicht mit 100% Coverage, sondern testen Sie kritische Geschäftslogik.",
+            "en": "Choose a standard framework (e.g., Jest, JUnit). Integrate tests into the build process. Don't start with 100% coverage, but test critical business logic."
+        },
         "resources": []
       }
     },
     { 
+      "id": "build-practices",
       "label": "Build Practices", "startRow": 7, "endRow": 9, "targetCount": 12,
       "details": {
-        "description": { "de": "Der Treibstoff für schnelle Lieferung.", "en": "The fuel for fast delivery." },
-        "importance": { "de": "Sorgt für zuverlässige, deploybare Artefakte.", "en": "Ensures reliable, deployable artifacts." },
-        "gettingStarted": { "de": "Standardisieren Sie den Build-Prozess.", "en": "Standardize the build process." },
+        "description": { 
+            "de": "Build Practices transformieren Quellcode zuverlässig und wiederholbar in deploybare Artefakte. Sie sind der Motor der Continuous Integration.", 
+            "en": "Build practices transform source code reliably and repeatably into deployable artifacts. They are the engine of Continuous Integration." 
+        },
+        "why": {
+            "de": "Lange, manuelle oder fragile Builds blockieren das gesamte Team. Ein automatisierter Build-Prozess ist Voraussetzung für schnelle Feedback-Zyklen.",
+            "en": "Long, manual, or fragile builds block the entire team. An automated build process is a prerequisite for fast feedback cycles."
+        },
+        "how": {
+            "de": "Automatisieren Sie den Build per Skript. Nutzen Sie einen CI-Server (z.B. Jenkins, GitHub Actions). Stellen Sie sicher, dass der Build isoliert und unabhängig von der lokalen Umgebung läuft.",
+            "en": "Automate the build via script. Use a CI server (e.g., Jenkins, GitHub Actions). Ensure the build runs isolated and independent of the local environment."
+        },
         "resources": []
       }
     },
     { 
+      "id": "deployment",
       "label": "Deployment Practices", "startRow": 10, "endRow": 12, "targetCount": 12,
       "details": {
-        "description": { "de": "Strukturierte Weiterentwicklung der Softwarebereitstellung.", "en": "Structured evolution of software delivery." },
-        "importance": { "de": "Ermöglicht häufige und sichere Releases.", "en": "Enables frequent and safe releases." },
-        "gettingStarted": { "de": "Automatisieren Sie erste Smoke-Tests.", "en": "Automate initial smoke tests." },
+        "description": { 
+            "de": "Deployment Practices regeln, wie Software sicher und effizient auf verschiedene Umgebungen (Test, Staging, Produktion) übertragen wird.", 
+            "en": "Deployment practices govern how software is safely and efficiently transferred to different environments (Test, Staging, Production)." 
+        },
+        "why": {
+            "de": "Manuelle Deployments sind fehleranfällig und langsam. Automatisierung reduziert das Risiko von Ausfällen ('Deployment Fear') und ermöglicht 'Deployment on Demand'.",
+            "en": "Manual deployments are error-prone and slow. Automation reduces the risk of failures ('Deployment Fear') and enables 'Deployment on Demand'."
+        },
+        "how": {
+            "de": "Trennen Sie Build und Deployment. Nutzen Sie die gleichen Artefakte für alle Umgebungen ('Build Once, Deploy Many'). Automatisieren Sie zuerst Deployments auf Testumgebungen.",
+            "en": "Separate build and deployment. Use the same artifacts for all environments ('Build Once, Deploy Many'). Automate deployments to test environments first."
+        },
         "resources": []
       }
     },
     { 
+      "id": "test-automation",
       "label": "Test Automation", "startRow": 13, "endRow": 15, "targetCount": 16,
       "details": {
-        "description": { "de": "Das Rückgrat moderner Softwarequalität.", "en": "The backbone of modern software quality." },
-        "importance": { "de": "Skaliert Tests über Systemgrenzen hinweg.", "en": "Scales tests across system boundaries." },
-        "gettingStarted": { "de": "Fokussieren Sie auf kritische Workflows.", "en": "Focus on critical workflows." },
+        "description": { 
+            "de": "Test Automation umfasst alle Prüfungen jenseits von Unit Tests: Integration, API, UI und End-to-End Tests. Sie validiert das Zusammenspiel der Komponenten.", 
+            "en": "Test automation includes all checks beyond unit tests: integration, API, UI, and end-to-end tests. It validates the interaction of components." 
+        },
+        "why": {
+            "de": "Manuelle Regressionstests skalieren nicht. Je komplexer das System, desto mehr Zeit frisst das Testen ohne Automatisierung, was die Time-to-Market verlangsamt.",
+            "en": "Manual regression tests do not scale. The more complex the system, the more time testing consumes without automation, slowing down time-to-market."
+        },
+        "how": {
+            "de": "Folgen Sie der Testpyramide: Viele API/Integrationstests, wenige UI-Tests. Nutzen Sie stabile Selektoren für UI-Tests. Behandeln Sie Testcode wie Produktionscode.",
+            "en": "Follow the test pyramid: Many API/integration tests, few UI tests. Use stable selectors for UI tests. Treat test code like production code."
+        },
         "resources": []
       }
     },
     { 
+      "id": "virtualization",
       "label": "Virtualisierung", "startRow": 16, "endRow": 18, "targetCount": 11,
       "details": {
-        "description": { "de": "Dynamische, skalierbare Umgebungen.", "en": "Dynamic, scalable environments." },
-        "importance": { "de": "Löst Abhängigkeiten von Live-Systemen.", "en": "Removes dependencies on live systems." },
-        "gettingStarted": { "de": "Nutzen Sie Stubs für externe Services.", "en": "Use stubs for external services." },
+        "description": { 
+            "de": "Service Virtualisierung und Stubs simulieren abhängige Systeme (z.B. Mainframe, 3rd Party APIs), die für Tests nicht verfügbar oder zu teuer sind.", 
+            "en": "Service virtualization and stubs simulate dependent systems (e.g., mainframe, 3rd party APIs) that are unavailable or too expensive for testing." 
+        },
+        "why": {
+            "de": "Warten auf Testdaten oder Umgebungen ist Verschwendung. Virtualisierung ermöglicht frühes Testen ('Shift Left') und stabile Testergebnisse.",
+            "en": "Waiting for test data or environments is waste. Virtualization enables early testing ('Shift Left') and stable test results."
+        },
+        "how": {
+            "de": "Identifizieren Sie blockierende Abhängigkeiten. Erstellen Sie einfache Stubs (z.B. mit WireMock) für externe APIs. Erweitern Sie diese zu intelligenten Mocks bei Bedarf.",
+            "en": "Identify blocking dependencies. Create simple stubs (e.g., with WireMock) for external APIs. Expand these into intelligent mocks as needed."
+        },
         "resources": []
       }
     },
     { 
+      "id": "manual-testing",
       "label": "Manual Testing", "startRow": 19, "endRow": 22, "targetCount": 12,
       "details": {
-        "description": { "de": "Menschliche Expertise und Prozessverbesserung.", "en": "Human expertise and process improvement." },
-        "importance": { "de": "Findet 'Unbekannte Unbekannte'.", "en": "Finds 'unknown unknowns'." },
-        "gettingStarted": { "de": "Führen Sie exploratives Testen ein.", "en": "Introduce exploratory testing." },
+        "description": { 
+            "de": "Manuelles Testen fokussiert sich auf explorative Ansätze, Usability und Szenarien, die menschliche Intuition erfordern. Es ergänzt die Automatisierung.", 
+            "en": "Manual testing focuses on exploratory approaches, usability, and scenarios requiring human intuition. It complements automation." 
+        },
+        "why": {
+            "de": "Automatisierung prüft auf bekannte Erwartungen. Menschen finden das 'Unbekannte Unbekannte'. UX und Design-Gefühl lassen sich schwer automatisieren.",
+            "en": "Automation checks for known expectations. Humans find the 'unknown unknowns'. UX and design feel are hard to automate."
+        },
+        "how": {
+            "de": "Verschieben Sie repetitive Checks in die Automatisierung. Nutzen Sie die freiwerdende Zeit für Exploratives Testen (Session-Based Testing).",
+            "en": "Move repetitive checks to automation. Use the freed-up time for exploratory testing (Session-Based Testing)."
+        },
         "resources": []
       }
     },
     { 
+      "id": "test-mgmt",
       "label": "Test Management", "startRow": 23, "endRow": 25, "targetCount": 9,
       "details": {
-        "description": { "de": "Transparenz und Steuerung.", "en": "Transparency and control." },
-        "importance": { "de": "Sichtbarkeit für fundierte Entscheidungen.", "en": "Visibility for informed decisions." },
-        "gettingStarted": { "de": "Etablieren Sie Basismetriken.", "en": "Establish basic metrics." },
+        "description": { 
+            "de": "Test Management schafft Transparenz und Steuerung. Es geht um Metriken, Reporting und die strategische Ausrichtung der Qualitätsmaßnahmen.", 
+            "en": "Test management creates transparency and control. It's about metrics, reporting, and the strategic alignment of quality measures." 
+        },
+        "why": {
+            "de": "Ohne Daten fliegt man blind. Gutes Management macht Qualität sichtbar und ermöglicht datengetriebene Entscheidungen statt Bauchgefühl.",
+            "en": "Without data, you're flying blind. Good management makes quality visible and enables data-driven decisions instead of gut feeling."
+        },
+        "how": {
+            "de": "Definieren Sie KPIs, die Verhalten positiv beeinflussen (z.B. Lead Time, Defect Escape Rate). Automatisieren Sie das Reporting in Dashboards.",
+            "en": "Define KPIs that positively influence behavior (e.g., Lead Time, Defect Escape Rate). Automate reporting into dashboards."
+        },
         "resources": []
       }
     }
@@ -87,7 +170,7 @@ export const rawConfig = {
     { 
         "id": "R1C2", 
         "label": { "de": "Feature Toggles im Code" }, 
-        "class": "blue", "isRoot": true, 
+        "class": "blue",
         "tooltip": { "de": "Code-basierte Schalter zur Laufzeitsteuerung von Funktionen. Entkoppelt Deployment von Release." },
         "acceptanceCriteria": ["Alle neuen riskanten Features hinter Toggles", "Naming- & Doku-Standards eingeführt", "Reduktion der Hotfixes nach Releases um 30%", "80 % der Toggles werden innerhalb von 2 Sprints entfernt"]
     },
@@ -723,71 +806,138 @@ export const rawConfig = {
     }
   ],
   "arrows": [
-    // Config Management (Fixed roots)
+    // CONFIG MANAGEMENT
+    // R1C1 -> R1C2, R2C2, R3C2 (Level 1 -> Level 2)
     { "from": "R1C1", "to": "R1C2" }, { "from": "R1C1", "to": "R2C2" }, { "from": "R1C1", "to": "R3C2" },
-    { "from": "R3C2", "to": "R2C3" }, { "from": "R3C2", "to": "R3C3" },
-    { "from": "R2C2", "to": "R1C4" }, { "from": "R2C3", "to": "R2C4" }, { "from": "R3C3", "to": "R3C4" },
-    { "from": "R1C4", "to": "R2C5" }, { "from": "R2C4", "to": "R2C5" }, { "from": "R3C4", "to": "R2C5" },
-    { "from": "R2C5", "to": "R2C6" }, { "from": "R2C6", "to": "R2C7" },
+    // Level 2 -> Level 3
+    { "from": "R1C2", "to": "R2C3" }, { "from": "R2C2", "to": "R2C3" }, { "from": "R3C2", "to": "R3C3" },
+    // Level 3 -> Level 4
+    { "from": "R2C3", "to": "R1C4" }, { "from": "R2C3", "to": "R2C4" }, { "from": "R3C3", "to": "R3C4" },
+    // Level 4 -> Level 5, 6, 7
+    { "from": "R1C4", "to": "R1C5" }, { "from": "R1C5", "to": "R1C6" }, { "from": "R1C6", "to": "R1C7" },
 
-    // Unit Testing (Fixed roots)
-    { "from": "R4C1", "to": "R4C2" }, { "from": "R4C1", "to": "R6C2" },
-    { "from": "R4C2", "to": "R5C3" }, { "from": "R6C2", "to": "R5C3" },
-    { "from": "R5C3", "to": "R5C4" }, { "from": "R5C4", "to": "R5C5" },
+    // UNIT TESTING
+    // L1 -> L2
+    { "from": "R4C1", "to": "R4C2" }, { "from": "R4C1", "to": "R5C2" },
+    // L2 -> L3
+    { "from": "R4C2", "to": "R4C3" }, { "from": "R5C2", "to": "R4C3" },
+    // L3 -> L4
+    { "from": "R4C3", "to": "R4C4" },
+    // L4 -> L5
+    { "from": "R4C4", "to": "R4C5" },
 
-    // Build Practices (Fixed roots)
+    // BUILD PRACTICES
+    // L1 -> L2
     { "from": "R7C1", "to": "R7C2" }, { "from": "R7C1", "to": "R8C2" }, { "from": "R7C1", "to": "R9C2" },
-    { "from": "R7C2", "to": "R8C3" }, { "from": "R8C2", "to": "R8C3" }, { "from": "R9C2", "to": "R8C3" },
-    { "from": "R8C3", "to": "R7C4" }, { "from": "R8C3", "to": "R9C4" }, 
-    { "from": "R7C4", "to": "R8C5" }, 
-    { "from": "R8C5", "to": "R7C6" }, { "from": "R8C5", "to": "R8C6" }, { "from": "R8C5", "to": "R9C6" },
-    { "from": "R7C6", "to": "R8C7" }, { "from": "R8C6", "to": "R8C7" }, { "from": "R9C6", "to": "R8C7" },
+    // L2 -> L3
+    { "from": "R7C2", "to": "R7C3" }, { "from": "R8C2", "to": "R7C3" }, { "from": "R9C2", "to": "R7C3" },
+    // L3 -> L4
+    { "from": "R7C3", "to": "R7C4" }, { "from": "R7C3", "to": "R8C4" },
+    // L4 -> L5
+    { "from": "R7C4", "to": "R7C5" }, 
+    // L5 -> L6
+    { "from": "R7C5", "to": "R7C6" }, { "from": "R7C5", "to": "R8C6" }, { "from": "R7C5", "to": "R9C6" },
+    // L6 -> L7
+    { "from": "R7C6", "to": "R7C7" }, { "from": "R8C6", "to": "R7C7" }, { "from": "R9C6", "to": "R7C7" },
 
-    // Deployment Practices (Fixed roots)
+    // DEPLOYMENT PRACTICES
+    // L1 -> L2
     { "from": "R10C1", "to": "R10C2" }, { "from": "R10C1", "to": "R12C2" },
+    // L2 -> L5
     { "from": "R10C2", "to": "R10C5" }, { "from": "R12C2", "to": "R12C5" },
-    { "from": "R12C5", "to": "R11C6" },
-    { "from": "R11C6", "to": "R10C7" }, { "from": "R11C6", "to": "R12C7" }, { "from": "R11C6", "to": "R11C7" },
-    { "from": "R10C7", "to": "R12C8" }, { "from": "R11C7", "to": "R10C7" },
-    { "from": "R12C7", "to": "R10C8" }, { "from": "R12C7", "to": "R12C8" },
+    // L5 -> L6
+    { "from": "R10C5", "to": "R11C6" }, { "from": "R12C5", "to": "R11C6" },
+    // L6 -> L7
+    { "from": "R11C6", "to": "R10C7" }, { "from": "R11C6", "to": "R11C7" }, { "from": "R11C6", "to": "R12C7" },
+    // L7 -> L8
+    { "from": "R10C7", "to": "R10C8" }, { "from": "R12C7", "to": "R12C8" },
+    // L8 -> L9
     { "from": "R10C8", "to": "R11C9" }, { "from": "R12C8", "to": "R11C9" },
 
-    // Test Automation (Fixed roots)
-    { "from": "R13C1", "to": "R14C2" },
-    { "from": "R14C2", "to": "R13C3" }, { "from": "R14C2", "to": "R15C3" },
-    { "from": "R14C2", "to": "R13C4" },
-    { "from": "R13C3", "to": "R15C4" }, { "from": "R15C3", "to": "R15C4" },
-    { "from": "R13C4", "to": "R15C4" },
+    // TEST AUTOMATION
+    // L1 -> L2
+    { "from": "R13C1", "to": "R13C2" },
+    // L2 -> L3, L4
+    { "from": "R13C2", "to": "R13C3" }, { "from": "R13C2", "to": "R15C3" }, { "from": "R13C2", "to": "R13C4" },
+    // L3/L4 -> L5
+    { "from": "R13C3", "to": "R15C4" }, { "from": "R15C3", "to": "R15C4" }, { "from": "R13C4", "to": "R15C4" },
+    // L5 -> L5 (Progression, Load, Security)
     { "from": "R15C4", "to": "R13C5" }, { "from": "R15C4", "to": "R14C5" }, { "from": "R15C4", "to": "R15C5" },
+    // L5 -> L6
     { "from": "R15C5", "to": "R13C6" }, { "from": "R15C5", "to": "R15C6" },
-    { "from": "R15C6", "to": "R13C7" }, 
+    // L6 -> L7
+    { "from": "R13C6", "to": "R13C7" }, { "from": "R15C6", "to": "R13C7" },
+    // L7 -> L7 (more items)
     { "from": "R13C7", "to": "R14C7" }, { "from": "R13C7", "to": "R15C7" },
+    // L7 -> L8
     { "from": "R14C7", "to": "R14C8" }, { "from": "R15C7", "to": "R14C8" },
+    // L8 -> L9
     { "from": "R14C8", "to": "R14C9" },
 
-    // Virtualization
+    // VIRTUALIZATION
+    // L1 -> L2
     { "from": "R17C1", "to": "R16C2" }, { "from": "R17C1", "to": "R18C2" },
-    { "from": "R16C2", "to": "R16C3" }, { "from": "R16C2", "to": "R18C3" }, { "from": "R18C2", "to": "R16C3" },
-    { "from": "R16C3", "to": "R16C6" }, { "from": "R18C3", "to": "R17C6" }, 
-    { "from": "R16C6", "to": "R18C6" }, { "from": "R16C6", "to": "R16C7" },
-    { "from": "R16C7", "to": "R17C7" }, { "from": "R18C6", "to": "R17C7" },
+    // L2 -> L3
+    { "from": "R16C2", "to": "R16C3" }, { "from": "R18C2", "to": "R18C3" },
+    // L3 -> L6
+    { "from": "R16C3", "to": "R16C6" }, { "from": "R18C3", "to": "R17C6" }, { "from": "R18C3", "to": "R18C6" },
+    // L6 -> L7
+    { "from": "R16C6", "to": "R16C7" }, { "from": "R17C6", "to": "R17C7" },
+    // L7 -> L8
     { "from": "R17C7", "to": "R18C8" },
 
-    // Manual Testing
+    // MANUAL TESTING
+    // L1 -> L2
     { "from": "R20C1", "to": "R19C2" }, { "from": "R20C1", "to": "R21C2" },
-    { "from": "R19C2", "to": "R19C3" }, { "from": "R19C2", "to": "R21C3" }, { "from": "R21C2", "to": "R21C3" },
-    { "from": "R21C3", "to": "R20C4" }, 
+    // L2 -> L3
+    { "from": "R19C2", "to": "R19C3" }, { "from": "R21C2", "to": "R21C3" },
+    // L3 -> L4
+    { "from": "R21C3", "to": "R20C4" },
+    // L4 -> L5
     { "from": "R20C4", "to": "R19C5" }, { "from": "R20C4", "to": "R21C5" },
-    { "from": "R19C5", "to": "R19C6" }, { "from": "R19C5", "to": "R21C6" }, { "from": "R21C5", "to": "R21C6" },
+    // L5 -> L6
+    { "from": "R19C5", "to": "R19C6" }, { "from": "R21C5", "to": "R21C6" },
+    // L6 -> L8
     { "from": "R19C6", "to": "R19C8" }, { "from": "R21C6", "to": "R21C8" },
 
-    // Test Management
+    // TEST MANAGEMENT
+    // L1 -> L2
     { "from": "R23C1", "to": "R22C2" }, { "from": "R23C1", "to": "R24C2" },
+    // L2 -> L3
     { "from": "R22C2", "to": "R23C3" }, { "from": "R24C2", "to": "R23C3" },
-    { "from": "R23C3", "to": "R23C4" }, 
-    { "from": "R23C4", "to": "R23C5" }, 
-    { "from": "R23C5", "to": "R23C6" }, 
+    // L3 -> L4
+    { "from": "R23C3", "to": "R23C4" },
+    // L4 -> L5
+    { "from": "R23C4", "to": "R23C5" },
+    // L5 -> L6
+    { "from": "R23C5", "to": "R23C6" },
+    // L6 -> L7
     { "from": "R23C6", "to": "R23C7" },
-    { "from": "R23C7", "to": "R23C8" }
+    // L7 -> L8
+    { "from": "R23C7", "to": "R23C8" },
+
+    // --- CROSS-BRANCH CONNECTIONS (The Trunk) ---
+    // Code (Config) -> Unit Test L1 (Basis)
+    { "from": "R1C1", "to": "R4C1" },
+    // Code (Config) -> Build L1 (Basis)
+    { "from": "R1C1", "to": "R7C1" },
+    // Unit L1 (Test Auto) -> Build L2 (Often integrated)
+    { "from": "R4C1", "to": "R7C2" },
+    // Unit L2 (Regression) -> Build L3 (Fast Feedback)
+    { "from": "R5C2", "to": "R7C3" },
+    // Build L4 (Build Once) -> Deploy L5 (Std Pre-UAT)
+    { "from": "R7C4", "to": "R12C5" },
+    // Build L5 (Artifact Repo) -> Deploy L5 (Rollback)
+    { "from": "R7C5", "to": "R10C5" },
+    // Config L2 (Toggles) -> Build L6 (Triggers)
+    { "from": "R2C2", "to": "R7C6" },
+    // Build L7 (CI) -> Deploy L7 (Auto Deploy Integration)
+    { "from": "R7C7", "to": "R10C7" },
+    // Deploy L1 (Data) -> Test Auto L4 (Auto Data)
+    { "from": "R10C1", "to": "R13C4" },
+    // Virt L1 (Services) -> Test Auto L1 (Dependencies)
+    { "from": "R17C1", "to": "R13C1" },
+    // Manual L1 (Regression) -> Test Auto L1 (Base for automation)
+    { "from": "R20C1", "to": "R13C1" }
   ]
 };

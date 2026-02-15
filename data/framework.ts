@@ -150,6 +150,146 @@ export const branches: Branch[] = [
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "milan-testing-united",
+    title: {
+      de: "Live aus Mailand: Warum wir einen neuen Bauplan für Qualität brauchen",
+      en: "Live from Milan: Why We Need a New Blueprint for Quality"
+    },
+    date: "2026-11-24",
+    author: "Serge Baumberger",
+    imageUrl: "https://media.licdn.com/dms/image/v2/D4E22AQGTN1dUqz0bzw/feedshare-shrink_2048_1536/B4EZsIVBh8KcAk-/0/1765371288233?e=1772668800&v=beta&t=otxUR675oppFTOejEn7jGzoSpeZnRH3-WmHmU-UQscw",
+    excerpt: {
+      de: "Zwei Tage voller Energie, ehrlicher QA-Diskussionen – und ein Publikum, das keine Buzzwords mehr will, sondern eine Roadmap. Genau dafür ist der Quality Tree gemacht.",
+      en: "Two days full of energy, honest QA discussions – and an audience that no longer wants buzzwords, but a roadmap. That is exactly what the Quality Tree is made for."
+    },
+    content: {
+      de: `Milan is always inspiring — aber dieses Mal ging’s nicht um Fashion oder Architektur. Es ging um die Zukunft von Software Quality.
+
+Im November stand ich beim Testing United im NH Milano Congress Centre auf der Bühne — und die Stimmung war genau so, wie man’s sich wünscht: fokussiert, neugierig, ein bisschen unbequem (im besten Sinn) und voller Leute, die Qualität nicht als „Testing-Phase“, sondern als Business-Fähigkeit verstehen wollen.
+
+## Warum ein neues Blueprint für Quality?
+
+Wir erleben gerade eine Branche, die gefühlt jedes Problem mit „AI“ und „Hyper-Automation“ lösen will. Ich liebe diese Entwicklungen — aber ich bin überzeugt: Damit AI wirklich glänzen kann, braucht es zuerst ein solides Fundament. Sonst automatisieren wir nur Chaos.
+
+Und genau an dieser Stelle kommt das Quality Tree Framework ins Spiel: als Struktur, Roadmap und gemeinsames Vokabular, um QA-Organisationen systematisch zu entwickeln.
+
+## Was ich auf der Bühne gezeigt habe
+
+In der Session habe ich den Quality Tree so präsentiert, wie er gedacht ist: pragmatisch, skalierbar, anschlussfähig an echte Delivery-Teams.
+
+### Die 9 Maturity Levels
+Eine klare Entwicklungslinie: von „Foundations“ bis hin zu „Future-Ready Intelligence“ — damit Teams ehrlich sehen, wo sie stehen und was der nächste sinnvolle Schritt ist.
+
+### From Chaos to AI
+Eine meiner Lieblingsfolien ist die Reise von Ad-hoc Testing / Unstructured Chaos hin zu AI-powered Defect Prediction. Nicht, weil AI „Menschen ersetzt“, sondern weil sie hilft, Fehler-Muster früh zu erkennen — bevor sie teuer werden.
+
+### Die 90 Leaves
+Und dann der Teil, den die Leute nachher am meisten gefeiert haben: die Detailtiefe. Nicht nur „Vision“, sondern konkrete Actions wie Dynamic Provisioning oder Self-Service Capabilities — die Dinge, die am Ende wirklich den Unterschied machen.
+
+## Der beste Teil: die Gespräche nach dem Talk
+
+Auf einer grossen Bühne zu stehen ist nice — aber der echte Wert entsteht danach im Gang, beim Kaffee, an den Tischen.
+
+Genau dort kamen die stärksten Gespräche: Teams, die mit endlosen Regression-Suites kämpfen. Organisationen, die keine Visibility haben. Leaders, die spüren, dass sie zwar Tools kaufen können, aber noch keine Quality-Architektur besitzen.
+
+Und das war für mich das Highlight: zu sehen, wie Leute ihre Probleme plötzlich sauber einordnen konnten — nicht als „wir sind schlecht im Testing“, sondern als: „Ah, wir sind auf Level X, uns fehlt Leaf Y, und unser nächster Hebel ist Z.“
+
+## Fazit
+
+Quality passiert nicht zufällig. Quality braucht eine Roadmap, die wachsen kann — it needs a tree.
+Milan was perfekter Boden, um diese Ideen zu pflanzen.
+
+Danke an Testing United — und an alle, die diskutiert, herausgefordert und das Framework direkt in ihre Realität übersetzt haben.`,
+      en: `Milan is always inspiring — but this time it wasn't about fashion or architecture. It was about the future of Software Quality.
+
+In November, I was on stage at Testing United in the NH Milano Congress Centre — and the atmosphere was exactly as you would wish: focused, curious, a bit uncomfortable (in the best sense) and full of people who want to understand quality not as a "testing phase", but as a business capability.
+
+## Why a new Blueprint for Quality?
+
+We are currently experiencing an industry that feels like it wants to solve every problem with "AI" and "Hyper-Automation". I love these developments — but I am convinced: For AI to really shine, a solid foundation is needed first. Otherwise, we are just automating chaos.
+
+And this is exactly where the Quality Tree Framework comes into play: as a structure, roadmap, and common vocabulary to systematically develop QA organizations.
+
+## What I showed on stage
+
+In the session, I presented the Quality Tree as it is intended: pragmatic, scalable, connectable to real delivery teams.
+
+### The 9 Maturity Levels
+A clear line of development: from "Foundations" to "Future-Ready Intelligence" — so teams can honestly see where they stand and what the next sensible step is.
+
+### From Chaos to AI
+One of my favorite slides is the journey from Ad-hoc Testing / Unstructured Chaos to AI-powered Defect Prediction. Not because AI "replaces humans", but because it helps to recognize error patterns early — before they become expensive.
+
+### The 90 Leaves
+And then the part that people celebrated the most afterwards: the depth of detail. Not just "vision", but concrete actions like Dynamic Provisioning or Self-Service Capabilities — the things that really make the difference in the end.
+
+## The best part: the conversations after the talk
+
+Standing on a big stage is nice — but the real value is created afterwards in the hallway, over coffee, at the tables.
+
+That's where the strongest conversations happened: Teams struggling with endless regression suites. Organizations that have no visibility. Leaders who sense that they can buy tools, but don't yet own a quality architecture.
+
+And that was the highlight for me: seeing how people could suddenly cleanly categorize their problems — not as "we are bad at testing", but as: "Ah, we are at Level X, we are missing Leaf Y, and our next lever is Z."
+
+## Conclusion
+
+Quality doesn't happen by accident. Quality needs a roadmap that can grow — it needs a tree.
+Milan was the perfect ground to plant these ideas.
+
+Thanks to Testing United — and to everyone who discussed, challenged, and translated the framework directly into their reality.`
+    }
+  },
+  {
+    id: "book-release-date-announce",
+    title: {
+      de: "Save the Date: Das Quality Tree Framework erscheint am 11. Mai 2026",
+      en: "Save the Date: The Quality Tree Framework releases on May 11, 2026"
+    },
+    date: "2026-02-14",
+    author: "Serge Baumberger",
+    imageUrl: "https://media.springernature.com/full/springer-static/cover-hires/book/978-3-658-51040-4?as=webp",
+    excerpt: {
+      de: "Der offizielle Erscheinungstermin steht fest! Sichern Sie sich Ihr Exemplar des Standardwerks für modernes Quality Engineering.",
+      en: "The official release date is set! Secure your copy of the standard reference for modern Quality Engineering."
+    },
+    content: {
+      de: `Es ist offiziell: **Am 11. Mai 2026** erscheint "Das Quality Tree Framework" im Springer Vieweg Verlag.
+
+Dieses Buch ist mehr als nur Theorie – es ist die Essenz aus über 25 Jahren Erfahrung in der Softwarequalität, kondensiert in einem strategischen Framework für echte Transformation.
+
+### Jetzt vorbestellen
+
+Sie können das Buch bereits jetzt auf Amazon vorbestellen, um es pünktlich zum Erscheinungstermin in den Händen zu halten:
+
+👉 [Hier auf Amazon vorbestellen](https://www.amazon.de/Das-Quality-Tree-Framework-Automatisierung/dp/3658510404)
+
+### Was Sie erwartet
+
+*   **Der Quality Tree:** Ein visuelles Modell für ganzheitliche Qualität.
+*   **90 Praktiken:** Von manuellen Tests bis zu AI-Automation.
+*   **Strategie:** Wie Sie QA vom Flaschenhals zum Business-Enabler machen.
+
+Markieren Sie sich den 11. Mai 2026 im Kalender!`,
+      en: `It's official: **On May 11, 2026**, "The Quality Tree Framework" will be published by Springer Vieweg.
+
+This book is more than just theory – it is the essence of over 25 years of experience in software quality, condensed into a strategic framework for real transformation.
+
+### Pre-order Now
+
+You can pre-order the book on Amazon right now to have it in your hands on the release day:
+
+👉 [Pre-order on Amazon here](https://www.amazon.de/Das-Quality-Tree-Framework-Automatisierung/dp/3658510404)
+
+### What to Expect
+
+*   **The Quality Tree:** A visual model for holistic quality.
+*   **90 Practices:** From manual tests to AI automation.
+*   **Strategy:** How to turn QA from a bottleneck into a business enabler.
+
+Mark May 11, 2026 in your calendar!`
+    }
+  },
+  {
     id: "book-preorder-amazon",
     title: { 
       de: "Offiziell vorbestellbar: Das Quality Tree Framework auf Amazon", 
@@ -294,93 +434,18 @@ If you want to dive deeper: If you want to apply the Quality Tree Framework in y
     }
   },
   {
-    id: "milan-testing-united",
-    title: {
-      de: "Live aus Mailand: Warum wir einen neuen Bauplan für Qualität brauchen",
-      en: "Live from Milan: Why We Need a New Blueprint for Quality"
-    },
-    date: "2026-11-24",
+    id: "2",
+    title: { de: "Der Quality Tree in seiner ganzen Pracht", en: "The Quality Tree in All Its Glory" },
+    date: "2025-02-01",
     author: "Serge Baumberger",
-    imageUrl: "https://media.licdn.com/dms/image/v2/D4E22AQE4V5w4ZHK99Q/feedshare-shrink_2048_1536/B4EZsIVBpgKkAk-/0/1765371288605?e=1770854400&v=beta&t=G7Kbb0kmCfTZtlJeBP7z4k3Wvb0w59yDpdlxxiWV5gQ",
+    imageUrl: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     excerpt: {
-      de: "Zwei Tage voller Energie, ehrlicher QA-Diskussionen – und ein Publikum, das keine Buzzwords mehr will, sondern eine Roadmap. Genau dafür ist der Quality Tree gemacht.",
-      en: "Two days full of energy, honest QA discussions – and an audience that no longer wants buzzwords, but a roadmap. That is exactly what the Quality Tree is made for."
+      de: "Um die vielschichtigen Ebenen des Quality-Tree-Frameworks greifbar zu machen, dient uns eine durchgängige Metapher: der Baum.",
+      en: "To make the multi-layered levels of the Quality Tree Framework tangible, we use a consistent metaphor: the tree."
     },
     content: {
-      de: `Milan is always inspiring — aber dieses Mal ging’s nicht um Fashion oder Architektur. Es ging um die Zukunft von Software Quality.
-
-Im November stand ich beim Testing United im NH Milano Congress Centre auf der Bühne — und die Stimmung war genau so, wie man’s sich wünscht: fokussiert, neugierig, ein bisschen unbequem (im besten Sinn) und voller Leute, die Qualität nicht als „Testing-Phase“, sondern als Business-Fähigkeit verstehen wollen.
-
-## Warum ein neues Blueprint für Quality?
-
-Wir erleben gerade eine Branche, die gefühlt jedes Problem mit „AI“ und „Hyper-Automation“ lösen will. Ich liebe diese Entwicklungen — aber ich bin überzeugt: Damit AI wirklich glänzen kann, braucht es zuerst ein solides Fundament. Sonst automatisieren wir nur Chaos.
-
-Und genau an dieser Stelle kommt das Quality Tree Framework ins Spiel: als Struktur, Roadmap und gemeinsames Vokabular, um QA-Organisationen systematisch zu entwickeln.
-
-## Was ich auf der Bühne gezeigt habe
-
-In der Session habe ich den Quality Tree so präsentiert, wie er gedacht ist: pragmatisch, skalierbar, anschlussfähig an echte Delivery-Teams.
-
-### Die 9 Maturity Levels
-Eine klare Entwicklungslinie: von „Foundations“ bis hin zu „Future-Ready Intelligence“ — damit Teams ehrlich sehen, wo sie stehen und was der nächste sinnvolle Schritt ist.
-
-### From Chaos to AI
-Eine meiner Lieblingsfolien ist die Reise von Ad-hoc Testing / Unstructured Chaos hin zu AI-powered Defect Prediction. Nicht, weil AI „Menschen ersetzt“, sondern weil sie hilft, Fehler-Muster früh zu erkennen — bevor sie teuer werden.
-
-### Die 90 Leaves
-Und dann der Teil, den die Leute nachher am meisten gefeiert haben: die Detailtiefe. Nicht nur „Vision“, sondern konkrete Actions wie Dynamic Provisioning oder Self-Service Capabilities — die Dinge, die am Ende wirklich den Unterschied machen.
-
-## Der beste Teil: die Gespräche nach dem Talk
-
-Auf einer grossen Bühne zu stehen ist nice — aber der echte Wert entsteht danach im Gang, beim Kaffee, an den Tischen.
-
-Genau dort kamen die stärksten Gespräche: Teams, die mit endlosen Regression-Suites kämpfen. Organisationen, die keine Visibility haben. Leaders, die spüren, dass sie zwar Tools kaufen können, aber noch keine Quality-Architektur besitzen.
-
-Und das war für mich das Highlight: zu sehen, wie Leute ihre Probleme plötzlich sauber einordnen konnten — nicht als „wir sind schlecht im Testing“, sondern als: „Ah, wir sind auf Level X, uns fehlt Leaf Y, und unser nächster Hebel ist Z.“
-
-## Fazit
-
-Quality passiert nicht zufällig. Quality braucht eine Roadmap, die wachsen kann — it needs a tree.
-Milan war perfekter Boden, um diese Ideen zu pflanzen.
-
-Danke an Testing United — und an alle, die diskutiert, herausgefordert und das Framework direkt in ihre Realität übersetzt haben.`,
-      en: `Milan is always inspiring — but this time it wasn't about fashion or architecture. It was about the future of Software Quality.
-
-In November, I was on stage at Testing United in the NH Milano Congress Centre — and the atmosphere was exactly as you would wish: focused, curious, a bit uncomfortable (in the best sense) and full of people who want to understand quality not as a "testing phase", but as a business capability.
-
-## Why a new Blueprint for Quality?
-
-We are currently experiencing an industry that feels like it wants to solve every problem with "AI" and "Hyper-Automation". I love these developments — but I am convinced: For AI to really shine, a solid foundation is needed first. Otherwise, we are just automating chaos.
-
-And this is exactly where the Quality Tree Framework comes into play: as a structure, roadmap, and common vocabulary to systematically develop QA organizations.
-
-## What I showed on stage
-
-In the session, I presented the Quality Tree as it is intended: pragmatic, scalable, connectable to real delivery teams.
-
-### The 9 Maturity Levels
-A clear line of development: from "Foundations" to "Future-Ready Intelligence" — so teams can honestly see where they stand and what the next sensible step is.
-
-### From Chaos to AI
-One of my favorite slides is the journey from Ad-hoc Testing / Unstructured Chaos to AI-powered Defect Prediction. Not because AI "replaces humans", but because it helps to recognize error patterns early — before they become expensive.
-
-### The 90 Leaves
-And then the part that people celebrated the most afterwards: the depth of detail. Not just "vision", but concrete actions like Dynamic Provisioning or Self-Service Capabilities — the things that really make the difference in the end.
-
-## The best part: the conversations after the talk
-
-Standing on a big stage is nice — but the real value is created afterwards in the hallway, over coffee, at the tables.
-
-That's where the strongest conversations happened: Teams struggling with endless regression suites. Organizations that have no visibility. Leaders who sense that they can buy tools, but don't yet own a quality architecture.
-
-And that was the highlight for me: seeing how people could suddenly cleanly categorize their problems — not as "we are bad at testing", but as: "Ah, we are at Level X, we are missing Leaf Y, and our next lever is Z."
-
-## Conclusion
-
-Quality doesn't happen by accident. Quality needs a roadmap that can grow — it needs a tree.
-Milan was the perfect ground to plant these ideas.
-
-Thanks to Testing United — and to everyone who discussed, challenged, and translated the framework directly into their reality.`
+      de: "Jedes seiner Elemente repräsentiert einen Kernbestandteil deines digitalen Imperiums. Die Wurzeln sind Prinzipien & Kultur. Der Stamm ist das Fundament & Architektur. Die Äste sind die Themenbereiche. Die Blätter sind die 90 Praktiken. Die Blüten sind Innovation & Experimente. Die Früchte sind Outcomes & Wert.",
+      en: "Each of its elements represents a core component of your digital empire. The roots are principles & culture. The trunk is the foundation & architecture. The branches are the subject areas. The leaves are the 90 practices. The blossoms are innovation & experiments. The fruits are outcomes & value."
     }
   },
   {
@@ -396,21 +461,6 @@ Thanks to Testing United — and to everyone who discussed, challenged, and tran
     content: {
       de: "Unternehmen stehen heute vor beispielloser Komplexität. Alte Systeme, verteilte Teams und der Druck zur ständigen Innovation schaffen Bedingungen, unter denen traditionelle Ansätze oft scheitern. Erfolgreich sind die Organisationen, die systematisch denken – die grossen Probleme in kleine, vernetzte Herausforderungen zerlegen und diese gezielt lösen. Genau dieses Denken fördert der Quality Tree.",
       en: "Companies today face unprecedented complexity. Legacy systems, distributed teams, and the pressure for constant innovation create conditions where traditional approaches often fail. Successful organizations are those that think systematically – breaking down big problems into small, interconnected challenges and solving them specifically. This is exactly the thinking that the Quality Tree promotes."
-    }
-  },
-  {
-    id: "2",
-    title: { de: "Der Quality Tree in seiner ganzen Pracht", en: "The Quality Tree in All Its Glory" },
-    date: "2025-02-01",
-    author: "Serge Baumberger",
-    imageUrl: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-    excerpt: {
-      de: "Um die vielschichtigen Ebenen des Quality-Tree-Frameworks greifbar zu machen, dient uns eine durchgängige Metapher: der Baum.",
-      en: "To make the multi-layered levels of the Quality Tree Framework tangible, we use a consistent metaphor: the tree."
-    },
-    content: {
-      de: "Jedes seiner Elemente repräsentiert einen Kernbestandteil deines digitalen Imperiums. Die Wurzeln sind Prinzipien & Kultur. Der Stamm ist das Fundament & Architektur. Die Äste sind die Themenbereiche. Die Blätter sind die 90 Praktiken. Die Blüten sind Innovation & Experimente. Die Früchte sind Outcomes & Wert.",
-      en: "Each of its elements represents a core component of your digital empire. The roots are principles & culture. The trunk is the foundation & architecture. The branches are the subject areas. The leaves are the 90 practices. The blossoms are innovation & experiments. The fruits are outcomes & value."
     }
   }
 ];

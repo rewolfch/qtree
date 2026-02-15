@@ -85,6 +85,74 @@ const WarningModal = ({ data, onClose, nodes }: any) => {
     );
 };
 
+const BranchInfoModal = ({ branch, onClose, t }: any) => {
+    if (!branch) return null;
+    
+    return (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in" onClick={onClose}>
+            <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden animate-scale-in flex flex-col max-h-[90vh]" onClick={e => e.stopPropagation()}>
+                <div className="p-6 md:p-8 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-950">
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl">
+                            <i className={`fas ${branch.icon}`}></i>
+                        </div>
+                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white font-serif">{branch.name}</h2>
+                    </div>
+                    <button onClick={onClose} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+                        <i className="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div className="p-6 md:p-8 overflow-y-auto">
+                    <div className="prose prose-slate dark:prose-invert max-w-none">
+                        <div className="mb-8">
+                            <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                                {t(branch.details.description)}
+                            </p>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-8 mb-8">
+                            <div className="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl border border-amber-100 dark:border-amber-900/30">
+                                <h3 className="text-amber-800 dark:text-amber-200 font-bold mb-3 flex items-center gap-2">
+                                    <i className="fas fa-question-circle"></i> Warum ist das wichtig?
+                                </h3>
+                                <p className="text-amber-900/80 dark:text-amber-100/80 text-sm leading-relaxed">
+                                    {t(branch.details.why)}
+                                </p>
+                            </div>
+                            <div className="bg-emerald-50 dark:bg-emerald-900/20 p-6 rounded-xl border border-emerald-100 dark:border-emerald-900/30">
+                                <h3 className="text-emerald-800 dark:text-emerald-200 font-bold mb-3 flex items-center gap-2">
+                                    <i className="fas fa-rocket"></i> Wie starte ich?
+                                </h3>
+                                <p className="text-emerald-900/80 dark:text-emerald-100/80 text-sm leading-relaxed">
+                                    {t(branch.details.how)}
+                                </p>
+                            </div>
+                        </div>
+
+                        {branch.details.resources && branch.details.resources.length > 0 && (
+                            <div>
+                                <h4 className="font-bold text-slate-900 dark:text-white mb-4 uppercase text-xs tracking-widest border-b border-slate-100 dark:border-slate-800 pb-2">
+                                    Weiterführende Informationen
+                                </h4>
+                                <ul className="space-y-2">
+                                    {branch.details.resources.map((res: any, idx: number) => (
+                                        <li key={idx}>
+                                            <a href={res.url} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-brand-600 hover:text-brand-700 font-medium transition-colors group">
+                                                <i className="fas fa-external-link-alt text-xs opacity-50 group-hover:opacity-100"></i>
+                                                {res.label}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const DetailPopup = ({ node, onClose, onStatusChange, onOkrToggle, nodeState, isGardener, isMobile, allNodes, userState, onNavigate, branches, ui }: any) => {
     const [isNaInputOpen, setIsNaInputOpen] = useState(false);
     const [naReason, setNaReason] = useState('');
@@ -270,20 +338,27 @@ const ListView = ({ branches, nodes, userState, onNodeClick, isGardener, onStatu
                 return (
                     <div key={branch.id} className="mb-8 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
                         <div 
-                        onClick={() => toggleCollapse(branch.id)}
-                        className="p-6 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors select-none group"
+                        className="p-6 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors select-none group"
                         >
-                            <div className="flex items-center">
+                            <div className="flex items-center cursor-pointer" onClick={() => toggleCollapse(branch.id)}>
                                 <div className="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl mr-4 pointer-events-none">
                                     <i className={`fas ${branch.icon}`}></i>
                                 </div>
                                 <div>
-                                    <h2 className="text-xl font-serif font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                                    {branch.name}
-                                    <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center ml-2 pointer-events-none">
-                                        <i className={`fas fa-chevron-${isCollapsed ? 'down' : 'up'} text-xs text-slate-500`}></i>
+                                    <div className="flex items-center gap-3">
+                                        <h2 className="text-xl font-serif font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                        {branch.name}
+                                        <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center ml-2 pointer-events-none">
+                                            <i className={`fas fa-chevron-${isCollapsed ? 'down' : 'up'} text-xs text-slate-500`}></i>
+                                        </div>
+                                        </h2>
+                                        <button 
+                                            onClick={(e) => { e.stopPropagation(); onBranchInfoClick(branch); }}
+                                            className="w-6 h-6 flex items-center justify-center text-slate-400 hover:text-emerald-600 transition-colors"
+                                        >
+                                            <i className="fas fa-info-circle"></i>
+                                        </button>
                                     </div>
-                                    </h2>
                                     <div className="flex items-center text-sm text-slate-500 dark:text-slate-400 mt-1 pointer-events-none">
                                         <span className="bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded text-xs font-bold mr-2">{branchNodes.length} Nodes</span>
                                         <span>{completed} abgeschlossen</span>
@@ -350,12 +425,7 @@ const AppTool: React.FC = () => {
       icon: icons[index] || "fa-circle",
       startRow: lane.startRow,
       endRow: lane.endRow,
-      details: {
-          description: t(lane.details.description),
-          importance: t(lane.details.importance),
-          gettingStarted: t(lane.details.gettingStarted),
-          resources: lane.details.resources
-      }
+      details: lane.details
   }));
 
   const appNodes = rawConfig.cells.map((cell: any) => {
@@ -380,6 +450,7 @@ const AppTool: React.FC = () => {
   }).filter(n => n.branchId !== null);
 
   const [activeNodeId, setActiveNodeId] = useState<string | null>(null);
+  const [selectedBranch, setSelectedBranch] = useState<any>(null);
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
   const [isGardenerMode, setIsGardenerMode] = useState(false);
   const [viewMode, setViewMode] = useState<'map' | 'list'>('map');
@@ -565,6 +636,10 @@ const AppTool: React.FC = () => {
 
       <WarningModal data={warningData} onClose={() => setWarningData({ ...warningData, isOpen: false })} nodes={appNodes} />
       
+      {selectedBranch && (
+          <BranchInfoModal branch={selectedBranch} onClose={() => setSelectedBranch(null)} t={t} />
+      )}
+
       {activeNodeId && (
         <DetailPopup node={activeNode} onClose={() => setActiveNodeId(null)} onStatusChange={(id: string, status: string, data: any) => handleStatusChangeAttempt(id, status, data, () => setActiveNodeId(null))} onOkrToggle={(idx: number) => toggleNodeOkr(activeNodeId, idx)} nodeState={getNodeState(activeNodeId)} isGardener={isGardenerMode} isMobile={isMobile} allNodes={appNodes} userState={userState} onNavigate={setActiveNodeId} branches={appBranches} ui={ui} />
       )}
@@ -654,7 +729,8 @@ const AppTool: React.FC = () => {
                                   <React.Fragment key={branch.id}>
                                       <div className="sticky left-0 z-30 flex items-center bg-slate-50 dark:bg-slate-950 pr-4 border-r border-slate-200 dark:border-slate-800 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
                                           <div 
-                                              className="flex items-center space-x-3 w-full p-4 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group"
+                                              className="flex items-center space-x-3 w-full p-4 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer"
+                                              onClick={() => setSelectedBranch(branch)}
                                           >
                                               <div className="w-8 h-8 rounded bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-700 dark:text-emerald-400 flex-shrink-0"><i className={`fas ${branch.icon}`}></i></div>
                                               <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 leading-tight flex-1">{branch.name}</h3>
@@ -717,7 +793,7 @@ const AppTool: React.FC = () => {
                   </div>
              </div>
           ) : (
-            <ListView branches={appBranches} nodes={appNodes} userState={userState} onNodeClick={setActiveNodeId} isGardener={isGardenerMode} onStatusChange={(id: string, status: string) => handleStatusChangeAttempt(id, status)} onBranchInfoClick={() => {}} />
+            <ListView branches={appBranches} nodes={appNodes} userState={userState} onNodeClick={setActiveNodeId} isGardener={isGardenerMode} onStatusChange={(id: string, status: string) => handleStatusChangeAttempt(id, status)} onBranchInfoClick={(branch: any) => setSelectedBranch(branch)} />
           )}
         </div>
       </div>

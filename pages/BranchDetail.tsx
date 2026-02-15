@@ -9,9 +9,22 @@ import {
 import { BranchDecoration, LeafIcon } from '../components/Illustrations';
 import SEO from '../components/SEO';
 import { useLanguage } from '../contexts/LanguageContext';
+import { Level } from '../types';
+
+interface LevelCardProps {
+  level: Level;
+  visual: { 
+    icon: any; 
+    color: string; 
+    bg: string; 
+    border: string; 
+    ring: string 
+  };
+  index: number;
+}
 
 // Helper component for individual scroll animations
-const LevelCard = ({ level, visual, index }: { level: any, visual: any, index: number }) => {
+const LevelCard: React.FC<LevelCardProps> = ({ level, visual, index }) => {
   const [isVisible, setIsVisible] = useState(false);
   const domRef = useRef<HTMLDivElement>(null);
   const { t } = useLanguage();

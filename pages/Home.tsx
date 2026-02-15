@@ -184,11 +184,11 @@ const Home: React.FC = () => {
       <section className="bg-white py-12 border-b border-slate-100">
          <div className="max-w-7xl mx-auto px-4">
             <ScrollReveal animation="fade-up" delay={200}>
-              <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700">
-                 <span className="text-slate-900 font-black text-xl">Swiss Testing Day</span>
-                 <span className="text-slate-900 font-black text-xl">Springer Vieweg</span>
-                 <span className="text-slate-900 font-black text-xl">Infometis AG</span>
-                 <span className="text-slate-900 font-black text-xl">Bank CIC</span>
+              <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24">
+                 <a href="https://swisstestingday.ch" target="_blank" rel="noreferrer" className="text-slate-900 font-black text-xl opacity-40 grayscale hover:grayscale-0 hover:opacity-100 hover:text-brand-600 transition-all duration-500">Swiss Testing Day</a>
+                 <a href="https://www.springer.com/de" target="_blank" rel="noreferrer" className="text-slate-900 font-black text-xl opacity-40 grayscale hover:grayscale-0 hover:opacity-100 hover:text-brand-600 transition-all duration-500">Springer Vieweg</a>
+                 <a href="https://www.infometis.ch" target="_blank" rel="noreferrer" className="text-slate-900 font-black text-xl opacity-40 grayscale hover:grayscale-0 hover:opacity-100 hover:text-brand-600 transition-all duration-500">Infometis AG</a>
+                 <a href="https://www.cic.ch" target="_blank" rel="noreferrer" className="text-slate-900 font-black text-xl opacity-40 grayscale hover:grayscale-0 hover:opacity-100 hover:text-brand-600 transition-all duration-500">Bank CIC</a>
               </div>
             </ScrollReveal>
          </div>
