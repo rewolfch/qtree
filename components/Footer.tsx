@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Linkedin, Mail, ShoppingCart, BookOpen, TreeDeciduous, Globe } from 'lucide-react';
+import { Linkedin, Mail, ShoppingCart, BookOpen, TreeDeciduous, Globe, ShoppingBag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -29,6 +29,12 @@ const Footer: React.FC = () => {
                </a>
                <a href="https://link.springer.com/book/9783658510404" target="_blank" rel="noreferrer" className="text-xs font-bold bg-slate-800 hover:bg-blue-600 text-white px-4 py-2.5 rounded-lg flex items-center transition-colors border border-slate-700 hover:border-blue-500 shadow-sm">
                  <BookOpen className="h-3.5 w-3.5 mr-2" /> Springer
+               </a>
+               <a href="https://www.thalia.de/suche?sq=9783658510404" target="_blank" rel="noreferrer" className="text-xs font-bold bg-white text-slate-900 hover:bg-brand-500 hover:text-white px-4 py-2.5 rounded-lg flex items-center transition-all shadow-sm">
+                 <ShoppingBag className="h-3.5 w-3.5 mr-2" /> Thalia
+               </a>
+               <a href="https://www.orellfuessli.ch/suche?sq=9783658510404" target="_blank" rel="noreferrer" className="text-xs font-bold bg-white text-slate-900 hover:bg-brand-500 hover:text-white px-4 py-2.5 rounded-lg flex items-center transition-all shadow-sm">
+                 <ShoppingBag className="h-3.5 w-3.5 mr-2" /> Orell Füssli
                </a>
             </div>
           </div>

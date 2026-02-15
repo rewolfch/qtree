@@ -37,7 +37,9 @@ const Blog: React.FC = () => {
     const loadPosts = async () => {
       setLoading(true);
       const data = await fetchAllPosts();
-      setDisplayPosts(data);
+      // Sort posts by date descending (newest first)
+      const sortedData = [...data].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      setDisplayPosts(sortedData);
       setLoading(false);
     };
     loadPosts();

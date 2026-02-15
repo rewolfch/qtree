@@ -155,7 +155,7 @@ export const blogPosts: BlogPost[] = [
       de: "Live aus Mailand: Warum wir einen neuen Bauplan für Qualität brauchen",
       en: "Live from Milan: Why We Need a New Blueprint for Quality"
     },
-    date: "2026-11-24",
+    date: "2025-11-24",
     author: "Serge Baumberger",
     imageUrl: "https://media.licdn.com/dms/image/v2/D4E22AQGTN1dUqz0bzw/feedshare-shrink_2048_1536/B4EZsIVBh8KcAk-/0/1765371288233?e=1772668800&v=beta&t=otxUR675oppFTOejEn7jGzoSpeZnRH3-WmHmU-UQscw",
     excerpt: {

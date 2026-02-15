@@ -128,28 +128,56 @@ const BranchDetail: React.FC = () => {
   const branchTitle = t(branch.title);
   const branchDesc = t(branch.description);
 
-  const breadcrumbSchema = {
+  const branchSchema = {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [{
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Framework",
-      "item": "https://www.quality-tree.com/#/framework"
-    },{
-      "@type": "ListItem",
-      "position": 2,
-      "name": branchTitle,
-      "item": `https://www.quality-tree.com/#/framework/${branch.id}`
-    }]
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Framework",
+          "item": "https://www.quality-tree.com/#/framework"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": branchTitle,
+          "item": `https://www.quality-tree.com/#/framework/${branch.id}`
+        }]
+      },
+      {
+        "@type": "TechArticle",
+        "headline": branchTitle,
+        "description": branchDesc,
+        "image": "https://media.springernature.com/full/springer-static/cover-hires/book/978-3-658-51040-4?as=webp",
+        "author": {
+          "@type": "Person",
+          "name": "Serge Baumberger",
+          "url": "https://www.quality-tree.com/#/author"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Quality Tree Framework",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://lucide.dev/favicon.ico"
+          }
+        },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": `https://www.quality-tree.com/#/framework/${branch.id}`
+        }
+      }
+    ]
   };
 
   return (
     <div className="min-h-screen bg-slate-50 py-12 relative overflow-hidden">
       <SEO 
-        title={`${branchTitle} - Framework Dimension`} 
+        title={branchTitle} 
         description={branchDesc}
-        schema={breadcrumbSchema}
+        schema={branchSchema}
+        type="article"
       />
 
       <div className={`absolute top-0 right-0 w-[800px] h-[800px] opacity-[0.07] pointer-events-none translate-x-1/4 -translate-y-1/4 ${visual.color}`}>

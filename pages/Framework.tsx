@@ -29,11 +29,30 @@ const Framework: React.FC = () => {
     branch.levels.some(l => t(l.title).toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
+  const frameworkSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": ui("framework.title"),
+    "description": ui("framework.subtitle"),
+    "url": "https://www.quality-tree.com/#/framework",
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": branches.map((branch, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "url": `https://www.quality-tree.com/#/framework/${branch.id}`,
+        "name": t(branch.title),
+        "description": t(branch.description)
+      }))
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 py-24">
       <SEO 
         title={ui("seo.framework.title")}
         description={ui("seo.framework.description")}
+        schema={frameworkSchema}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
