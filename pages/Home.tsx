@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, Sprout, Layers, GitBranch, ShoppingCart, BookOpen, Star, CheckCircle2, TrendingUp, ShieldCheck, Users, Globe, Calendar, Video, ExternalLink, Search, Zap, Linkedin, Mail } from 'lucide-react';
+import { ArrowRight, Sprout, Layers, GitBranch, ShoppingCart, BookOpen, Star, CheckCircle2, TrendingUp, ShieldCheck, Users, Globe, Calendar, Video, ExternalLink, Search, Zap, Linkedin, Mail, ClipboardCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { LeafIcon, TheGrowingTree, SeedIcon, ForestIcon } from '../components/Illustrations';
 import SEO from '../components/SEO';
@@ -348,6 +348,84 @@ const Home: React.FC = () => {
               </div>
             </div>
           </ScrollReveal>
+        </div>
+      </section>
+
+      {/* NEW: Professional Assessment Service by Infometis */}
+      <section className="py-24 bg-indigo-50 border-t border-indigo-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
+            <div className="order-2 lg:order-1">
+              <ScrollReveal animation="fade-right">
+                <div className="inline-flex items-center gap-2 bg-white text-indigo-600 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-6 border border-indigo-100 shadow-sm">
+                  {ui("home.services.badge")}
+                </div>
+                <h2 className="text-4xl lg:text-5xl font-black text-slate-900 mb-6 tracking-tight">
+                  {ui("home.services.title")}
+                </h2>
+                <p className="text-xl text-slate-600 leading-relaxed mb-8 font-light">
+                  {ui("home.services.desc")}
+                </p>
+                
+                <ul className="space-y-4 mb-10">
+                   {[
+                     ui("home.services.feature1"),
+                     ui("home.services.feature2"),
+                     ui("home.services.feature3"),
+                   ].map((item, i) => (
+                     <li key={i} className="flex items-center gap-3 text-slate-700 font-medium">
+                        <div className="w-6 h-6 rounded-full bg-indigo-200 text-indigo-700 flex items-center justify-center shrink-0">
+                          <CheckCircle2 className="h-3.5 w-3.5" />
+                        </div>
+                        {item}
+                     </li>
+                   ))}
+                </ul>
+
+                <a 
+                  href="https://www.infometis.ch/services/test-assessment" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-xl shadow-indigo-200 hover:-translate-y-1"
+                >
+                  {ui("home.services.cta")} <ExternalLink className="h-4 w-4" />
+                </a>
+              </ScrollReveal>
+            </div>
+
+            <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
+              <ScrollReveal animation="fade-left">
+                 <div className="relative group">
+                   <div className="absolute inset-0 bg-indigo-600 rounded-[3rem] rotate-6 opacity-10 scale-95 transition-transform group-hover:rotate-3"></div>
+                   <div className="bg-white p-8 rounded-[3rem] shadow-2xl border border-indigo-50 relative z-10 max-w-md">
+                      <div className="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 mb-6">
+                         <ClipboardCheck className="h-8 w-8" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-slate-900 mb-2">Infometis Quality Assessment</h3>
+                      <p className="text-slate-500 mb-6 text-sm">Powered by Quality Tree Framework</p>
+                      <div className="space-y-3">
+                         <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                            <div className="h-full bg-indigo-500 w-3/4"></div>
+                         </div>
+                         <div className="flex justify-between text-xs text-slate-400 font-mono">
+                            <span>Maturity Analysis</span>
+                            <span>75%</span>
+                         </div>
+                         <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden mt-4">
+                            <div className="h-full bg-emerald-500 w-1/2"></div>
+                         </div>
+                         <div className="flex justify-between text-xs text-slate-400 font-mono">
+                            <span>Strategy Roadmap</span>
+                            <span>In Progress</span>
+                         </div>
+                      </div>
+                   </div>
+                 </div>
+              </ScrollReveal>
+            </div>
+
+          </div>
         </div>
       </section>
 

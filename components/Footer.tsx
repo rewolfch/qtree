@@ -43,6 +43,7 @@ const Footer: React.FC = () => {
             <h3 className="text-white text-sm font-bold uppercase tracking-wider mb-6">{ui("footer.explore")}</h3>
             <ul className="space-y-4 text-sm">
               <li><Link to="/framework" className="hover:text-brand-400 transition-colors">{ui("nav.framework")}</Link></li>
+              <li><a href="https://www.infometis.ch/services/test-assessment" target="_blank" rel="noreferrer" className="hover:text-brand-400 transition-colors">{ui("nav.assessment")}</a></li>
               <li><Link to="/blog" className="hover:text-brand-400 transition-colors">{ui("nav.blog")}</Link></li>
               <li><Link to="/author" className="hover:text-brand-400 transition-colors">{ui("nav.author")}</Link></li>
               <li><Link to="/app" className="hover:text-brand-400 transition-colors">{ui("nav.app")}</Link></li>

@@ -25,6 +25,7 @@ const uiTranslations: Record<string, Record<Language, string>> = {
   "nav.book": { de: "Buch", en: "Book" },
   "nav.course": { de: "Kurs", en: "Course" },
   "nav.faq": { de: "FAQ & Definitionen", en: "FAQ & Definitions" },
+  "nav.assessment": { de: "Assessment", en: "Assessment" },
   
   "hero.badge": { de: "Jetzt als Bestseller erhältlich", en: "Now available as Bestseller" },
   "hero.title_start": { de: "Qualität ist", en: "Quality is" },
@@ -63,6 +64,14 @@ const uiTranslations: Record<string, Record<Language, string>> = {
   "home.check.high": { de: "Exzellente Performance! Sie sind bereit für AI-gestütztes Testing. Kapitel 8 liefert Ihnen die notwendigen Deep Dives.", en: "Excellent performance! You are ready for AI-supported testing. Chapter 8 provides the necessary deep dives." },
   "home.check.cta_app": { de: "Vollständiges Assessment", en: "Full Assessment" },
   "home.check.cta_book": { de: "Lösungsbuch kaufen", en: "Buy Solution Book" },
+
+  "home.services.badge": { de: "Official Service", en: "Official Service" },
+  "home.services.title": { de: "Das Quality Tree Assessment", en: "The Quality Tree Assessment" },
+  "home.services.desc": { de: "Gehen Sie über die Selbsteinschätzung hinaus. Lassen Sie Ihre Reife von den Experten der Infometis AG analysieren, Lücken identifizieren und eine maßgeschneiderte Roadmap für Ihr Unternehmen erstellen.", en: "Go beyond self-assessment. Let the experts at Infometis AG analyze your maturity, identify gaps, and build a tailored roadmap for your organization." },
+  "home.services.feature1": { de: "Detaillierte Reifegrad-Heatmap", en: "Detailed Maturity Heatmap" },
+  "home.services.feature2": { de: "Strategische Gap-Analyse", en: "Strategic Gap Analysis" },
+  "home.services.feature3": { de: "Priorisierter Maßnahmenplan", en: "Prioritized Action Plan" },
+  "home.services.cta": { de: "Assessment anfragen", en: "Request Assessment" },
 
   "home.author.badge": { de: "Der Kopf hinter dem System", en: "The Mind Behind the System" },
   "home.author.title": { de: "Vom Workshop zur Weltbühne.", en: "From Workshop to World Stage." },

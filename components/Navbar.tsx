@@ -35,6 +35,14 @@ const Navbar: React.FC = () => {
           <div className="hidden md:flex items-center space-x-1">
             <Link to="/" className={isActive('/')}>{ui("nav.home")}</Link>
             <Link to="/framework" className={isActive('/framework')}>{ui("nav.framework")}</Link>
+            <a 
+              href="https://www.infometis.ch/services/test-assessment" 
+              target="_blank" 
+              rel="noreferrer" 
+              className="text-slate-600 hover:text-brand-700 hover:bg-slate-50 rounded-lg px-3 py-2 transition-all"
+            >
+              {ui("nav.assessment")}
+            </a>
             <Link to="/blog" className={isActive('/blog')}>{ui("nav.blog")}</Link>
             <Link to="/author" className={isActive('/author')}>{ui("nav.author")}</Link>
             <Link to="/app" className={isActive('/app')}>{ui("nav.app")}</Link>
@@ -89,6 +97,7 @@ const Navbar: React.FC = () => {
           <div className="px-4 pt-2 pb-6 space-y-1">
             <Link to="/" onClick={() => setIsOpen(false)} className="block px-3 py-3 text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50 rounded-lg">{ui("nav.home")}</Link>
             <Link to="/framework" onClick={() => setIsOpen(false)} className="block px-3 py-3 text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50 rounded-lg">{ui("nav.framework")}</Link>
+            <a href="https://www.infometis.ch/services/test-assessment" target="_blank" rel="noreferrer" onClick={() => setIsOpen(false)} className="block px-3 py-3 text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50 rounded-lg">{ui("nav.assessment")}</a>
             <Link to="/blog" onClick={() => setIsOpen(false)} className="block px-3 py-3 text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50 rounded-lg">{ui("nav.blog")}</Link>
             <Link to="/author" onClick={() => setIsOpen(false)} className="block px-3 py-3 text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50 rounded-lg">{ui("nav.author")}</Link>
             <Link to="/app" onClick={() => setIsOpen(false)} className="block px-3 py-3 text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50 rounded-lg">{ui("nav.app")}</Link>
