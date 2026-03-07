@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { branches } from '../data/framework';
 import { GitBranch, Microscope, Hammer, Rocket, Bot, Cloud, UserCheck, BarChart, ArrowRight, Search, Zap, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { BranchDecoration } from '../components';
+import { BranchDecoration } from '../components/Illustrations';
 import SEO from '../components/SEO';
 import { useLanguage } from '../contexts/LanguageContext';
 import ScrollReveal from '../components/ScrollReveal';
