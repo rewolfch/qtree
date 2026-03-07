@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { fetchPostById } from '../services/blogService';
 import { BlogPost } from '../types';
-import { ArrowLeft, Calendar, User, Linkedin, Twitter, Mail, Share2, TreeDeciduous, ArrowRight } from 'lucide-react';
+import { ArrowLeft, Calendar, User, Share2, TreeDeciduous, ArrowRight } from 'lucide-react';
 import SEO from '../components/SEO';
 import { useLanguage } from '../contexts/LanguageContext';
+import ShareButtons from '../components/ShareButtons';
 
 const PostSkeleton = () => (
   <div className="min-h-screen bg-slate-50 pb-16 animate-pulse">
@@ -168,6 +169,11 @@ const BlogPostDetail: React.FC = () => {
         </div>
       )}
 
+      {/* Sticky Share Buttons for Desktop */}
+      <div className="hidden xl:block fixed left-12 top-1/2 -translate-y-1/2 z-20">
+         <ShareButtons title={postTitle} url={currentUrl} vertical />
+      </div>
+
       <div className={`max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 ${post.imageUrl ? '-mt-20 relative z-10' : 'pt-12'}`}>
         <div className="flex justify-between items-center mb-6">
           <Link to="/blog" className="inline-flex items-center text-slate-600 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full hover:text-brand-600 transition-colors group shadow-sm border border-slate-200/50">
@@ -209,30 +215,7 @@ const BlogPostDetail: React.FC = () => {
             <Share2 className="h-5 w-5 mr-2 text-brand-600" />
             {ui("blog_detail.share")}
           </div>
-          <div className="flex gap-3">
-            <a 
-              href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center px-4 py-2 bg-[#0077b5] text-white rounded-lg hover:bg-[#006097] transition-colors text-sm font-medium"
-            >
-              <Linkedin className="h-4 w-4 mr-2" /> LinkedIn
-            </a>
-            <a 
-              href={`https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center px-4 py-2 bg-black text-white rounded-lg hover:bg-slate-800 transition-colors text-sm font-medium"
-            >
-              <Twitter className="h-4 w-4 mr-2" /> X / Twitter
-            </a>
-            <a 
-              href={`mailto:?subject=${shareText}&body=Lies diesen Artikel: ${shareUrl}`}
-              className="flex items-center justify-center px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors text-sm font-medium"
-            >
-              <Mail className="h-4 w-4 mr-2" /> Email
-            </a>
-          </div>
+          <ShareButtons title={postTitle} url={currentUrl} />
         </div>
       </div>
     </div>
