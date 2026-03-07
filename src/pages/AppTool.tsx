@@ -4,7 +4,7 @@ import confetti from 'canvas-confetti';
 import { rawConfig } from '../data/appToolData';
 import { useLanguage } from '../contexts/LanguageContext';
 import SEO from '../components/SEO';
-import { AppToolCell, AppToolLane, LocalizedString } from '../types';
+import { AppToolCell, LocalizedString } from '../types';
 
 interface AppNode extends Omit<AppToolCell, 'label' | 'tooltip'> {
   title: string;
@@ -431,13 +431,18 @@ const AppTool: React.FC = () => {
   const levels = Array.from({ length: 9 }, (_, i) => ({ id: i + 1, label: `${ui("app.level")} ${i + 1}` }));
   const icons = ["fa-cogs", "fa-vial", "fa-cube", "fa-rocket", "fa-robot", "fa-server", "fa-user-check", "fa-chart-line"];
 
-  const appBranches = rawConfig.lanes.map((lane: AppToolLane, index: number) => ({
+  const appBranches = rawConfig.lanes.map((lane: any, index: number) => ({
       id: `branch-${index}`,
       name: lane.label,
       icon: icons[index] || "fa-circle",
       startRow: lane.startRow,
       endRow: lane.endRow,
-      details: lane.details
+      details: {
+          description: lane.details.description,
+          why: lane.details.importance,
+          how: lane.details.gettingStarted,
+          resources: lane.details.resources
+      }
   }));
 
   const appNodes: AppNode[] = rawConfig.cells.map((cell: AppToolCell) => {

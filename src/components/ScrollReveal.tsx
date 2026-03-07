@@ -1,23 +1,25 @@
+
 import React, { useRef, useEffect } from 'react';
-import { motion, useInView, useAnimation } from 'framer-motion';
+
+import { motion, useAnimation, useInView } from 'framer-motion';
 
 interface ScrollRevealProps {
   children: React.ReactNode;
-  animation?: 'fade-up' | 'fade-right' | 'fade-left' | 'fade-in' | 'zoom-in';
+  className?: string;
+  animation?: 'fade-up' | 'fade-right' | 'fade-left' | 'zoom-in';
   delay?: number;
   duration?: number;
-  className?: string;
 }
 
 const ScrollReveal: React.FC<ScrollRevealProps> = ({ 
   children, 
+  className = "", 
   animation = 'fade-up', 
-  delay = 0, 
-  duration = 500,
-  className = '' 
+  delay = 0,
+  duration = 1000
 }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
+  const isInView = useInView(ref, { once: true, margin: "0px 0px -50px 0px" });
   const controls = useAnimation();
 
   useEffect(() => {
@@ -27,21 +29,21 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
   }, [isInView, controls]);
 
   const variants = {
-    hidden: { 
+    hidden: {
       opacity: 0,
       y: animation === 'fade-up' ? 50 : 0,
       x: animation === 'fade-right' ? -50 : animation === 'fade-left' ? 50 : 0,
-      scale: animation === 'zoom-in' ? 0.8 : 1
+      scale: animation === 'zoom-in' ? 0.9 : 1
     },
-    visible: { 
+    visible: {
       opacity: 1,
       y: 0,
       x: 0,
       scale: 1,
-      transition: { 
-        duration: duration / 1000, 
+      transition: {
+        duration: duration / 1000,
         delay: delay / 1000,
-        ease: "easeOut"
+        ease: "easeOut" as any
       }
     }
   };

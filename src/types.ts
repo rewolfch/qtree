@@ -31,12 +31,15 @@ export interface AppToolCell {
   label: LocalizedString;
   tooltip: LocalizedString;
   acceptanceCriteria?: string[];
+  class?: string;
+  isRoot?: boolean;
 }
 
 export interface AppToolLane {
   label: string;
   startRow: number;
   endRow: number;
+  icon?: string;
   details: {
     description: LocalizedString;
     why: LocalizedString;
