@@ -153,7 +153,7 @@ const BranchInfoModal = ({ branch, onClose, t }: any) => {
     );
 };
 
-const DetailPopup = ({ node, onClose, onStatusChange, onOkrToggle, nodeState, isGardener, isMobile, allNodes, userState, onNavigate, branches, ui }: any) => {
+const DetailPopup = ({ node, onClose, onStatusChange, onOkrToggle, nodeState, isMobile, allNodes, userState, onNavigate, branches, ui }: any) => {
     const [isNaInputOpen, setIsNaInputOpen] = useState(false);
     const [naReason, setNaReason] = useState('');
 
@@ -489,11 +489,6 @@ const AppTool: React.FC = () => {
     localStorage.setItem('qtree-state', JSON.stringify(userState));
     localStorage.setItem('qtree-project', JSON.stringify(projectData));
   }, [userState, projectData]);
-
-  const scrollToTree = () => {
-    const target = isMobile ? document.getElementById('mobile-branch-selector') : gridRef.current;
-    target?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   const getPrerequisites = (nodeId: string) => {
     if (!rawConfig || !rawConfig.arrows) return [];

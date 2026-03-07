@@ -198,7 +198,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   };
 
   // Helper for content objects {de: "...", en: "..."}
-  const t = (content: LocalizedString | string, key?: string): string => {
+  const t = (content: LocalizedString | string): string => {
     if (typeof content === 'object' && content !== null && 'de' in content) {
       return content[language] || content['de'];
     }
