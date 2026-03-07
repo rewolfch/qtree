@@ -1,4 +1,4 @@
-import { db } from '../firebaseConfig';
+import { db } from '../firebaseConfig.ts';
 import { collection, getDocs } from 'firebase/firestore';
 import { BlogPost } from '../types';
 import { blogPosts as staticPosts } from '../data/framework';

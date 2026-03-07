@@ -48,6 +48,12 @@ export interface AppToolLane {
   };
 }
 
+export interface AppToolConfig {
+  lanes: AppToolLane[];
+  cells: AppToolCell[];
+  arrows: { from: string; to: string }[];
+}
+
 export interface AppNode extends Omit<AppToolCell, 'label' | 'tooltip'> {
   title: string;
   description: string;
