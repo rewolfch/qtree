@@ -471,12 +471,11 @@ const Home: React.FC = () => {
                     <h4 className="font-bold text-slate-900">{ui("home.author.meeting_title")}</h4>
                     <p className="text-slate-500 text-sm mt-2">{ui("home.author.meeting_desc")}</p>
                   </a>
-                  <a href="https://www.developer-world.de/" target="_blank" rel="noreferrer" className="flex flex-col p-6 rounded-3xl border border-slate-100 bg-slate-50 group hover:bg-white hover:shadow-lg transition-all">
+                  <div className="flex flex-col p-6 rounded-3xl border border-slate-100 bg-slate-50 group hover:bg-white hover:shadow-lg transition-all">
                     <Video className="h-8 w-8 text-slate-400 mb-4 group-hover:text-brand-600 transition-colors" />
                     <h4 className="font-bold text-slate-900">{ui("home.author.keynote_title")}</h4>
-                    <p className="text-slate-500 text-sm mt-2">Developer Week 2026</p>
-                    <p className="text-slate-400 text-xs mt-1">2. Juli 2026 • Mannheim</p>
-                  </a>
+                    <p className="text-slate-500 text-sm mt-2">Swiss Testing Day 2025.</p>
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-8">
