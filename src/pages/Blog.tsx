@@ -1,115 +1,172 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useLanguage } from '../contexts/LanguageContext';
+import { BlogPost } from '../types';
+import { fetchAllPosts } from '../services/blogService';
+import { Calendar, User, ArrowRight, BookOpen, Search } from 'lucide-react';
 import SEO from '../components/SEO';
+import { useLanguage } from '../contexts/LanguageContext';
 import ScrollReveal from '../components/ScrollReveal';
-import { blogPosts } from '../data/blogPosts';
-import { Search, Clock, User, ArrowRight } from 'lucide-react';
+
+const BlogSkeleton = () => (
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+    {[1, 2, 3, 4, 5, 6].map((i) => (
+      <div key={i} className="bg-white rounded-[2.5rem] shadow-sm border border-slate-200 overflow-hidden h-full animate-pulse">
+        <div className="h-64 bg-slate-200"></div>
+        <div className="p-10">
+          <div className="h-3 w-32 bg-slate-200 rounded-full mb-6"></div>
+          <div className="h-8 w-full bg-slate-200 rounded mb-4"></div>
+          <div className="h-8 w-2/3 bg-slate-200 rounded mb-10"></div>
+          <div className="space-y-3">
+            <div className="h-3 w-full bg-slate-100 rounded"></div>
+            <div className="h-3 w-5/6 bg-slate-100 rounded"></div>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+);
 
 const Blog: React.FC = () => {
-  const { t, ui } = useLanguage();
+  const [displayPosts, setDisplayPosts] = useState<BlogPost[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
+  const { ui, t } = useLanguage();
 
-  const filteredPosts = blogPosts.filter(post => 
+  useEffect(() => {
+    const loadPosts = async () => {
+      setLoading(true);
+      const data = await fetchAllPosts();
+      // Sort posts by date descending (newest first)
+      const sortedData = [...data].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      setDisplayPosts(sortedData);
+      setLoading(false);
+    };
+    loadPosts();
+  }, []);
+
+  const filteredPosts = displayPosts.filter(post => 
     t(post.title).toLowerCase().includes(searchQuery.toLowerCase()) ||
     t(post.excerpt).toLowerCase().includes(searchQuery.toLowerCase()) ||
-    post.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+    t(post.content).toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": ui("seo.blog.title"),
+    "description": ui("blog.header_desc"),
+    "url": "https://www.quality-tree.com/#/blog"
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 py-24">
       <SEO 
         title={ui("seo.blog.title")}
         description={ui("blog.header_desc")}
+        schema={schema}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20">
+        {/* Blog Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
           <ScrollReveal animation="fade-up">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-100 text-brand-700 text-[10px] font-black uppercase tracking-widest mb-6 border border-brand-200">
-              Knowledge Hub
+            <div className="inline-flex items-center justify-center p-3 bg-brand-100 rounded-2xl mb-6 text-brand-600 border border-brand-200">
+              <BookOpen className="h-8 w-8" />
             </div>
-            <h1 className="text-5xl font-black text-slate-900 mb-6 tracking-tight">{ui("blog.header_title")}</h1>
-            <p className="text-xl text-slate-500 leading-relaxed font-light">
+            <h1 className="text-5xl md:text-6xl font-black text-slate-900 mb-6 tracking-tight">{ui("blog.header_title")}</h1>
+            <p className="text-xl text-slate-600 leading-relaxed">
               {ui("blog.header_desc")}
             </p>
           </ScrollReveal>
         </div>
 
-        {/* Search */}
+        {/* Search Bar */}
         <ScrollReveal animation="fade-up" delay={200}>
-          <div className="max-w-xl mx-auto mb-20 relative">
-             <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none">
-               <Search className="h-5 w-5 text-slate-400" />
+          <div className="max-w-2xl mx-auto mb-20 relative group">
+             <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none">
+               <Search className="h-5 w-5 text-slate-400 group-focus-within:text-brand-600 transition-colors" />
              </div>
              <input 
               type="text" 
               placeholder={ui("blog.search_placeholder")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white border border-slate-200 rounded-2xl py-4 pl-14 pr-6 text-lg shadow-lg shadow-slate-200/50 outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 transition-all"
+              className="w-full bg-white border border-slate-200 rounded-3xl py-6 pl-16 pr-8 text-lg shadow-2xl shadow-slate-200/50 outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 transition-all"
              />
+             {searchQuery && (
+               <div className="absolute right-6 top-1/2 -translate-y-1/2 bg-slate-100 text-slate-500 px-3 py-1 rounded-lg text-xs font-bold animate-fade-in">
+                 {filteredPosts.length} {ui("blog.results")}
+               </div>
+             )}
           </div>
         </ScrollReveal>
+        
+        {loading ? <BlogSkeleton /> : (
+          <>
+            {filteredPosts.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                {filteredPosts.map((post, index) => (
+                  <ScrollReveal key={post.id} animation="fade-up" delay={index * 100}>
+                    <article className="flex flex-col bg-white rounded-[2.5rem] shadow-sm border border-slate-200 overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group h-full">
+                      <Link to={`/blog/${post.id}`} className="block h-64 overflow-hidden bg-slate-200 relative">
+                        {post.imageUrl ? (
+                          <img 
+                            src={post.imageUrl} 
+                            alt={t(post.title)} 
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s]"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
+                            <span className="text-slate-300 text-6xl font-black">QTF</span>
+                          </div>
+                        )}
+                        <div className="absolute top-6 left-6">
+                          <span className="bg-white/90 backdrop-blur-md text-slate-900 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-sm">
+                            {post.date.split('-')[0]}
+                          </span>
+                        </div>
+                      </Link>
 
-        {/* Blog Grid */}
-        {filteredPosts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {filteredPosts.map((post, idx) => (
-              <ScrollReveal key={post.id} animation="fade-up" delay={idx * 100}>
-                <Link to={`/blog/${post.id}`} className="group flex flex-col h-full bg-white rounded-[2rem] overflow-hidden border border-slate-200 shadow-sm hover:shadow-2xl hover:border-brand-200 transition-all duration-500 hover:-translate-y-2">
-                  <div className="relative h-64 overflow-hidden">
-                    <img 
-                      src={post.imageUrl} 
-                      alt={t(post.title)} 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-                      {post.tags.map(tag => (
-                        <span key={tag} className="bg-white/90 backdrop-blur-sm text-slate-800 text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-sm">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div className="p-8 flex flex-col flex-grow">
-                    <div className="flex items-center gap-4 text-xs text-slate-400 mb-4 font-medium">
-                      <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {post.readTime}</span>
-                      <span className="flex items-center gap-1"><User className="h-3 w-3" /> {post.author}</span>
-                    </div>
-                    
-                    <h2 className="text-2xl font-bold text-slate-900 mb-4 leading-tight group-hover:text-brand-700 transition-colors">
-                      {t(post.title)}
-                    </h2>
-                    
-                    <p className="text-slate-500 text-sm leading-relaxed mb-8 flex-grow line-clamp-3">
-                      {t(post.excerpt)}
-                    </p>
-                    
-                    <div className="flex items-center text-brand-600 font-black text-xs uppercase tracking-widest mt-auto">
-                      {ui("blog.read_more")} <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-2 transition-transform" />
-                    </div>
-                  </div>
-                </Link>
-              </ScrollReveal>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-24 bg-white rounded-[3rem] border border-slate-100">
-             <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 mx-auto mb-6">
-               <Search className="h-8 w-8" />
-             </div>
-             <h3 className="text-xl font-bold text-slate-900 mb-2">{ui("blog.no_results_title")}</h3>
-             <p className="text-slate-500 mb-8">{ui("blog.no_results_desc")}</p>
-             <button onClick={() => setSearchQuery("")} className="text-brand-600 font-bold hover:underline">
-               {ui("blog.reset_search")}
-             </button>
-          </div>
+                      <div className="p-10 flex-grow flex flex-col">
+                        <div className="flex items-center text-[10px] font-black text-brand-600 mb-6 space-x-4 uppercase tracking-widest">
+                          <span className="flex items-center"><Calendar className="h-3.5 w-3.5 mr-2" /> {post.date}</span>
+                          <span className="flex items-center"><User className="h-3.5 w-3.5 mr-2" /> {post.author}</span>
+                        </div>
+                        
+                        <h2 className="text-2xl font-bold text-slate-900 mb-6 line-clamp-2 group-hover:text-brand-700 transition-colors leading-tight">
+                          <Link to={`/blog/${post.id}`}>
+                            {t(post.title)}
+                          </Link>
+                        </h2>
+                        
+                        <p className="text-slate-500 mb-8 line-clamp-3 text-sm leading-relaxed flex-grow">
+                          {t(post.excerpt)}
+                        </p>
+                        
+                        <div className="mt-auto pt-8 border-t border-slate-50 group-hover:border-slate-100">
+                          <Link to={`/blog/${post.id}`} className="inline-flex items-center text-slate-900 font-black text-xs uppercase tracking-widest hover:text-brand-600 transition-all gap-2 group/btn">
+                            {ui("blog.read_more")} <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-2 transition-transform" />
+                          </Link>
+                        </div>
+                      </div>
+                    </article>
+                  </ScrollReveal>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-24 bg-white rounded-[3rem] border border-slate-100">
+                <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 mx-auto mb-6">
+                  <Search className="h-8 w-8" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">{ui("blog.no_results_title")}</h3>
+                <p className="text-slate-500">{ui("blog.no_results_desc")}</p>
+                <button onClick={() => setSearchQuery("")} className="mt-6 text-brand-600 font-bold hover:underline">{ui("blog.reset_search")}</button>
+              </div>
+            )}
+          </>
         )}
-
       </div>
     </div>
   );
