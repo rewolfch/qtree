@@ -1,6 +1,6 @@
 
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
-import { LocalizedString } from '../types';
+import { LocalizedString } from '../src/types';
 
 export type Language = 'de' | 'en';
 

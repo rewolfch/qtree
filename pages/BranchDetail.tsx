@@ -9,7 +9,7 @@ import {
 import { BranchDecoration } from '../components/Illustrations';
 import SEO from '../components/SEO';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Level } from '../types';
+import { Level } from '../src/types';
 
 interface LevelCardProps {
   level: Level;
@@ -31,7 +31,7 @@ const LevelCard: React.FC<LevelCardProps> = ({ level, visual, index }) => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
+      (entries: IntersectionObserverEntry[]) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);

@@ -4,7 +4,7 @@ import confetti from 'canvas-confetti';
 import { rawConfig } from '../data/appToolData';
 import { useLanguage } from '../contexts/LanguageContext';
 import SEO from '../components/SEO';
-import { AppToolCell, AppToolLane, LocalizedString } from '../types';
+import { AppToolCell, AppToolLane, LocalizedString } from '../src/types';
 
 interface AppNode extends Omit<AppToolCell, 'label' | 'tooltip'> {
   title: string;
@@ -448,6 +448,13 @@ const AppTool: React.FC = () => {
           col = parseInt(match[2]);
       }
       const branch = appBranches.find(b => row >= b.startRow && row <= b.endRow);
+      
+      // Helper to ensure LocalizedString structure
+      const ensureLocalized = (val: string | LocalizedString): LocalizedString => {
+          if (typeof val === 'string') return { de: val, en: val };
+          return { de: val.de, en: val.en || val.de };
+      };
+
       return {
           title: t(cell.label), 
           description: t(cell.tooltip),
@@ -456,7 +463,9 @@ const AppTool: React.FC = () => {
           branchId: branch ? branch.id : '',
           row: row,
           col: col,
-          ...cell
+          ...cell,
+          label: ensureLocalized(cell.label),
+          tooltip: ensureLocalized(cell.tooltip)
       };
   }).filter(n => n.branchId !== '');
 

@@ -1,5 +1,5 @@
 
-import { Branch, BlogPost } from '../types';
+import { Branch, BlogPost } from '../src/types';
 
 export const branches: Branch[] = [
   {

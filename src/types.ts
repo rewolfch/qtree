@@ -1,13 +1,11 @@
-export interface LocalizedString {
-  de: string;
-  en: string;
-}
+
+export type LocalizedString = string | { de: string; en?: string };
 
 export interface Level {
   id: number;
   title: LocalizedString;
   description: LocalizedString;
-  tools: string[];
+  tools?: string[];
 }
 
 export interface Branch {
@@ -21,9 +19,34 @@ export interface Branch {
 export interface BlogPost {
   id: string;
   title: LocalizedString;
+  date: string;
   excerpt: LocalizedString;
   content: LocalizedString;
-  date: string;
   author: string;
   imageUrl?: string;
+}
+
+export interface AppToolCell {
+  id: string;
+  label: LocalizedString;
+  tooltip: LocalizedString;
+  acceptanceCriteria?: string[];
+}
+
+export interface AppToolLane {
+  label: string;
+  startRow: number;
+  endRow: number;
+  details: {
+    description: LocalizedString;
+    why: LocalizedString;
+    how: LocalizedString;
+    resources?: { label: string; url: string }[];
+  };
+}
+
+export interface AppToolConfig {
+  lanes: AppToolLane[];
+  cells: AppToolCell[];
+  arrows: { from: string; to: string }[];
 }
