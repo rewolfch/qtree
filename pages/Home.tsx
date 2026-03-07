@@ -83,7 +83,7 @@ const Home: React.FC = () => {
             alt=""
             className="w-full h-full object-cover opacity-10 mix-blend-overlay animate-pulse-slow"
             loading="eager"
-            fetchPriority="high"
+            fetchpriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-900/95 to-brand-900/20"></div>
         </div>
@@ -164,7 +164,7 @@ const Home: React.FC = () => {
                       width="380"
                       height="548"
                       loading="eager"
-                      fetchPriority="high"
+                      fetchpriority="high"
                       className="w-[280px] md:w-[380px] h-auto mx-auto rounded-r-2xl shadow-[20px_20px_60px_-15px_rgba(0,0,0,0.7)] border-l-8 border-slate-800"
                     />
                     <div className="absolute -top-6 -right-6 bg-white text-slate-900 p-4 rounded-2xl shadow-2xl border border-slate-100 hidden md:block animate-float-delayed">
@@ -471,11 +471,12 @@ const Home: React.FC = () => {
                     <h4 className="font-bold text-slate-900">{ui("home.author.meeting_title")}</h4>
                     <p className="text-slate-500 text-sm mt-2">{ui("home.author.meeting_desc")}</p>
                   </a>
-                  <div className="flex flex-col p-6 rounded-3xl border border-slate-100 bg-slate-50 group hover:bg-white hover:shadow-lg transition-all">
+                  <a href="https://www.developer-world.de/" target="_blank" rel="noreferrer" className="flex flex-col p-6 rounded-3xl border border-slate-100 bg-slate-50 group hover:bg-white hover:shadow-lg transition-all">
                     <Video className="h-8 w-8 text-slate-400 mb-4 group-hover:text-brand-600 transition-colors" />
                     <h4 className="font-bold text-slate-900">{ui("home.author.keynote_title")}</h4>
-                    <p className="text-slate-500 text-sm mt-2">Swiss Testing Day 2025.</p>
-                  </div>
+                    <p className="text-slate-500 text-sm mt-2">Developer Week 2026</p>
+                    <p className="text-slate-400 text-xs mt-1">2. Juli 2026 • Mannheim</p>
+                  </a>
                 </div>
 
                 <div className="flex items-center gap-8">

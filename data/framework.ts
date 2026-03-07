@@ -150,6 +150,70 @@ export const branches: Branch[] = [
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "dwx-2026-speaker",
+    title: {
+      de: "Speaker auf der Developer Week 2026 (DWX): Digital Quality & Trust",
+      en: "Speaker at Developer Week 2026 (DWX): Digital Quality & Trust"
+    },
+    date: "2026-03-07",
+    author: "Serge Baumberger",
+    imageUrl: "https://media.licdn.com/dms/image/v2/D4E22AQENhxoQI5--Hg/feedshare-shrink_2048_1536/B4EZx3AXu8GsAk-/0/1771523112287?e=1774483200&v=beta&t=0N4jRmaZK_iZaOpdge7bP5fkwkHd92AFlkQSAnRblks",
+    excerpt: {
+      de: "Im Juli werde ich auf der Developer Week 2026 über \"Digital Quality & Trust: The Quality Tree Framework for Responsible AI & Software\" sprechen. Wie skalieren wir Innovation, ohne die Kontrolle zu verlieren?",
+      en: "In July, I’ll be presenting \"Digital Quality & Trust: The Quality Tree Framework for Responsible AI & Software\" at Developer Week 2026. How do we scale innovation without losing control?"
+    },
+    content: {
+      de: `🚀 Ich freue mich, auf der Developer Week 2026 (DWX) zu sprechen!
+
+Im Juli werde ich folgenden Vortrag halten:
+
+**Digital Quality & Trust: The Quality Tree Framework for Responsible AI & Software**
+
+Da KI und Automatisierung unsere Systeme neu formen, wird eine Frage entscheidend:
+
+*Wie skalieren wir Innovation, ohne die Kontrolle über Qualität, Sicherheit und Vertrauen zu verlieren?*
+
+In dieser Session werde ich teilen, wie wir ein strukturiertes Qualitätsmodell in komplexen, regulierten Umgebungen angewendet haben — weg von fragmentiertem Testen und tool-getriebenem Chaos hin zu messbaren, Governance-konformen Qualitätssystemen.
+
+Wir werden erkunden:
+
+*   KI-gestützte Szenario-Generierung, die die Abdeckung intelligent erweitert
+*   Self-healing Automation, die den Wartungsaufwand reduziert
+*   Kontinuierliche Quality Gates, die in DevOps-Pipelines eingebettet sind
+*   Governance-Modelle, die Technologie, Compliance und Geschäftsstrategie in Einklang bringen
+
+Die Konzepte hinter diesem Vortrag basieren auf meinem kürzlich veröffentlichten Buch über das Quality Tree Framework, aber die Session wird sich vollständig auf die praktische Umsetzung und Lektionen aus realen Unternehmenssystemen konzentrieren.
+
+Wenn Sie im Juli auf der DWX sind, lassen Sie uns vernetzen.
+
+[Programm](https://lnkd.in/eEZcaSiS)`,
+      en: `🚀 Excited to speak at Developer Week 2026 (DWX)
+
+In July, I’ll be presenting:
+
+**Digital Quality & Trust: The Quality Tree Framework for Responsible AI & Software**
+
+As AI and automation reshape our systems, one question becomes critical:
+
+*How do we scale innovation without losing control over quality, security, and trust?*
+
+In this session, I’ll share how we applied a structured quality model in complex, regulated environments — moving from fragmented testing and tool-driven chaos to measurable, governance-aligned quality systems.
+
+We’ll explore:
+
+*   AI-powered scenario generation that expands coverage intelligently
+*   Self-healing automation that reduces maintenance overhead
+*   Continuous quality gates embedded in DevOps pipelines
+*   Governance models that align technology, compliance, and business strategy
+
+The concepts behind this talk are grounded in my recently published book on the Quality Tree Framework, but the session will focus entirely on practical implementation and lessons learned from real-world enterprise systems.
+
+If you’re attending DWX in July, let’s connect.
+
+[Program](https://lnkd.in/eEZcaSiS)`
+    }
+  },
+  {
     id: "milan-testing-united",
     title: {
       de: "Live aus Mailand: Warum wir einen neuen Bauplan für Qualität brauchen",
@@ -157,7 +221,7 @@ export const blogPosts: BlogPost[] = [
     },
     date: "2025-11-24",
     author: "Serge Baumberger",
-    imageUrl: "https://media.licdn.com/dms/image/v2/D4E22AQGTN1dUqz0bzw/feedshare-shrink_2048_1536/B4EZsIVBh8KcAk-/0/1765371288233?e=1772668800&v=beta&t=otxUR675oppFTOejEn7jGzoSpeZnRH3-WmHmU-UQscw",
+    imageUrl: "https://media.licdn.com/dms/image/v2/D4E22AQG__aMkTMzGPA/feedshare-shrink_2048_1536/B4EZsIVBzFHEAk-/0/1765371289212?e=1774483200&v=beta&t=R8Uma7j7QQI4Hk2VGqj-O-NQ_LP9KHHSvgJSjEZJ4hw",
     excerpt: {
       de: "Zwei Tage voller Energie, ehrlicher QA-Diskussionen – und ein Publikum, das keine Buzzwords mehr will, sondern eine Roadmap. Genau dafür ist der Quality Tree gemacht.",
       en: "Two days full of energy, honest QA discussions – and an audience that no longer wants buzzwords, but a roadmap. That is exactly what the Quality Tree is made for."
@@ -297,7 +361,7 @@ Mark May 11, 2026 in your calendar!`
     },
     date: "2026-02-01",
     author: "Serge Baumberger",
-    imageUrl: "https://media.licdn.com/dms/image/v2/D4E22AQEcQRQUYYkbog/feedshare-shrink_1280/B4EZv2wVfBIEAc-/0/1769371425039?e=1771459200&v=beta&t=nfkc8LFvF8cBWKdVpMRaDUt3UblIiuw1QWvmKe4TwwQ",
+    imageUrl: "https://media.licdn.com/dms/image/v2/D4E22AQEcQRQUYYkbog/feedshare-shrink_1280/B4EZv2wVfBIEAc-/0/1769371425039?e=1774483200&v=beta&t=PSH4C3-VP9kbIJLFU8V1m3twjuglFAFcCoQzUN44k4c",
     excerpt: { 
       de: "Endlich ist es soweit! Das Quality Tree Framework ist da. Sichern Sie sich jetzt Ihren strategischen Bauplan für Softwarequalität direkt auf Amazon.", 
       en: "The wait is over! The Quality Tree Framework is here. Secure your strategic blueprint for software quality directly on Amazon now." 
