@@ -1,1 +1,1 @@
-export { BranchDecoration } from './Illustrations';
+export * from './Illustrations';
