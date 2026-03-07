@@ -4,35 +4,25 @@ import { Helmet } from 'react-helmet-async';
 interface SEOProps {
   title: string;
   description: string;
+  schema?: any;
   imageUrl?: string;
-  schema?: object;
+  type?: string;
+  author?: string;
+  publishedTime?: string;
 }
 
-const SEO: React.FC<SEOProps> = ({ title, description, imageUrl, schema }) => {
-  const siteUrl = 'https://www.quality-tree.com';
-  const defaultImage = 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop';
-
+const SEO: React.FC<SEOProps> = ({ title, description, schema, imageUrl, type = 'website', author, publishedTime }) => {
   return (
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
-      
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={imageUrl || defaultImage} />
-      <meta property="og:url" content={siteUrl} />
-      <meta property="og:type" content="website" />
-      
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={imageUrl || defaultImage} />
-      
-      {schema && (
-        <script type="application/ld+json">
-          {JSON.stringify(schema)}
-        </script>
-      )}
+      <meta property="og:type" content={type} />
+      {imageUrl && <meta property="og:image" content={imageUrl} />}
+      {author && <meta name="author" content={author} />}
+      {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+      {schema && <script type="application/ld+json">{JSON.stringify(schema)}</script>}
     </Helmet>
   );
 };

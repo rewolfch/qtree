@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Linkedin, Mail, Globe, Calendar, Video } from 'lucide-react';
 import SEO from '../components/SEO';
@@ -36,15 +37,17 @@ const Author: React.FC = () => {
           <div className="flex flex-col lg:flex-row">
             
             {/* Image Section */}
-            <div className="lg:w-5/12 relative min-h-[500px] lg:min-h-full bg-slate-50 flex items-center justify-center p-8 lg:p-12">
-              <ScrollReveal animation="zoom-in" className="w-full max-w-md mx-auto">
-                <div className="relative group">
-                  <div className="absolute inset-0 bg-brand-50 rounded-[3rem] -rotate-3 translate-x-4 scale-95 transition-transform group-hover:rotate-0"></div>
-                  <img 
-                    src="https://cdn.prod.website-files.com/659bd602c8644fb17135bbe7/660c27367443119851a48cd0_Swarmie%20Profile%20-%20Serge%20Wolf.png" 
-                    alt="Serge Baumberger" 
-                    className="relative rounded-[2.5rem] shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000 w-full aspect-[4/5] object-cover border-8 border-white hover:scale-[1.02]"
-                  />
+            <div className="lg:w-5/12 relative min-h-[500px] lg:min-h-full bg-slate-900">
+              <ScrollReveal animation="zoom-in" className="h-full">
+                <img 
+                  src="https://cdn.prod.website-files.com/659bd602c8644fb17135bbe7/660c27367443119851a48cd0_Swarmie%20Profile%20-%20Serge%20Wolf.png" 
+                  alt="Serge Baumberger" 
+                  className="absolute inset-0 w-full h-full object-cover grayscale opacity-90 mix-blend-luminosity hover:grayscale-0 hover:opacity-100 transition-all duration-1000"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+                <div className="absolute bottom-12 left-12">
+                   <h1 className="text-5xl font-black text-white mb-2 tracking-tight">Serge Baumberger</h1>
+                   <p className="text-brand-400 font-bold uppercase tracking-widest text-sm">Author | Co-CEO Infometis AG</p>
                 </div>
               </ScrollReveal>
             </div>
@@ -52,12 +55,9 @@ const Author: React.FC = () => {
             {/* Biography Content */}
             <div className="lg:w-7/12 p-12 md:p-20 flex flex-col justify-center">
               <ScrollReveal animation="fade-left">
-                <div className="inline-flex items-center gap-2 bg-brand-50 text-brand-700 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-6 border border-brand-100">
+                <div className="inline-flex items-center gap-2 bg-brand-50 text-brand-700 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-10 border border-brand-100">
                   {ui("author.badge")}
                 </div>
-                
-                <h1 className="text-5xl font-black text-slate-900 mb-2 tracking-tight">Serge Baumberger</h1>
-                <p className="text-brand-600 font-bold uppercase tracking-widest text-sm mb-10">Author | Co-CEO Infometis AG</p>
                 
                 <div className="prose prose-slate prose-lg max-w-none text-slate-600 mb-12">
                   <p className="text-2xl font-bold text-slate-900 leading-snug mb-8">
@@ -131,17 +131,18 @@ const Author: React.FC = () => {
                   alt="Workshop Context" 
                   className="relative rounded-[3rem] shadow-xl w-full h-[500px] object-cover hover:rotate-1 transition-transform duration-700"
                 />
-                <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-3xl shadow-2xl border border-slate-100 animate-float">
+                <a href="https://www.developer-world.de/" target="_blank" rel="noreferrer" className="absolute -bottom-6 -right-6 bg-white p-6 rounded-3xl shadow-2xl border border-slate-100 animate-float hover:scale-105 transition-transform cursor-pointer group">
                    <div className="flex items-center gap-4">
-                      <div className="bg-brand-600 text-white p-3 rounded-2xl">
+                      <div className="bg-brand-600 text-white p-3 rounded-2xl group-hover:bg-brand-700 transition-colors">
                          <Video className="h-6 w-6" />
                       </div>
                       <div>
-                         <p className="text-xs font-black text-slate-400 uppercase tracking-widest">{ui("author.next_talk")}</p>
-                         <p className="font-bold text-slate-900">Swiss Testing Day '25</p>
+                         <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">{ui("author.next_talk")}</p>
+                         <p className="font-bold text-slate-900 leading-tight">Developer Week '26</p>
+                         <p className="text-xs text-slate-500 mt-1">2. Juli 2026 • Mannheim</p>
                       </div>
                    </div>
-                </div>
+                </a>
               </ScrollReveal>
            </div>
         </div>

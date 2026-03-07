@@ -150,67 +150,61 @@ export const branches: Branch[] = [
 
 export const blogPosts: BlogPost[] = [
   {
-    id: "dwx-2026-speaker",
+    id: "dwx-2026-announcement",
     title: {
-      de: "Speaker auf der Developer Week 2026 (DWX): Digital Quality & Trust",
-      en: "Speaker at Developer Week 2026 (DWX): Digital Quality & Trust"
+      de: "Speaker auf der Developer Week 2026 (DWX)",
+      en: "Speaker at Developer Week 2026 (DWX)"
     },
     date: "2026-03-07",
     author: "Serge Baumberger",
     imageUrl: "https://media.licdn.com/dms/image/v2/D4E22AQENhxoQI5--Hg/feedshare-shrink_2048_1536/B4EZx3AXu8GsAk-/0/1771523112287?e=1774483200&v=beta&t=0N4jRmaZK_iZaOpdge7bP5fkwkHd92AFlkQSAnRblks",
     excerpt: {
-      de: "Im Juli werde ich auf der Developer Week 2026 über \"Digital Quality & Trust: The Quality Tree Framework for Responsible AI & Software\" sprechen. Wie skalieren wir Innovation, ohne die Kontrolle zu verlieren?",
-      en: "In July, I’ll be presenting \"Digital Quality & Trust: The Quality Tree Framework for Responsible AI & Software\" at Developer Week 2026. How do we scale innovation without losing control?"
+      de: "Ich freue mich, auf der DWX 2026 über 'Digital Quality & Trust' zu sprechen. Wie skalieren wir Innovation mit KI, ohne die Kontrolle zu verlieren?",
+      en: "Excited to speak at Developer Week 2026 (DWX) about 'Digital Quality & Trust'. How do we scale innovation with AI without losing control?"
     },
     content: {
-      de: `🚀 Ich freue mich, auf der Developer Week 2026 (DWX) zu sprechen!
+      de: `🚀 Ich freue mich riesig, auf der Developer Week 2026 (DWX) zu sprechen!
 
-Im Juli werde ich folgenden Vortrag halten:
-
+Im Juli werde ich folgendes Thema präsentieren:
 **Digital Quality & Trust: The Quality Tree Framework for Responsible AI & Software**
 
-Da KI und Automatisierung unsere Systeme neu formen, wird eine Frage entscheidend:
-
+Da KI und Automatisierung unsere Systeme grundlegend verändern, wird eine Frage immer kritischer:
 *Wie skalieren wir Innovation, ohne die Kontrolle über Qualität, Sicherheit und Vertrauen zu verlieren?*
 
-In dieser Session werde ich teilen, wie wir ein strukturiertes Qualitätsmodell in komplexen, regulierten Umgebungen angewendet haben — weg von fragmentiertem Testen und tool-getriebenem Chaos hin zu messbaren, Governance-konformen Qualitätssystemen.
+In dieser Session werde ich teilen, wie wir ein strukturiertes Qualitätsmodell in komplexen, regulierten Umgebungen angewendet haben — weg von fragmentiertem Testen und Tool-getriebenem Chaos hin zu messbaren, Governance-konformen Qualitätssystemen.
 
-Wir werden erkunden:
+Wir werden folgende Themen erkunden:
+*   **KI-gestützte Szenario-Generierung**, die die Testabdeckung intelligent erweitert
+*   **Self-healing Automation**, die den Wartungsaufwand reduziert
+*   **Continuous Quality Gates**, die fest in DevOps-Pipelines integriert sind
+*   **Governance-Modelle**, die Technologie, Compliance und Geschäftsstrategie in Einklang bringen
 
-*   KI-gestützte Szenario-Generierung, die die Abdeckung intelligent erweitert
-*   Self-healing Automation, die den Wartungsaufwand reduziert
-*   Kontinuierliche Quality Gates, die in DevOps-Pipelines eingebettet sind
-*   Governance-Modelle, die Technologie, Compliance und Geschäftsstrategie in Einklang bringen
+Die Konzepte hinter diesem Vortrag basieren auf meinem kürzlich veröffentlichten Buch zum Quality Tree Framework, aber die Session wird sich vollständig auf die praktische Umsetzung und "Lessons Learned" aus realen Unternehmenssystemen konzentrieren.
 
-Die Konzepte hinter diesem Vortrag basieren auf meinem kürzlich veröffentlichten Buch über das Quality Tree Framework, aber die Session wird sich vollständig auf die praktische Umsetzung und Lektionen aus realen Unternehmenssystemen konzentrieren.
+Wenn Sie im Juli auf der DWX sind, lassen Sie uns vernetzen!
 
-Wenn Sie im Juli auf der DWX sind, lassen Sie uns vernetzen.
-
-[Programm](https://lnkd.in/eEZcaSiS)`,
-      en: `🚀 Excited to speak at Developer Week 2026 (DWX)
+👉 [Zum Programm](https://lnkd.in/eEZcaSiS)`,
+      en: `🚀 Excited to speak at Developer Week 2026 (DWX)!
 
 In July, I’ll be presenting:
-
 **Digital Quality & Trust: The Quality Tree Framework for Responsible AI & Software**
 
 As AI and automation reshape our systems, one question becomes critical:
-
 *How do we scale innovation without losing control over quality, security, and trust?*
 
 In this session, I’ll share how we applied a structured quality model in complex, regulated environments — moving from fragmented testing and tool-driven chaos to measurable, governance-aligned quality systems.
 
 We’ll explore:
-
-*   AI-powered scenario generation that expands coverage intelligently
-*   Self-healing automation that reduces maintenance overhead
-*   Continuous quality gates embedded in DevOps pipelines
-*   Governance models that align technology, compliance, and business strategy
+*   **AI-powered scenario generation** that expands coverage intelligently
+*   **Self-healing automation** that reduces maintenance overhead
+*   **Continuous quality gates** embedded in DevOps pipelines
+*   **Governance models** that align technology, compliance, and business strategy
 
 The concepts behind this talk are grounded in my recently published book on the Quality Tree Framework, but the session will focus entirely on practical implementation and lessons learned from real-world enterprise systems.
 
 If you’re attending DWX in July, let’s connect.
 
-[Program](https://lnkd.in/eEZcaSiS)`
+👉 [Program](https://lnkd.in/eEZcaSiS)`
     }
   },
   {

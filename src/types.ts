@@ -1,7 +1,14 @@
-export type LocalizedString = {
+export interface LocalizedString {
   de: string;
-  en?: string;
-};
+  en: string;
+}
+
+export interface Level {
+  id: number;
+  title: LocalizedString;
+  description: LocalizedString;
+  tools: string[];
+}
 
 export interface Branch {
   id: string;
@@ -11,42 +18,12 @@ export interface Branch {
   levels: Level[];
 }
 
-export interface Level {
-  id: number;
-  title: LocalizedString;
-  description: LocalizedString;
-}
-
-export interface AppToolLane {
-  label: string;
-  startRow: number;
-  endRow: number;
-  targetCount: number;
-  icon?: string;
-  details: {
-    description: string;
-    importance: string;
-    gettingStarted: string;
-    resources: { label: string; url: string; }[];
-  };
-}
-
-export interface AppToolCell {
+export interface BlogPost {
   id: string;
-  label: LocalizedString;
-  tooltip: LocalizedString;
-  acceptanceCriteria: string[];
-  class?: string;
-  isRoot?: boolean;
-}
-
-export interface AppToolArrow {
-  from: string;
-  to: string;
-}
-
-export interface AppToolConfig {
-  lanes: AppToolLane[];
-  cells: AppToolCell[];
-  arrows: AppToolArrow[];
+  title: LocalizedString;
+  excerpt: LocalizedString;
+  content: LocalizedString;
+  date: string;
+  author: string;
+  imageUrl?: string;
 }
