@@ -4,43 +4,55 @@ import confetti from 'canvas-confetti';
 import { rawConfig } from '../data/appToolData';
 import { useLanguage } from '../contexts/LanguageContext';
 import SEO from '../components/SEO';
+import { AppToolCell, AppToolLane, LocalizedString } from '../types';
 
-const ConnectingLines = ({ nodeRefs, hoveredNode, containerRef }: any) => {
+interface AppNode extends Omit<AppToolCell, 'label' | 'tooltip'> {
+  title: string;
+  description: string;
+  level: number;
+  branchId: string;
+  row: number;
+  col: number;
+}
+
+const ConnectingLines = ({ nodeRefs, hoveredNode, containerRef }: { nodeRefs: React.MutableRefObject<Map<string, HTMLDivElement>>, hoveredNode: string | null, containerRef: React.RefObject<HTMLDivElement> }) => {
   const [lines, setLines] = useState<React.ReactElement[]>([]);
 
   useLayoutEffect(() => {
     const updateGraph = () => {
        const newLines: React.ReactElement[] = [];
-       rawConfig.arrows.forEach((arrow: any) => {
-           const startEl = nodeRefs.current.get(arrow.from);
-           const endEl = nodeRefs.current.get(arrow.to);
-           
-           if (startEl && endEl) {
-               const startX = startEl.offsetLeft + startEl.offsetWidth / 2;
-               const startY = startEl.offsetTop + startEl.offsetHeight / 2;
-               const endX = endEl.offsetLeft + endEl.offsetWidth / 2;
-               const endY = endEl.offsetTop + endEl.offsetHeight / 2;
+       if (rawConfig.arrows) {
+           rawConfig.arrows.forEach((arrow: { from: string; to: string }) => {
+               const startEl = nodeRefs.current.get(arrow.from);
+               const endEl = nodeRefs.current.get(arrow.to);
                
-               const isHovered = hoveredNode === arrow.from || hoveredNode === arrow.to;
-               
-               const deltaX = endX - startX;
-               const midX = startX + (deltaX / 2);
-               
-               const d = `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`;
-               
-               newLines.push(
-                   <path 
-                       key={`${arrow.from}-${arrow.to}`}
-                       d={d}
-                       fill="none"
-                       stroke={isHovered ? "#059669" : "#cbd5e1"}
-                       strokeWidth={isHovered ? 2.5 : 1.5}
-                       className="transition-all duration-300 ease-in-out"
-                       style={{ opacity: isHovered ? 1 : 0.6, zIndex: isHovered ? 10 : 0 }}
-                   />
-               );
-           }
-       });
+               if (startEl && endEl) {
+                   const startX = startEl.offsetLeft + startEl.offsetWidth / 2;
+                   const startY = startEl.offsetTop + startEl.offsetHeight / 2;
+                   const endX = endEl.offsetLeft + endEl.offsetWidth / 2;
+                   const endY = endEl.offsetTop + endEl.offsetHeight / 2;
+                   
+                   const isHovered = hoveredNode === arrow.from || hoveredNode === arrow.to;
+                   
+                   const deltaX = endX - startX;
+                   const midX = startX + (deltaX / 2);
+                   
+                   const d = `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`;
+                   
+                   newLines.push(
+                       <path 
+                           key={`${arrow.from}-${arrow.to}`}
+                           d={d}
+                           fill="none"
+                           stroke={isHovered ? "#059669" : "#cbd5e1"}
+                           strokeWidth={isHovered ? 2.5 : 1.5}
+                           className="transition-all duration-300 ease-in-out"
+                           style={{ opacity: isHovered ? 1 : 0.6, zIndex: isHovered ? 10 : 0 }}
+                       />
+                   );
+               }
+           });
+       }
        setLines(newLines);
     };
     updateGraph();
@@ -53,7 +65,7 @@ const ConnectingLines = ({ nodeRefs, hoveredNode, containerRef }: any) => {
   return <svg className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">{lines}</svg>;
 };
 
-const WarningModal = ({ data, onClose, nodes }: any) => {
+const WarningModal = ({ data, onClose, nodes }: { data: { isOpen: boolean, missingNodes: string[] }, onClose: () => void, nodes: any[] }) => {
     if (!data.isOpen) return null;
     return (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
@@ -85,7 +97,7 @@ const WarningModal = ({ data, onClose, nodes }: any) => {
     );
 };
 
-const BranchInfoModal = ({ branch, onClose, t }: any) => {
+const BranchInfoModal = ({ branch, onClose, t }: { branch: any, onClose: () => void, t: (s: string | LocalizedString) => string }) => {
     if (!branch) return null;
     
     return (
@@ -153,7 +165,7 @@ const BranchInfoModal = ({ branch, onClose, t }: any) => {
     );
 };
 
-const DetailPopup = ({ node, onClose, onStatusChange, onOkrToggle, nodeState, isMobile, allNodes, userState, onNavigate, branches, ui }: any) => {
+const DetailPopup = ({ node, onClose, onStatusChange, onOkrToggle, nodeState, isMobile, allNodes, userState, onNavigate, branches, ui }: { node: AppNode, onClose: () => void, onStatusChange: (id: string, status: string, data?: any) => void, onOkrToggle: (idx: number) => void, nodeState: any, isMobile: boolean, allNodes: AppNode[], userState: any, onNavigate: (id: string) => void, branches: any[], ui: (key: string) => string }) => {
     const [isNaInputOpen, setIsNaInputOpen] = useState(false);
     const [naReason, setNaReason] = useState('');
 
@@ -302,7 +314,7 @@ const DetailPopup = ({ node, onClose, onStatusChange, onOkrToggle, nodeState, is
     );
 };
 
-const ListView = ({ branches, nodes, userState, onNodeClick, isGardener, onStatusChange, onBranchInfoClick }: any) => {
+const ListView = ({ branches, nodes, userState, onNodeClick, isGardener, onStatusChange, onBranchInfoClick }: { branches: any[], nodes: AppNode[], userState: any, onNodeClick: (id: string) => void, isGardener: boolean, onStatusChange: (id: string, status: string) => void, onBranchInfoClick: (branch: any) => void }) => {
     const [collapsed, setCollapsed] = useState<Record<string, boolean>>(() => {
         const initial: Record<string, boolean> = {};
         branches.forEach((b: any) => initial[b.id] = true);
@@ -419,7 +431,7 @@ const AppTool: React.FC = () => {
   const levels = Array.from({ length: 9 }, (_, i) => ({ id: i + 1, label: `${ui("app.level")} ${i + 1}` }));
   const icons = ["fa-cogs", "fa-vial", "fa-cube", "fa-rocket", "fa-robot", "fa-server", "fa-user-check", "fa-chart-line"];
 
-  const appBranches = rawConfig.lanes.map((lane: any, index: number) => ({
+  const appBranches = rawConfig.lanes.map((lane: AppToolLane, index: number) => ({
       id: `branch-${index}`,
       name: lane.label,
       icon: icons[index] || "fa-circle",
@@ -428,7 +440,7 @@ const AppTool: React.FC = () => {
       details: lane.details
   }));
 
-  const appNodes = rawConfig.cells.map((cell: any) => {
+  const appNodes: AppNode[] = rawConfig.cells.map((cell: AppToolCell) => {
       const match = cell.id.match(/R(\d+)C(\d+)/);
       let row = 0, col = 0;
       if (match) {
@@ -437,17 +449,16 @@ const AppTool: React.FC = () => {
       }
       const branch = appBranches.find(b => row >= b.startRow && row <= b.endRow);
       return {
-          id: cell.id,
           title: t(cell.label), 
           description: t(cell.tooltip),
           acceptanceCriteria: cell.acceptanceCriteria || [],
           level: col, // Col is now 1-based, Level 1 is Col 1.
-          branchId: branch ? branch.id : null,
+          branchId: branch ? branch.id : '',
           row: row,
           col: col,
           ...cell
       };
-  }).filter(n => n.branchId !== null);
+  }).filter(n => n.branchId !== '');
 
   const [activeNodeId, setActiveNodeId] = useState<string | null>(null);
   const [selectedBranch, setSelectedBranch] = useState<any>(null);
@@ -635,8 +646,8 @@ const AppTool: React.FC = () => {
           <BranchInfoModal branch={selectedBranch} onClose={() => setSelectedBranch(null)} t={t} />
       )}
 
-      {activeNodeId && (
-        <DetailPopup node={activeNode} onClose={() => setActiveNodeId(null)} onStatusChange={(id: string, status: string, data: any) => handleStatusChangeAttempt(id, status, data, () => setActiveNodeId(null))} onOkrToggle={(idx: number) => toggleNodeOkr(activeNodeId, idx)} nodeState={getNodeState(activeNodeId)} isGardener={isGardenerMode} isMobile={isMobile} allNodes={appNodes} userState={userState} onNavigate={setActiveNodeId} branches={appBranches} ui={ui} />
+      {activeNode && (
+        <DetailPopup node={activeNode} onClose={() => setActiveNodeId(null)} onStatusChange={(id: string, status: string, data: any) => handleStatusChangeAttempt(id, status, data, () => setActiveNodeId(null))} onOkrToggle={(idx: number) => toggleNodeOkr(activeNodeId!, idx)} nodeState={getNodeState(activeNodeId!)} isMobile={isMobile} allNodes={appNodes} userState={userState} onNavigate={setActiveNodeId} branches={appBranches} ui={ui} />
       )}
 
       <div className="toolbar sticky top-[64px] left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm h-auto py-2 transition-all duration-200 print:hidden flex flex-col gap-2">

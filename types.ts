@@ -28,8 +28,8 @@ export interface BlogPost {
 
 export interface AppToolCell {
   id: string;
-  label: string;
-  tooltip: string;
+  label: LocalizedString;
+  tooltip: LocalizedString;
   acceptanceCriteria?: string[];
 }
 
@@ -38,9 +38,9 @@ export interface AppToolLane {
   startRow: number;
   endRow: number;
   details: {
-    description: string;
-    why: string;
-    how: string;
+    description: LocalizedString;
+    why: LocalizedString;
+    how: LocalizedString;
     resources?: { label: string; url: string }[];
   };
 }
