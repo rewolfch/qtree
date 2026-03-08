@@ -111,11 +111,8 @@ export const BranchDecoration: React.FC<IllustrationProps> = ({ className = "", 
 };
 
 export const RootSystem: React.FC<{ progress: number; className?: string }> = ({ progress, className = "" }) => {
-  // Ensure progress is a valid number
-  const safeProgress = (typeof progress === 'number' && !isNaN(progress)) ? progress : 0;
-  
   // progress is 0 to 1
-  const dashOffset = 100 - (safeProgress * 100);
+  const dashOffset = 100 - (progress * 100);
   
   return (
     <svg className={className} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -165,10 +162,8 @@ export const TrunkPath: React.FC<{ className?: string }> = ({ className = "" }) 
  * Covers 4 sections vertically.
  */
 export const TheGrowingTree: React.FC<{ progress: number; className?: string }> = ({ progress, className = "" }) => {
-  // Ensure progress is a valid number, defaulting to 0 if NaN or undefined
-  const safeProgress = (typeof progress === 'number' && !isNaN(progress)) ? progress : 0;
-  
   // progress goes from 0.0 to 1.0
+  const safeProgress = (isNaN(progress) || !isFinite(progress)) ? 0 : progress;
   
   // Calculations for staggered animation
   // Trunk grows continuously: 0 -> 1

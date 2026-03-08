@@ -31,6 +31,11 @@ const Home: React.FC = () => {
       
       let progress = scrolled / totalScrollable;
       
+      // Ensure progress is valid
+      if (isNaN(progress) || !isFinite(progress)) {
+        progress = 0;
+      }
+      
       // Clamp between 0 and 1
       progress = Math.max(0, Math.min(1, progress));
       
