@@ -333,7 +333,7 @@ const AppTool: React.FC = () => {
           row = parseInt(match[1]);
           col = parseInt(match[2]);
       }
-      const branch = appBranches.find(b => row >= b.startRow && row <= b.endRow);
+      const branch = appBranches.find((b: any) => row >= b.startRow && row <= b.endRow);
       
       // Helper to ensure LocalizedString structure
       const ensureLocalized = (val: string | LocalizedString): LocalizedString => {
@@ -353,7 +353,7 @@ const AppTool: React.FC = () => {
           label: ensureLocalized(cell.label),
           tooltip: ensureLocalized(cell.tooltip)
       };
-  }).filter(n => n.branchId !== '');
+  }).filter((n: any) => n.branchId !== '');
 
   const [activeNodeId, setActiveNodeId] = useState<string | null>(null);
   const [selectedBranch, setSelectedBranch] = useState<any>(null);

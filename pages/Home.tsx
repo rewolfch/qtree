@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, Layers, GitBranch, ShoppingCart, Star, CheckCircle2, Calendar, Video, ExternalLink, Zap, Linkedin, Mail, ClipboardCheck } from 'lucide-react';
+import { ArrowRight, Sprout, Layers, GitBranch, ShoppingCart, BookOpen, Star, CheckCircle2, TrendingUp, ShieldCheck, Users, Globe, Calendar, Video, ExternalLink, Search, Zap, Linkedin, Mail, ClipboardCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { TheGrowingTree, SeedIcon, ForestIcon } from '../components/Illustrations';
+import { LeafIcon, TheGrowingTree, SeedIcon, ForestIcon } from '../components/Illustrations';
 import SEO from '../components/SEO';
 import { useLanguage } from '../contexts/LanguageContext';
 import ScrollReveal from '../components/ScrollReveal';
@@ -83,7 +83,6 @@ const Home: React.FC = () => {
             alt=""
             className="w-full h-full object-cover opacity-10 mix-blend-overlay animate-pulse-slow"
             loading="eager"
-            // @ts-ignore
             fetchpriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-900/95 to-brand-900/20"></div>
@@ -165,7 +164,6 @@ const Home: React.FC = () => {
                       width="380"
                       height="548"
                       loading="eager"
-                      // @ts-ignore
                       fetchpriority="high"
                       className="w-[280px] md:w-[380px] h-auto mx-auto rounded-r-2xl shadow-[20px_20px_60px_-15px_rgba(0,0,0,0.7)] border-l-8 border-slate-800"
                     />
