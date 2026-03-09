@@ -131,18 +131,17 @@ const Author: React.FC = () => {
                   alt="Workshop Context" 
                   className="relative rounded-[3rem] shadow-xl w-full h-[500px] object-cover hover:rotate-1 transition-transform duration-700"
                 />
-                <a href="https://www.developer-world.de/" target="_blank" rel="noreferrer" className="absolute -bottom-6 -right-6 bg-white p-6 rounded-3xl shadow-2xl border border-slate-100 animate-float hover:scale-105 transition-transform cursor-pointer group">
+                <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-3xl shadow-2xl border border-slate-100 animate-float">
                    <div className="flex items-center gap-4">
-                      <div className="bg-brand-600 text-white p-3 rounded-2xl group-hover:bg-brand-700 transition-colors">
+                      <div className="bg-brand-600 text-white p-3 rounded-2xl">
                          <Video className="h-6 w-6" />
                       </div>
                       <div>
-                         <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">{ui("author.next_talk")}</p>
-                         <p className="font-bold text-slate-900 leading-tight">Developer Week '26</p>
-                         <p className="text-xs text-slate-500 mt-1">2. Juli 2026 • Mannheim</p>
+                         <p className="text-xs font-black text-slate-400 uppercase tracking-widest">{ui("author.next_talk")}</p>
+                         <p className="font-bold text-slate-900">Swiss Testing Day '25</p>
                       </div>
                    </div>
-                </a>
+                </div>
               </ScrollReveal>
            </div>
         </div>

@@ -1,7 +1,5 @@
 
-import React, { useRef, useEffect } from 'react';
-
-import { motion, useAnimation, useInView, Easing } from 'framer-motion';
+import React, { useRef, useEffect, useState } from 'react';
 
 interface ScrollRevealProps {
   children: React.ReactNode;
@@ -18,46 +16,51 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
   delay = 0,
   duration = 1000
 }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "0px 0px -50px 0px" });
-  const controls = useAnimation();
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (isInView) {
-      controls.start("visible");
-    }
-  }, [isInView, controls]);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          if (ref.current) observer.unobserve(ref.current);
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
 
-  const variants = {
-    hidden: {
-      opacity: 0,
-      y: animation === 'fade-up' ? 50 : 0,
-      x: animation === 'fade-right' ? -50 : animation === 'fade-left' ? 50 : 0,
-      scale: animation === 'zoom-in' ? 0.9 : 1
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      x: 0,
-      scale: 1,
-      transition: {
-        duration: duration / 1000,
-        delay: delay / 1000,
-        ease: "easeOut" as Easing
-      }
+    if (ref.current) observer.observe(ref.current);
+    
+    return () => {
+      if (ref.current) observer.disconnect();
+    };
+  }, []);
+
+  const getInitialClass = () => {
+    switch (animation) {
+      case 'fade-right': return '-translate-x-12 opacity-0';
+      case 'fade-left': return 'translate-x-12 opacity-0';
+      case 'zoom-in': return 'scale-90 opacity-0';
+      case 'fade-up': default: return 'translate-y-12 opacity-0';
     }
   };
 
+  const getFinalClass = () => {
+    return 'translate-x-0 translate-y-0 scale-100 opacity-100';
+  };
+
   return (
-    <motion.div
+    <div
       ref={ref}
-      initial="hidden"
-      animate={controls}
-      variants={variants}
-      className={className}
+      className={`${className} transition-all ease-out will-change-transform ${isVisible ? getFinalClass() : getInitialClass()}`}
+      style={{ 
+        transitionDuration: `${duration}ms`,
+        transitionDelay: `${delay}ms` 
+      }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };
 

@@ -1,6 +1,6 @@
 
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
-import { LocalizedString } from '../src/types';
+import { LocalizedString } from '../types';
 
 export type Language = 'de' | 'en';
 
@@ -198,7 +198,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   };
 
   // Helper for content objects {de: "...", en: "..."}
-  const t = (content: LocalizedString | string): string => {
+  const t = (content: LocalizedString | string, key?: string): string => {
     if (typeof content === 'object' && content !== null && 'de' in content) {
       return content[language] || content['de'];
     }

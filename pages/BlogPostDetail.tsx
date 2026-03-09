@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { fetchPostById } from '../services/blogService';
-import { BlogPost } from '../src/types';
+import { BlogPost } from '../types';
 import { ArrowLeft, Calendar, User, Linkedin, Twitter, Mail, Share2, TreeDeciduous, ArrowRight } from 'lucide-react';
 import SEO from '../components/SEO';
 import { useLanguage } from '../contexts/LanguageContext';

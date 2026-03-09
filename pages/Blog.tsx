@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BlogPost } from '../src/types';
+import { BlogPost } from '../types';
 import { fetchAllPosts } from '../services/blogService';
 import { Calendar, User, ArrowRight, BookOpen, Search } from 'lucide-react';
 import SEO from '../components/SEO';

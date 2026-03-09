@@ -26,7 +26,7 @@ const Framework: React.FC = () => {
   const filteredBranches = branches.filter(branch => 
     t(branch.title).toLowerCase().includes(searchQuery.toLowerCase()) ||
     t(branch.description).toLowerCase().includes(searchQuery.toLowerCase()) ||
-    branch.levels.some((l: any) => t(l.title).toLowerCase().includes(searchQuery.toLowerCase()))
+    branch.levels.some(l => t(l.title).toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   const frameworkSchema = {

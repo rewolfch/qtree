@@ -6,10 +6,10 @@ import {
   ArrowLeft, CheckCircle2, ArrowRight, 
   GitBranch, Microscope, Hammer, Rocket, Bot, Cloud, UserCheck, BarChart, Zap
 } from 'lucide-react';
-import { BranchDecoration } from '../components/Illustrations';
+import { BranchDecoration, LeafIcon } from '../components/Illustrations';
 import SEO from '../components/SEO';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Level } from '../src/types';
+import { Level } from '../types';
 
 interface LevelCardProps {
   level: Level;
@@ -31,7 +31,7 @@ const LevelCard: React.FC<LevelCardProps> = ({ level, visual, index }) => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries: IntersectionObserverEntry[]) => {
+      (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);

@@ -31,11 +31,6 @@ const Home: React.FC = () => {
       
       let progress = scrolled / totalScrollable;
       
-      // Ensure progress is valid
-      if (isNaN(progress) || !isFinite(progress)) {
-        progress = 0;
-      }
-      
       // Clamp between 0 and 1
       progress = Math.max(0, Math.min(1, progress));
       
@@ -88,7 +83,7 @@ const Home: React.FC = () => {
             alt=""
             className="w-full h-full object-cover opacity-10 mix-blend-overlay animate-pulse-slow"
             loading="eager"
-            fetchpriority="high"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-900/95 to-brand-900/20"></div>
         </div>
@@ -169,7 +164,7 @@ const Home: React.FC = () => {
                       width="380"
                       height="548"
                       loading="eager"
-                      fetchpriority="high"
+                      fetchPriority="high"
                       className="w-[280px] md:w-[380px] h-auto mx-auto rounded-r-2xl shadow-[20px_20px_60px_-15px_rgba(0,0,0,0.7)] border-l-8 border-slate-800"
                     />
                     <div className="absolute -top-6 -right-6 bg-white text-slate-900 p-4 rounded-2xl shadow-2xl border border-slate-100 hidden md:block animate-float-delayed">

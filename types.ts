@@ -1,5 +1,5 @@
 
-export type LocalizedString = string | { de: string; en?: string };
+export type LocalizedString = string | { de: string; en: string };
 
 export interface Level {
   id: number;
@@ -24,29 +24,4 @@ export interface BlogPost {
   content: LocalizedString;
   author: string;
   imageUrl?: string;
-}
-
-export interface AppToolCell {
-  id: string;
-  label: LocalizedString;
-  tooltip: LocalizedString;
-  acceptanceCriteria?: string[];
-}
-
-export interface AppToolLane {
-  label: string;
-  startRow: number;
-  endRow: number;
-  details: {
-    description: LocalizedString;
-    why: LocalizedString;
-    how: LocalizedString;
-    resources?: { label: string; url: string }[];
-  };
-}
-
-export interface AppToolConfig {
-  lanes: AppToolLane[];
-  cells: AppToolCell[];
-  arrows: { from: string; to: string }[];
 }
