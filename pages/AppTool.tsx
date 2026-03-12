@@ -4,43 +4,55 @@ import confetti from 'canvas-confetti';
 import { rawConfig } from '../data/appToolData';
 import { useLanguage } from '../contexts/LanguageContext';
 import SEO from '../components/SEO';
+import { AppToolCell, AppToolLane, LocalizedString } from '../src/types';
 
-const ConnectingLines = ({ nodeRefs, hoveredNode, containerRef }: any) => {
+interface AppNode extends Omit<AppToolCell, 'label' | 'tooltip'> {
+  title: string;
+  description: string;
+  level: number;
+  branchId: string;
+  row: number;
+  col: number;
+}
+
+const ConnectingLines = ({ nodeRefs, hoveredNode, containerRef }: { nodeRefs: React.MutableRefObject<Map<string, HTMLDivElement>>, hoveredNode: string | null, containerRef: React.RefObject<HTMLDivElement> }) => {
   const [lines, setLines] = useState<React.ReactElement[]>([]);
 
   useLayoutEffect(() => {
     const updateGraph = () => {
        const newLines: React.ReactElement[] = [];
-       rawConfig.arrows.forEach((arrow: any) => {
-           const startEl = nodeRefs.current.get(arrow.from);
-           const endEl = nodeRefs.current.get(arrow.to);
-           
-           if (startEl && endEl) {
-               const startX = startEl.offsetLeft + startEl.offsetWidth / 2;
-               const startY = startEl.offsetTop + startEl.offsetHeight / 2;
-               const endX = endEl.offsetLeft + endEl.offsetWidth / 2;
-               const endY = endEl.offsetTop + endEl.offsetHeight / 2;
+       if (rawConfig.arrows) {
+           rawConfig.arrows.forEach((arrow: { from: string; to: string }, index: number) => {
+               const startEl = nodeRefs.current.get(arrow.from);
+               const endEl = nodeRefs.current.get(arrow.to);
                
-               const isHovered = hoveredNode === arrow.from || hoveredNode === arrow.to;
-               
-               const deltaX = endX - startX;
-               const midX = startX + (deltaX / 2);
-               
-               const d = `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`;
-               
-               newLines.push(
-                   <path 
-                       key={`${arrow.from}-${arrow.to}`}
-                       d={d}
-                       fill="none"
-                       stroke={isHovered ? "#059669" : "#cbd5e1"}
-                       strokeWidth={isHovered ? 2.5 : 1.5}
-                       className="transition-all duration-300 ease-in-out"
-                       style={{ opacity: isHovered ? 1 : 0.6, zIndex: isHovered ? 10 : 0 }}
-                   />
-               );
-           }
-       });
+               if (startEl && endEl) {
+                   const startX = startEl.offsetLeft + startEl.offsetWidth / 2;
+                   const startY = startEl.offsetTop + startEl.offsetHeight / 2;
+                   const endX = endEl.offsetLeft + endEl.offsetWidth / 2;
+                   const endY = endEl.offsetTop + endEl.offsetHeight / 2;
+                   
+                   const isHovered = hoveredNode === arrow.from || hoveredNode === arrow.to;
+                   
+                   const deltaX = endX - startX;
+                   const midX = startX + (deltaX / 2);
+                   
+                   const d = `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`;
+                   
+                   newLines.push(
+                       <path 
+                           key={`${arrow.from}-${arrow.to}-${index}`}
+                           d={d}
+                           fill="none"
+                           stroke={isHovered ? "#059669" : "#cbd5e1"}
+                           strokeWidth={isHovered ? 2.5 : 1.5}
+                           className="transition-all duration-300 ease-in-out"
+                           style={{ opacity: isHovered ? 1 : 0.6, zIndex: isHovered ? 10 : 0 }}
+                       />
+                   );
+               }
+           });
+       }
        setLines(newLines);
     };
     updateGraph();
@@ -53,7 +65,7 @@ const ConnectingLines = ({ nodeRefs, hoveredNode, containerRef }: any) => {
   return <svg className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">{lines}</svg>;
 };
 
-const WarningModal = ({ data, onClose, nodes }: any) => {
+const WarningModal = ({ data, onClose, nodes }: { data: { isOpen: boolean, missingNodes: string[] }, onClose: () => void, nodes: any[] }) => {
     if (!data.isOpen) return null;
     return (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
@@ -85,7 +97,7 @@ const WarningModal = ({ data, onClose, nodes }: any) => {
     );
 };
 
-const BranchInfoModal = ({ branch, onClose, t }: any) => {
+const BranchInfoModal = ({ branch, onClose, t }: { branch: any, onClose: () => void, t: (s: string | LocalizedString) => string }) => {
     if (!branch) return null;
     
     return (
@@ -96,7 +108,7 @@ const BranchInfoModal = ({ branch, onClose, t }: any) => {
                         <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl">
                             <i className={`fas ${branch.icon}`}></i>
                         </div>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white font-serif">{branch.name}</h2>
+                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white font-sans">{t(branch.name)}</h2>
                     </div>
                     <button onClick={onClose} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
                         <i className="fas fa-times text-xl"></i>
@@ -153,12 +165,13 @@ const BranchInfoModal = ({ branch, onClose, t }: any) => {
     );
 };
 
-const DetailPopup = ({ node, onClose, onStatusChange, onOkrToggle, nodeState, isGardener, isMobile, allNodes, userState, onNavigate, branches, ui }: any) => {
+const DetailPopup = ({ node, onClose, onStatusChange, onOkrToggle, nodeState, isMobile, allNodes, userState, onNavigate, branches, ui, t }: { node: AppNode, onClose: () => void, onStatusChange: (id: string, status: string, data?: any) => void, onOkrToggle: (idx: number) => void, nodeState: any, isMobile: boolean, allNodes: AppNode[], userState: any, onNavigate: (id: string) => void, branches: any[], ui: (key: string) => string, t: (s: any) => string }) => {
     const [isNaInputOpen, setIsNaInputOpen] = useState(false);
     const [naReason, setNaReason] = useState('');
 
     if (!node) return null;
-    const branchName = branches.find((b: any) => b.id === node.branchId)?.name?.toUpperCase();
+    const branchObj = branches.find((b: any) => b.id === node.branchId);
+    const branchName = branchObj ? t(branchObj.name).toUpperCase() : '';
 
     const getPrerequisites = (nodeId: string) => {
         if (!rawConfig || !rawConfig.arrows) return [];
@@ -192,7 +205,7 @@ const DetailPopup = ({ node, onClose, onStatusChange, onOkrToggle, nodeState, is
                          <span>•</span>
                          <span>{branchName}</span>
                      </div>
-                     <h2 className={`text-3xl md:text-4xl font-serif font-bold ${isNA ? 'text-slate-400 dark:text-slate-500 line-through decoration-2' : 'text-slate-900 dark:text-white'} leading-tight`}>{node.title}</h2>
+                     <h2 className={`text-3xl md:text-4xl font-sans font-bold ${isNA ? 'text-slate-400 dark:text-slate-500 line-through decoration-2' : 'text-slate-900 dark:text-white'} leading-tight`}>{node.title}</h2>
                      {isNA && <div className="inline-block mt-2 px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-500 text-xs font-bold uppercase rounded-full">{ui("app.not_relevant")}</div>}
                 </div>
                  
@@ -302,7 +315,7 @@ const DetailPopup = ({ node, onClose, onStatusChange, onOkrToggle, nodeState, is
     );
 };
 
-const ListView = ({ branches, nodes, userState, onNodeClick, isGardener, onStatusChange, onBranchInfoClick }: any) => {
+const ListView = ({ branches, nodes, userState, onNodeClick, isGardener, onStatusChange, onBranchInfoClick, t }: { branches: any[], nodes: AppNode[], userState: any, onNodeClick: (id: string) => void, isGardener: boolean, onStatusChange: (id: string, status: string) => void, onBranchInfoClick: (branch: any) => void, t: (s: any) => string }) => {
     const [collapsed, setCollapsed] = useState<Record<string, boolean>>(() => {
         const initial: Record<string, boolean> = {};
         branches.forEach((b: any) => initial[b.id] = true);
@@ -346,8 +359,8 @@ const ListView = ({ branches, nodes, userState, onNodeClick, isGardener, onStatu
                                 </div>
                                 <div>
                                     <div className="flex items-center gap-3">
-                                        <h2 className="text-xl font-serif font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                                        {branch.name}
+                                        <h2 className="text-xl font-sans font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                        {t(branch.name)}
                                         <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center ml-2 pointer-events-none">
                                             <i className={`fas fa-chevron-${isCollapsed ? 'down' : 'up'} text-xs text-slate-500`}></i>
                                         </div>
@@ -414,12 +427,12 @@ const ListView = ({ branches, nodes, userState, onNodeClick, isGardener, onStatu
 };
 
 const AppTool: React.FC = () => {
-  const { t, ui } = useLanguage();
+  const { t, ui, language } = useLanguage();
   
   const levels = Array.from({ length: 9 }, (_, i) => ({ id: i + 1, label: `${ui("app.level")} ${i + 1}` }));
   const icons = ["fa-cogs", "fa-vial", "fa-cube", "fa-rocket", "fa-robot", "fa-server", "fa-user-check", "fa-chart-line"];
 
-  const appBranches = rawConfig.lanes.map((lane: any, index: number) => ({
+  const appBranches = rawConfig.lanes.map((lane: AppToolLane, index: number) => ({
       id: `branch-${index}`,
       name: lane.label,
       icon: icons[index] || "fa-circle",
@@ -428,7 +441,7 @@ const AppTool: React.FC = () => {
       details: lane.details
   }));
 
-  const appNodes = rawConfig.cells.map((cell: any) => {
+  const appNodes: AppNode[] = rawConfig.cells.map((cell: AppToolCell) => {
       const match = cell.id.match(/R(\d+)C(\d+)/);
       let row = 0, col = 0;
       if (match) {
@@ -436,18 +449,27 @@ const AppTool: React.FC = () => {
           col = parseInt(match[2]);
       }
       const branch = appBranches.find(b => row >= b.startRow && row <= b.endRow);
+      
+      // Helper to ensure LocalizedString structure
+      const ensureLocalized = (val: string | LocalizedString | undefined): LocalizedString => {
+          if (!val) return { de: '', en: '' };
+          if (typeof val === 'string') return { de: val, en: val };
+          return { de: val.de || '', en: val.en || val.de || '' };
+      };
+
       return {
-          id: cell.id,
           title: t(cell.label), 
           description: t(cell.tooltip),
           acceptanceCriteria: cell.acceptanceCriteria || [],
-          level: col, // Col is now 1-based, Level 1 is Col 1.
-          branchId: branch ? branch.id : null,
+          level: col - 1,
+          branchId: branch ? branch.id : '',
           row: row,
           col: col,
-          ...cell
+          ...cell,
+          label: ensureLocalized(cell.label),
+          tooltip: ensureLocalized(cell.tooltip)
       };
-  }).filter(n => n.branchId !== null);
+  }).filter(n => n.branchId !== '');
 
   const [activeNodeId, setActiveNodeId] = useState<string | null>(null);
   const [selectedBranch, setSelectedBranch] = useState<any>(null);
@@ -461,10 +483,66 @@ const AppTool: React.FC = () => {
   const [projectData, setProjectData] = useState({ name: '', owner: '' });
   
   const [isMobile, setIsMobile] = useState(false);
+  const [selectedMobileBranchId, setSelectedMobileBranchId] = useState<string | null>(null);
+
+  const renderNodeCard = (node: any) => {
+      const state = getNodeState(node.id);
+      const isCompleted = state.status === 'completed';
+      const isInProgress = state.status === 'in-progress';
+      const isLocked = state.status === 'locked';
+      const isNotRelevant = state.status === 'not-relevant';
+      
+      let cardClasses = "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm";
+      let textClasses = "text-slate-700 dark:text-slate-200";
+      let statusIndicator = null;
+      
+      if (isNotRelevant) {
+          cardClasses = "bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 border-dashed opacity-60";
+          textClasses = "text-slate-400 dark:text-slate-600 line-through decoration-slate-300 dark:decoration-slate-700";
+      } else if (isGardenerMode) {
+          if (isCompleted) {
+              cardClasses = "bg-emerald-50 dark:bg-emerald-900/20 border-emerald-500 dark:border-emerald-500 shadow-md ring-1 ring-emerald-500/20";
+              textClasses = "text-emerald-900 dark:text-emerald-100 font-medium";
+              statusIndicator = (<div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] shadow-sm border-2 border-white dark:border-slate-900 z-20"><i className="fas fa-check"></i></div>);
+          } else if (isInProgress) {
+              cardClasses = "bg-amber-50 dark:bg-amber-900/20 border-amber-400 dark:border-amber-500 shadow-md ring-1 ring-amber-400/20";
+              textClasses = "text-amber-900 dark:text-amber-100 font-medium";
+              statusIndicator = (<div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-amber-400 text-white flex items-center justify-center text-[10px] shadow-sm border-2 border-white dark:border-slate-900 z-20"><i className="fas fa-spinner fa-spin"></i></div>);
+          } else if (isLocked) {
+              cardClasses = "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 opacity-90";
+          }
+      } else {
+          if (isCompleted) cardClasses = "bg-white dark:bg-slate-800 border-b-4 border-b-emerald-500 border-slate-200 dark:border-slate-700 shadow-sm";
+          else if (isInProgress) cardClasses = "bg-white dark:bg-slate-800 border-b-4 border-b-amber-400 border-slate-200 dark:border-slate-700 shadow-sm";
+      }
+      
+      return (
+        <div key={node.id} ref={el => { if(el) nodeRefs.current.set(node.id, el) }} 
+             className={`relative group perspective w-full max-w-[160px] print:hidden z-10 transition-transform duration-200 hover:-translate-y-0.5`} 
+             onMouseEnter={() => setHoveredNodeId(node.id)} 
+             onMouseLeave={() => setHoveredNodeId(null)} 
+             onClick={() => setActiveNodeId(node.id)}>
+            <div className={`relative w-full min-h-[70px] p-3 rounded-lg border text-left flex flex-col justify-between transition-all duration-200 ${cardClasses}`}>
+                {statusIndicator}
+                <div className="flex justify-between items-start mb-2">
+                    <span className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest font-mono">L{node.level}</span>
+                    {isNotRelevant && <i className="fas fa-ban text-xs text-slate-300 dark:text-slate-600"></i>}
+                </div>
+                <h4 className={`text-[11px] leading-snug font-semibold ${textClasses} line-clamp-3`}>{node.title}</h4>
+            </div>
+        </div>
+      )
+  };
 
   const gridRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef(new Map());
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const scrollGrid = (direction: number) => {
+      if (gridRef.current) {
+          gridRef.current.scrollBy({ left: direction * 300, behavior: 'smooth' });
+      }
+  };
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
@@ -489,11 +567,6 @@ const AppTool: React.FC = () => {
     localStorage.setItem('qtree-state', JSON.stringify(userState));
     localStorage.setItem('qtree-project', JSON.stringify(projectData));
   }, [userState, projectData]);
-
-  const scrollToTree = () => {
-    const target = isMobile ? document.getElementById('mobile-branch-selector') : gridRef.current;
-    target?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   const getPrerequisites = (nodeId: string) => {
     if (!rawConfig || !rawConfig.arrows) return [];
@@ -631,6 +704,7 @@ const AppTool: React.FC = () => {
       <SEO 
         title={ui("seo.app.title")} 
         description={ui("seo.app.description")}
+        lang={language}
       />
       <input type="file" ref={fileInputRef} style={{display: 'none'}} onChange={handleFileChange} accept=".json" />
 
@@ -640,8 +714,8 @@ const AppTool: React.FC = () => {
           <BranchInfoModal branch={selectedBranch} onClose={() => setSelectedBranch(null)} t={t} />
       )}
 
-      {activeNodeId && (
-        <DetailPopup node={activeNode} onClose={() => setActiveNodeId(null)} onStatusChange={(id: string, status: string, data: any) => handleStatusChangeAttempt(id, status, data, () => setActiveNodeId(null))} onOkrToggle={(idx: number) => toggleNodeOkr(activeNodeId, idx)} nodeState={getNodeState(activeNodeId)} isGardener={isGardenerMode} isMobile={isMobile} allNodes={appNodes} userState={userState} onNavigate={setActiveNodeId} branches={appBranches} ui={ui} />
+      {activeNode && (
+        <DetailPopup node={activeNode} onClose={() => setActiveNodeId(null)} onStatusChange={(id: string, status: string, data: any) => handleStatusChangeAttempt(id, status, data, () => setActiveNodeId(null))} onOkrToggle={(idx: number) => toggleNodeOkr(activeNodeId!, idx)} nodeState={getNodeState(activeNodeId!)} isMobile={isMobile} allNodes={appNodes} userState={userState} onNavigate={setActiveNodeId} branches={appBranches} ui={ui} t={t} />
       )}
 
       <div className="toolbar sticky top-[64px] left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm h-auto py-2 transition-all duration-200 print:hidden flex flex-col gap-2">
@@ -699,7 +773,7 @@ const AppTool: React.FC = () => {
                      <button onClick={handleLoadClick} className="p-2 bg-slate-100 dark:bg-slate-800 rounded hover:bg-emerald-100 hover:text-emerald-700 transition-colors" title="Load Project"><i className="fas fa-upload"></i></button>
                 </div>
 
-                <div className="hidden sm:flex items-center bg-slate-100 dark:bg-slate-800 rounded p-1 border border-slate-200 dark:border-slate-700">
+                <div className="flex items-center bg-slate-100 dark:bg-slate-800 rounded p-1 border border-slate-200 dark:border-slate-700">
                       <button onClick={() => setViewMode('map')} className={`w-8 h-7 flex items-center justify-center rounded text-xs transition-all ${viewMode === 'map' ? 'bg-white dark:bg-slate-600 text-emerald-700 dark:text-emerald-400 shadow-sm' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'}`} title={ui("app.view_map")}><i className="fas fa-project-diagram"></i></button>
                       <button onClick={() => setViewMode('list')} className={`w-8 h-7 flex items-center justify-center rounded text-xs transition-all ${viewMode === 'list' ? 'bg-white dark:bg-slate-600 text-emerald-700 dark:text-emerald-400 shadow-sm' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'}`} title={ui("app.view_list")}><i className="fas fa-list-ul"></i></button>
                 </div>
@@ -714,86 +788,85 @@ const AppTool: React.FC = () => {
       <div className="flex-grow flex flex-col">
         <div className="flex-grow">
           {viewMode === 'map' ? (
-             <div id="tree-grid-container" ref={gridRef} className={`relative w-full overflow-auto bg-slate-50 dark:bg-slate-950 pt-12 pb-32 px-8 min-h-screen print:hidden ${isMobile ? 'hidden' : 'block'}`}>
-                  <div style={{ width: 'fit-content', minWidth: '100%', height: 'fit-content' }}>
-                          <div className="relative inline-block min-w-full">
-                              <ConnectingLines nodeRefs={nodeRefs} hoveredNode={hoveredNodeId} containerRef={gridRef} />
-                              <div className="inline-grid gap-x-8 gap-y-8 relative z-10" style={{ gridTemplateColumns: `250px repeat(${levels.length}, minmax(160px, 1fr))` }}>
-                              <div className="sticky top-0 left-0 z-50 bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 h-10 flex items-center justify-center text-xs font-bold text-slate-400 tracking-widest uppercase border-r">{ui("app.ast")}</div>
-                              {levels.map(level => (
-                                  <div key={level.id} className="sticky top-0 z-40 text-center pb-4 bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
-                                      <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">{level.label}</span>
+              <>
+                <div className={`print:hidden ${isMobile ? 'block' : 'hidden'}`}>
+                  <div id="mobile-branch-selector" className="min-h-screen bg-slate-50 dark:bg-slate-950 py-12 px-4">
+                      {!selectedMobileBranchId ? (
+                          <div className="max-w-md mx-auto space-y-4">
+                              <h2 className="text-xl font-sans font-bold text-slate-900 dark:text-white mb-6 text-center">{ui("app.discipline")}</h2>
+                              {appBranches.map((branch: any) => (
+                                  <div key={branch.id} onClick={() => setSelectedMobileBranchId(branch.id)} className="p-4 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center space-x-4 cursor-pointer active:scale-95 transition-transform">
+                                      <div className="w-10 h-10 rounded bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-700 dark:text-emerald-400"><i className={`fas ${branch.icon} text-base`}></i></div>
+                                      <div><h3 className="font-bold text-base text-slate-900 dark:text-white">{t(branch.name)}</h3></div>
+                                      <div className="flex-1 text-right"><i className="fas fa-chevron-right text-slate-300 dark:text-slate-600"></i></div>
                                   </div>
                               ))}
-                              {appBranches.map((branch: any) => (
-                                  <React.Fragment key={branch.id}>
-                                      <div className="sticky left-0 z-30 flex items-center bg-slate-50 dark:bg-slate-950 pr-4 border-r border-slate-200 dark:border-slate-800 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
-                                          <div 
-                                              className="flex items-center space-x-3 w-full p-4 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer"
-                                              onClick={() => setSelectedBranch(branch)}
-                                          >
-                                              <div className="w-8 h-8 rounded bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-700 dark:text-emerald-400 flex-shrink-0"><i className={`fas ${branch.icon}`}></i></div>
-                                              <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 leading-tight flex-1">{branch.name}</h3>
-                                              <i className="fas fa-info-circle text-slate-300 dark:text-slate-600 group-hover:text-emerald-500 transition-colors"></i>
-                                          </div>
-                                      </div>
-                                      {levels.map(level => {
-                                          const cellNodes = appNodes.filter((n: any) => n.branchId === branch.id && n.level === level.id);
-                                          return (
-                                              <div key={`${branch.id}-${level.id}`} className="flex flex-col items-center justify-center space-y-2 min-h-[100px]">
-                                                  {cellNodes.map((node: any) => {
-                                                      const state = getNodeState(node.id);
-                                                      const isCompleted = state.status === 'completed';
-                                                      const isInProgress = state.status === 'in-progress';
-                                                      const isNotRelevant = state.status === 'not-relevant';
-                                                      let cardClasses = "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm";
-                                                      let textClasses = "text-slate-700 dark:text-slate-200";
-                                                      let statusIndicator = null;
-                                                      if (isNotRelevant) {
-                                                          cardClasses = "bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 border-dashed opacity-60";
-                                                          textClasses = "text-slate-400 dark:text-slate-600 line-through decoration-slate-300 dark:decoration-slate-700";
-                                                      } else if (isGardenerMode) {
-                                                          if (isCompleted) {
-                                                              cardClasses = "bg-emerald-50 dark:bg-emerald-900/20 border-emerald-500 dark:border-emerald-500 shadow-md ring-1 ring-emerald-500/20";
-                                                              textClasses = "text-emerald-900 dark:text-emerald-100 font-medium";
-                                                              statusIndicator = (<div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] shadow-sm border-2 border-white dark:border-slate-900 z-20"><i className="fas fa-check"></i></div>);
-                                                          } else if (isInProgress) {
-                                                              cardClasses = "bg-amber-50 dark:bg-amber-900/20 border-amber-400 dark:border-amber-500 shadow-md ring-1 ring-amber-400/20";
-                                                              textClasses = "text-amber-900 dark:text-amber-100 font-medium";
-                                                              statusIndicator = (<div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-amber-400 text-white flex items-center justify-center text-[10px] shadow-sm border-2 border-white dark:border-slate-900 z-20"><i className="fas fa-spinner fa-spin"></i></div>);
-                                                          }
-                                                      } else {
-                                                          if (isCompleted) cardClasses = "bg-white dark:bg-slate-800 border-b-4 border-b-emerald-500 border-slate-200 dark:border-slate-700 shadow-sm";
-                                                          else if (isInProgress) cardClasses = "bg-white dark:bg-slate-800 border-b-4 border-b-amber-400 border-slate-200 dark:border-slate-700 shadow-sm";
-                                                      }
-                                                      return (
-                                                        <div key={node.id} ref={el => { if(el) nodeRefs.current.set(node.id, el) }} 
-                                                             className={`relative group perspective w-full max-w-[160px] print:hidden z-10 transition-transform duration-200 hover:-translate-y-0.5`} 
-                                                             onMouseEnter={() => setHoveredNodeId(node.id)} 
-                                                             onMouseLeave={() => setHoveredNodeId(null)} 
-                                                             onClick={() => setActiveNodeId(node.id)}>
-                                                            <div className={`relative w-full min-h-[70px] p-3 rounded-lg border text-left flex flex-col justify-between transition-all duration-200 ${cardClasses}`}>
-                                                                {statusIndicator}
-                                                                <div className="flex justify-between items-start mb-2">
-                                                                    <span className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest font-mono">L{node.level}</span>
-                                                                    {isNotRelevant && <i className="fas fa-ban text-xs text-slate-300 dark:text-slate-600"></i>}
-                                                                </div>
-                                                                <h4 className={`text-[11px] leading-snug font-semibold ${textClasses} line-clamp-3`}>{node.title}</h4>
-                                                            </div>
-                                                        </div>
-                                                      )
-                                                  })}
-                                              </div>
-                                          );
-                                      })}
-                                  </React.Fragment>
-                              ))}
+                          </div>
+                      ) : (
+                          <div className="max-w-md mx-auto">
+                              <button onClick={() => setSelectedMobileBranchId(null)} className="mb-6 flex items-center text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white font-medium text-sm"><i className="fas fa-arrow-left mr-2"></i> {ui("app.back")}</button>
+                              <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-px before:bg-slate-200 dark:before:bg-slate-800">
+                                  {levels.map(level => {
+                                       const branchNodes = appNodes.filter((n: any) => n.branchId === selectedMobileBranchId && n.level === level.id);
+                                       if (branchNodes.length === 0) return null;
+                                       return (
+                                           <div key={level.id} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                                               <div className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                                                  <span className="text-xs font-bold text-slate-600 dark:text-slate-400">{level.id}</span>
+                                               </div>
+                                               <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4"><div className="space-y-4">{branchNodes.map(node => renderNodeCard(node))}</div></div>
+                                           </div>
+                                       );
+                                  })}
                               </div>
                           </div>
+                      )}
                   </div>
-             </div>
+                </div>
+                <div className="relative w-full">
+                    <button onClick={() => scrollGrid(-1)} className="fixed left-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white dark:bg-slate-800 shadow-lg rounded-full flex items-center justify-center text-slate-600 dark:text-slate-200 hover:scale-110 transition-transform scroll-btn border border-slate-200 dark:border-slate-700 hidden md:flex" aria-label="Scroll left"><i className="fas fa-chevron-left"></i></button>
+                    <button onClick={() => scrollGrid(1)} className="fixed right-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white dark:bg-slate-800 shadow-lg rounded-full flex items-center justify-center text-slate-600 dark:text-slate-200 hover:scale-110 transition-transform scroll-btn border border-slate-200 dark:border-slate-700 hidden md:flex" aria-label="Scroll right"><i className="fas fa-chevron-right"></i></button>
+                    <div id="tree-grid-container" ref={gridRef} className={`relative w-full overflow-auto bg-slate-50 dark:bg-slate-950 pt-12 pb-32 px-8 min-h-screen print:hidden ${isMobile ? 'hidden' : 'block'}`}>
+                         <div style={{ width: 'fit-content', minWidth: '100%', height: 'fit-content' }}>
+                                 <div className="relative inline-block min-w-full">
+                                     <ConnectingLines nodeRefs={nodeRefs} hoveredNode={hoveredNodeId} containerRef={gridRef} />
+                                     <div className="inline-grid gap-x-8 gap-y-8 relative z-10" style={{ gridTemplateColumns: `250px repeat(${levels.length}, minmax(160px, 1fr))` }}>
+                                     <div className="sticky top-0 left-0 z-50 bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 h-10 flex items-center justify-center text-xs font-bold text-slate-400 tracking-widest uppercase border-r">{ui("app.ast")}</div>
+                                     {levels.map(level => (
+                                         <div key={level.id} className="sticky top-0 z-40 text-center pb-4 bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+                                             <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">{level.label}</span>
+                                         </div>
+                                     ))}
+                                     {appBranches.map((branch: any) => (
+                                         <React.Fragment key={branch.id}>
+                                             <div className="sticky left-0 z-30 flex items-center bg-slate-50 dark:bg-slate-950 pr-4 border-r border-slate-200 dark:border-slate-800 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
+                                                 <div 
+                                                     className="flex items-center space-x-3 w-full p-4 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer"
+                                                     onClick={() => setSelectedBranch(branch)}
+                                                 >
+                                                     <div className="w-8 h-8 rounded bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-700 dark:text-emerald-400 flex-shrink-0"><i className={`fas ${branch.icon}`}></i></div>
+                                                     <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 leading-tight flex-1">{t(branch.name)}</h3>
+                                                     <i className="fas fa-info-circle text-slate-300 dark:text-slate-600 group-hover:text-emerald-500 transition-colors"></i>
+                                                 </div>
+                                             </div>
+                                             {levels.map(level => {
+                                                 const cellNodes = appNodes.filter((n: any) => n.branchId === branch.id && n.level === level.id);
+                                                 return (
+                                                     <div key={`${branch.id}-${level.id}`} className="flex flex-col items-center justify-center space-y-2 min-h-[100px]">
+                                                         {cellNodes.map((node: any) => renderNodeCard(node))}
+                                                     </div>
+                                                 );
+                                             })}
+                                         </React.Fragment>
+                                     ))}
+                                     </div>
+                                 </div>
+                         </div>
+                    </div>
+                </div>
+              </>
           ) : (
-            <ListView branches={appBranches} nodes={appNodes} userState={userState} onNodeClick={setActiveNodeId} isGardener={isGardenerMode} onStatusChange={(id: string, status: string) => handleStatusChangeAttempt(id, status)} onBranchInfoClick={(branch: any) => setSelectedBranch(branch)} />
+            <ListView branches={appBranches} nodes={appNodes} userState={userState} onNodeClick={setActiveNodeId} isGardener={isGardenerMode} onStatusChange={(id: string, status: string) => handleStatusChangeAttempt(id, status)} onBranchInfoClick={(branch: any) => setSelectedBranch(branch)} t={t} />
           )}
         </div>
       </div>

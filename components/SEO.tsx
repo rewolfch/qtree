@@ -1,65 +1,49 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useLocation } from 'react-router-dom';
 
 interface SEOProps {
-  title: string;
-  description: string;
-  type?: 'website' | 'article';
+  title?: string;
+  description?: string;
+  name?: string;
+  type?: string;
+  image?: string;
   imageUrl?: string;
+  url?: string;
+  schema?: any;
+  lang?: string;
   author?: string;
   publishedTime?: string;
-  schema?: Record<string, any>;
 }
 
-const SEO: React.FC<SEOProps> = ({ 
-  title, 
-  description, 
-  type = 'website', 
-  imageUrl = 'https://media.springernature.com/full/springer-static/cover-hires/book/978-3-658-51040-4?as=webp',
-  author = 'Serge Baumberger',
-  publishedTime,
-  schema
-}) => {
-  const location = useLocation();
-  const siteTitle = "Quality Tree Framework";
-  const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
-  
-  // Force the main domain
-  const domain = "https://www.quality-tree.com";
-  
-  // Construct the URL. Since the app uses HashRouter, we construct the URL 
-  // to include the hash so deep links work correctly when clicked from Search.
-  const currentPath = location.pathname === '/' ? '' : `/#${location.pathname}`;
-  const currentUrl = `${domain}${currentPath}`;
+export default function SEO({ title, description, name, type, image, imageUrl, url, schema, lang = 'de', author, publishedTime }: SEOProps) {
+  const siteTitle = title ? `${title} | Quality Tree Framework` : 'Quality Tree Framework';
+  const siteDesc = description || 'Quality Tree Framework';
+  const siteImage = image || imageUrl || 'https://www.quality-tree.com/og-image.jpg';
+  const siteUrl = url || (typeof window !== 'undefined' ? window.location.href : 'https://www.quality-tree.com');
 
   return (
-    <Helmet>
-      {/* Standard Metadata */}
-      <title>{fullTitle}</title>
-      <meta name="description" content={description} />
-      <meta name="author" content={author} />
-      <link rel="canonical" href={currentUrl} />
-
+    <Helmet htmlAttributes={{ lang }}>
+      <title>{siteTitle}</title>
+      <meta name='description' content={siteDesc} />
+      
       {/* Open Graph / Facebook */}
-      <meta property="og:type" content={type} />
-      <meta property="og:url" content={currentUrl} />
-      <meta property="og:title" content={fullTitle} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={imageUrl} />
-      <meta property="og:site_name" content={siteTitle} />
-      {publishedTime && <meta property="article:published_time" content={publishedTime} />}
-      {publishedTime && <meta property="article:author" content={author} />}
+      <meta property="og:type" content={type || 'website'} />
+      <meta property="og:url" content={siteUrl} />
+      <meta property="og:title" content={siteTitle} />
+      <meta property="og:description" content={siteDesc} />
+      <meta property="og:image" content={siteImage} />
+      {type === 'article' && publishedTime && <meta property="article:published_time" content={publishedTime} />}
+      {type === 'article' && author && <meta property="article:author" content={author} />}
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={fullTitle} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={imageUrl} />
-      <meta name="twitter:url" content={currentUrl} />
+      <meta name="twitter:url" content={siteUrl} />
+      <meta name="twitter:title" content={siteTitle} />
+      <meta name="twitter:description" content={siteDesc} />
+      <meta name="twitter:image" content={siteImage} />
+      <meta name="twitter:creator" content={name || author || '@SergeBaumberger'} />
 
-      {/* Schema Markup */}
+      {/* Structured Data */}
       {schema && (
         <script type="application/ld+json">
           {JSON.stringify(schema)}
@@ -67,6 +51,4 @@ const SEO: React.FC<SEOProps> = ({
       )}
     </Helmet>
   );
-};
-
-export default SEO;
+}

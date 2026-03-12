@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { fetchPostById } from '../services/blogService';
-import { BlogPost } from '../types';
+import { BlogPost } from '../src/types';
 import { ArrowLeft, Calendar, User, Linkedin, Twitter, Mail, Share2, TreeDeciduous, ArrowRight } from 'lucide-react';
 import SEO from '../components/SEO';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -36,7 +36,7 @@ const BlogPostDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [post, setPost] = useState<BlogPost | undefined>(undefined);
   const [loading, setLoading] = useState(true);
-  const { ui, t } = useLanguage();
+  const { ui, t, language } = useLanguage();
 
   useEffect(() => {
     const loadPost = async () => {
@@ -155,6 +155,7 @@ const BlogPostDetail: React.FC = () => {
         author={post.author}
         publishedTime={post.date}
         schema={schema}
+        lang={language}
       />
 
       {post.imageUrl && (
@@ -162,6 +163,9 @@ const BlogPostDetail: React.FC = () => {
            <img 
              src={post.imageUrl} 
              alt={postTitle} 
+             loading="eager"
+             fetchpriority="high"
+             decoding="sync"
              className="w-full h-full object-cover opacity-80"
            />
            <div className="absolute inset-0 bg-gradient-to-t from-slate-50 via-transparent to-transparent"></div>

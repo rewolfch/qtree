@@ -21,12 +21,12 @@ const iconMap: Record<string, { icon: React.ReactNode, color: string, bg: string
 
 const Framework: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const { t, ui } = useLanguage();
+  const { t, ui, language } = useLanguage();
 
   const filteredBranches = branches.filter(branch => 
     t(branch.title).toLowerCase().includes(searchQuery.toLowerCase()) ||
     t(branch.description).toLowerCase().includes(searchQuery.toLowerCase()) ||
-    branch.levels.some(l => t(l.title).toLowerCase().includes(searchQuery.toLowerCase()))
+    branch.levels.some((l: any) => t(l.title).toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   const frameworkSchema = {
@@ -53,6 +53,7 @@ const Framework: React.FC = () => {
         title={ui("seo.framework.title")}
         description={ui("seo.framework.description")}
         schema={frameworkSchema}
+        lang={language}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
