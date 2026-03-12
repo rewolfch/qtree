@@ -1,6 +1,6 @@
 
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
-import { LocalizedString } from '../types';
+import { LocalizedString } from '../src/types';
 
 export type Language = 'de' | 'en';
 
@@ -80,6 +80,18 @@ const uiTranslations: Record<string, Record<Language, string>> = {
   "home.author.meeting_desc": { de: "Strategie-Checkup vereinbaren.", en: "Schedule strategy checkup." },
   "home.author.keynote_title": { de: "Keynote Speaker", en: "Keynote Speaker" },
   "home.author.bio_link": { de: "Biographie lesen", en: "Read Biography" },
+
+  "author.title": { de: "Über den Autor", en: "About the Author" },
+  "author.subtitle": { de: "Serge Baumberger", en: "Serge Baumberger" },
+  "author.role": { de: "Co-CEO Infometis AG & Creator of the Quality Tree", en: "Co-CEO Infometis AG & Creator of the Quality Tree" },
+  "author.bio.p1": { de: "Serge Baumberger ist seit über 25 Jahren in der Software-Qualitätssicherung tätig. Als Co-CEO der Infometis AG begleitet er Unternehmen bei der agilen Transformation und dem Aufbau nachhaltiger Qualitätsstrukturen.", en: "Serge Baumberger has been active in software quality assurance for over 25 years. As Co-CEO of Infometis AG, he accompanies companies in agile transformation and building sustainable quality structures." },
+  "author.bio.p2": { de: "Der Quality Tree entstand aus dem Bedürfnis, eine gemeinsame Sprache zwischen Business und IT zu finden. Er visualisiert komplexe QA-Themen verständlich und macht sie messbar.", en: "The Quality Tree arose from the need to find a common language between business and IT. It visualizes complex QA topics understandably and makes them measurable." },
+  "author.bio.p3": { de: "Neben seiner Tätigkeit als Berater und Geschäftsführer ist Serge ein gefragter Keynote-Speaker auf internationalen Konferenzen wie dem Swiss Testing Day.", en: "In addition to his work as a consultant and managing director, Serge is a sought-after keynote speaker at international conferences such as the Swiss Testing Day." },
+  "author.contact.title": { de: "Kontakt aufnehmen", en: "Get in Touch" },
+  "author.contact.desc": { de: "Möchten Sie den Quality Tree in Ihrem Unternehmen einführen oder suchen Sie einen Speaker für Ihr nächstes Event?", en: "Would you like to introduce the Quality Tree in your company or are you looking for a speaker for your next event?" },
+  "author.contact.meeting": { de: "1:1 Gespräch buchen", en: "Book 1:1 Meeting" },
+  "author.contact.email": { de: "Email schreiben", en: "Send Email" },
+  "author.contact.linkedin": { de: "Mit Serge vernetzen", en: "Connect with Serge" },
 
   "framework.title": { de: "Das Framework.", en: "The Framework." },
   "framework.subtitle": { de: "8 Äste, 90 Praktiken. Finden Sie genau die Themenbereiche, die Ihr Team heute voranbringen.", en: "8 Branches, 90 Practices. Find exactly the topics that move your team forward today." },
@@ -176,6 +188,12 @@ const uiTranslations: Record<string, Record<Language, string>> = {
   "faq.a2": { de: "Serge Baumberger, Co-CEO der Infometis AG, ist der Schöpfer des Frameworks. Er verfügt über 25+ Jahre Erfahrung in QA, Testing und Agiler Transformation.", en: "Serge Baumberger, Co-CEO of Infometis AG, is the creator of the framework. He has 25+ years of experience in QA, testing, and agile transformation." },
   "faq.q3": { de: "Was sind die 8 Dimensionen (Äste)?", en: "What are the 8 Dimensions (Branches)?" },
   "faq.a3": { de: "Die 8 Äste sind: Configuration Management, Unit Testing, Build Practices, Deployment Practices, Test Automation, Virtualization, Manual Testing und Test Management.", en: "The 8 branches are: Configuration Management, Unit Testing, Build Practices, Deployment Practices, Test Automation, Virtualization, Manual Testing, and Test Management." },
+  "faq.q4": { de: "Wie kann ich die QTF App nutzen?", en: "How can I use the QTF App?" },
+  "faq.a4": { de: "Die QTF App ist ein interaktives Assessment-Tool. Sie können Ihr Projekt anlegen, die 90 Praktiken bewerten und erhalten sofort eine visuelle Auswertung Ihres Quality Trees sowie Handlungsempfehlungen.", en: "The QTF App is an interactive assessment tool. You can create your project, evaluate the 90 practices, and immediately receive a visual evaluation of your Quality Tree as well as recommendations for action." },
+  "faq.q5": { de: "Wo kann ich das Buch kaufen?", en: "Where can I buy the book?" },
+  "faq.a5": { de: "Das Buch 'Das Quality Tree Framework' ist bei Amazon, Springer, Thalia und Orell Füssli erhältlich. Links finden Sie im Footer dieser Website.", en: "The book 'The Quality Tree Framework' is available at Amazon, Springer, Thalia, and Orell Füssli. You can find links in the footer of this website." },
+  "faq.q6": { de: "Was ist der Unterschied zwischen dem Buch und der App?", en: "What is the difference between the book and the app?" },
+  "faq.a6": { de: "Das Buch bietet das theoretische Fundament, tiefgehende Erklärungen und Praxisbeispiele. Die App ist ein praktisches Werkzeug zur Standortbestimmung und Fortschrittskontrolle Ihres eigenen Teams.", en: "The book provides the theoretical foundation, in-depth explanations, and practical examples. The app is a practical tool for determining the current status and monitoring the progress of your own team." },
 };
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -198,7 +216,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   };
 
   // Helper for content objects {de: "...", en: "..."}
-  const t = (content: LocalizedString | string, key?: string): string => {
+  const t = (content: LocalizedString | string): string => {
     if (typeof content === 'object' && content !== null && 'de' in content) {
       return content[language] || content['de'];
     }

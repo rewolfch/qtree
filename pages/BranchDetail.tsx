@@ -6,10 +6,10 @@ import {
   ArrowLeft, CheckCircle2, ArrowRight, 
   GitBranch, Microscope, Hammer, Rocket, Bot, Cloud, UserCheck, BarChart, Zap
 } from 'lucide-react';
-import { BranchDecoration, LeafIcon } from '../components/Illustrations';
+import { BranchDecoration } from '../components/Illustrations';
 import SEO from '../components/SEO';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Level } from '../types';
+import { Level } from '../src/types';
 
 interface LevelCardProps {
   level: Level;
@@ -31,7 +31,7 @@ const LevelCard: React.FC<LevelCardProps> = ({ level, visual, index }) => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
+      (entries: IntersectionObserverEntry[]) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
@@ -99,13 +99,13 @@ const LevelCard: React.FC<LevelCardProps> = ({ level, visual, index }) => {
 
 const BranchDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { t, ui } = useLanguage();
+  const { t, ui, language } = useLanguage();
   const branch = branches.find(b => b.id === id);
 
   if (!branch) {
     return (
       <div className="p-12 text-center">
-        <SEO title="Branch Not Found" description="The requested framework branch could not be found." />
+        <SEO title="Branch Not Found" description="The requested framework branch could not be found." lang={language} />
         Branch not found. <Link to="/framework">Go back</Link>
       </div>
     );
@@ -178,6 +178,7 @@ const BranchDetail: React.FC = () => {
         description={branchDesc}
         schema={branchSchema}
         type="article"
+        lang={language}
       />
 
       <div className={`absolute top-0 right-0 w-[800px] h-[800px] opacity-[0.07] pointer-events-none translate-x-1/4 -translate-y-1/4 ${visual.color}`}>

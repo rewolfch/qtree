@@ -163,19 +163,20 @@ export const TrunkPath: React.FC<{ className?: string }> = ({ className = "" }) 
  */
 export const TheGrowingTree: React.FC<{ progress: number; className?: string }> = ({ progress, className = "" }) => {
   // progress goes from 0.0 to 1.0
+  const safeProgress = (isNaN(progress) || !isFinite(progress)) ? 0 : progress;
   
   // Calculations for staggered animation
   // Trunk grows continuously: 0 -> 1
-  const trunkProgress = Math.min(1, Math.max(0, progress * 1.1)); 
+  const trunkProgress = Math.min(1, Math.max(0, safeProgress * 1.1)); 
   
   // Roots spread at start: 0 -> 0.2
-  const rootsProgress = Math.min(1, Math.max(0, progress * 5));
+  const rootsProgress = Math.min(1, Math.max(0, safeProgress * 5));
   
   // Branches spread in middle: 0.4 -> 0.8
-  const branchesProgress = Math.min(1, Math.max(0, (progress - 0.4) * 2.5));
+  const branchesProgress = Math.min(1, Math.max(0, (safeProgress - 0.4) * 2.5));
   
   // Leaves/Canopy at end: 0.7 -> 1.0
-  const canopyProgress = Math.min(1, Math.max(0, (progress - 0.7) * 3.3));
+  const canopyProgress = Math.min(1, Math.max(0, (safeProgress - 0.7) * 3.3));
 
   // Stroke Dash Array Helpers
   const draw = (val: number, max: number) => ({
@@ -196,12 +197,12 @@ export const TheGrowingTree: React.FC<{ progress: number; className?: string }> 
       </g>
 
       {/* 2. TRUNK (Spanning Level 1 to 4) */}
-      <g className={progress > 0.5 ? "text-brand-600 transition-colors duration-1000" : "text-slate-300 transition-colors duration-1000"}>
+      <g className={safeProgress > 0.5 ? "text-brand-600 transition-colors duration-1000" : "text-slate-300 transition-colors duration-1000"}>
          {/* Main Central Trunk Line */}
          <path 
            d="M100 60 C 100 150, 95 250, 100 350 C 105 450, 95 550, 100 650" 
            stroke="currentColor" 
-           strokeWidth={progress > 0.5 ? 4 : 2} 
+           strokeWidth={safeProgress > 0.5 ? 4 : 2} 
            strokeLinecap="round"
            fill="none"
            style={{

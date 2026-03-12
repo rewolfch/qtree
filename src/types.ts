@@ -1,11 +1,6 @@
-
-export type LocalizedString = string | { de: string; en?: string };
-
-export interface Level {
-  id: number;
-  title: LocalizedString;
-  description: LocalizedString;
-  tools?: string[];
+export interface LocalizedString {
+  de: string;
+  en: string;
 }
 
 export interface Branch {
@@ -13,52 +8,44 @@ export interface Branch {
   title: LocalizedString;
   description: LocalizedString;
   icon: string;
-  levels: Level[];
+  levels: {
+    id: number;
+    title: LocalizedString;
+    description: LocalizedString;
+    tools: string[];
+  }[];
 }
 
 export interface BlogPost {
   id: string;
   title: LocalizedString;
   date: string;
+  author: string;
+  imageUrl: string;
   excerpt: LocalizedString;
   content: LocalizedString;
-  author: string;
-  imageUrl?: string;
 }
 
 export interface AppToolCell {
   id: string;
-  label: LocalizedString;
-  tooltip: LocalizedString;
+  label: any;
+  tooltip: any;
+  row?: number;
+  col?: number;
+  status?: string;
+  okrs?: boolean[];
   acceptanceCriteria?: string[];
   class?: string;
   isRoot?: boolean;
 }
 
 export interface AppToolLane {
-  label: string;
+  id?: string;
+  title?: LocalizedString;
+  label?: any;
   startRow: number;
   endRow: number;
-  icon?: string;
-  details: {
-    description: LocalizedString;
-    why: LocalizedString;
-    how: LocalizedString;
-    resources?: { label: string; url: string }[];
-  };
-}
-
-export interface AppToolConfig {
-  lanes: AppToolLane[];
-  cells: AppToolCell[];
-  arrows: { from: string; to: string }[];
-}
-
-export interface AppNode extends Omit<AppToolCell, 'label' | 'tooltip'> {
-  title: string;
-  description: string;
-  level: number;
-  branchId: string;
-  row: number;
-  col: number;
+  color?: string;
+  details?: any;
+  targetCount?: number;
 }

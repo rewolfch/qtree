@@ -1,42 +1,45 @@
-
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { LanguageProvider } from './contexts/LanguageContext';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import Framework from './pages/Framework';
-import BranchDetail from './pages/BranchDetail';
-import Author from './pages/Author';
-import Blog from './pages/Blog';
-import BlogPostDetail from './pages/BlogPostDetail';
-import AppTool from './pages/AppTool';
-import FAQ from './pages/FAQ';
-import ScrollToTop from './components/ScrollToTop';
+import { LanguageProvider } from '../contexts/LanguageContext';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+
+const Home = React.lazy(() => import('../pages/Home'));
+const Blog = React.lazy(() => import('../pages/Blog'));
+const BlogPostDetail = React.lazy(() => import('../pages/BlogPostDetail'));
+const Framework = React.lazy(() => import('../pages/Framework'));
+const BranchDetail = React.lazy(() => import('../pages/BranchDetail'));
+const AppTool = React.lazy(() => import('../pages/AppTool'));
+const AdminCreatePost = React.lazy(() => import('../pages/AdminCreatePost'));
+const Author = React.lazy(() => import('../pages/Author'));
+const FAQ = React.lazy(() => import('../pages/FAQ'));
 
 function App() {
   return (
     <HelmetProvider>
       <LanguageProvider>
-        <HashRouter>
-          <ScrollToTop />
+        <Router>
           <div className="flex flex-col min-h-screen">
             <Navbar />
-            <main className="flex-grow flex flex-col">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/framework" element={<Framework />} />
-                <Route path="/framework/:id" element={<BranchDetail />} />
-                <Route path="/author" element={<Author />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/blog/:id" element={<BlogPostDetail />} />
-                <Route path="/app" element={<AppTool />} />
-                <Route path="/faq" element={<FAQ />} />
-              </Routes>
+            <main className="flex-grow pt-20">
+              <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-600"></div></div>}>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:id" element={<BlogPostDetail />} />
+                  <Route path="/framework" element={<Framework />} />
+                  <Route path="/framework/:id" element={<BranchDetail />} />
+                  <Route path="/app" element={<AppTool />} />
+                  <Route path="/admin" element={<AdminCreatePost />} />
+                  <Route path="/author" element={<Author />} />
+                  <Route path="/faq" element={<FAQ />} />
+                </Routes>
+              </Suspense>
             </main>
             <Footer />
           </div>
-        </HashRouter>
+        </Router>
       </LanguageProvider>
     </HelmetProvider>
   );

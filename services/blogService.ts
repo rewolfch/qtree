@@ -1,12 +1,12 @@
 import { db } from '../firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
-import { BlogPost } from '../types';
+import { BlogPost } from '../src/types';
 import { blogPosts as staticPosts } from '../data/framework';
 
 const COLLECTION_NAME = 'posts';
-const STORAGE_KEY = 'qtf_blog_posts_v1';
+const STORAGE_KEY = 'qtf_blog_posts_v2';
 
-const isFirebaseReady = () => !!db;
+const isFirebaseReady = () => !!db && import.meta.env.VITE_FIREBASE_API_KEY && import.meta.env.VITE_FIREBASE_API_KEY !== 'dummy';
 
 export const fetchAllPosts = async (): Promise<BlogPost[]> => {
   // 1. Firebase
