@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BlogPost } from '../types';
+import { BlogPost } from '../src/types';
 import { fetchAllPosts } from '../services/blogService';
 import { Calendar, User, ArrowRight, BookOpen, Search } from 'lucide-react';
 import SEO from '../components/SEO';
@@ -31,7 +31,8 @@ const Blog: React.FC = () => {
   const [displayPosts, setDisplayPosts] = useState<BlogPost[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
-  const { ui, t } = useLanguage();
+  const [visibleCount, setVisibleCount] = useState(6);
+  const { ui, t, language } = useLanguage();
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -45,11 +46,27 @@ const Blog: React.FC = () => {
     loadPosts();
   }, []);
 
-  const filteredPosts = displayPosts.filter(post => 
-    t(post.title).toLowerCase().includes(searchQuery.toLowerCase()) ||
-    t(post.excerpt).toLowerCase().includes(searchQuery.toLowerCase()) ||
-    t(post.content).toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredPosts = React.useMemo(() => {
+    const query = searchQuery.toLowerCase();
+    if (!query) return displayPosts;
+    
+    return displayPosts.filter(post => 
+      t(post.title).toLowerCase().includes(query) ||
+      t(post.excerpt).toLowerCase().includes(query) ||
+      t(post.content).toLowerCase().includes(query)
+    );
+  }, [displayPosts, searchQuery, t]);
+
+  // Reset visible count when search query changes
+  useEffect(() => {
+    setVisibleCount(6);
+  }, [searchQuery]);
+
+  const visiblePosts = filteredPosts.slice(0, visibleCount);
+
+  const handleLoadMore = () => {
+    setVisibleCount(prev => prev + 6);
+  };
 
   const schema = {
     "@context": "https://schema.org",
@@ -65,13 +82,14 @@ const Blog: React.FC = () => {
         title={ui("seo.blog.title")}
         description={ui("blog.header_desc")}
         schema={schema}
+        lang={language}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Blog Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <ScrollReveal animation="fade-up">
+          <ScrollReveal animation="fade-up" duration={500}>
             <div className="inline-flex items-center justify-center p-3 bg-brand-100 rounded-2xl mb-6 text-brand-600 border border-brand-200">
               <BookOpen className="h-8 w-8" />
             </div>
@@ -83,7 +101,7 @@ const Blog: React.FC = () => {
         </div>
 
         {/* Search Bar */}
-        <ScrollReveal animation="fade-up" delay={200}>
+        <ScrollReveal animation="fade-up" delay={100} duration={500}>
           <div className="max-w-2xl mx-auto mb-20 relative group">
              <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none">
                <Search className="h-5 w-5 text-slate-400 group-focus-within:text-brand-600 transition-colors" />
@@ -106,16 +124,20 @@ const Blog: React.FC = () => {
         {loading ? <BlogSkeleton /> : (
           <>
             {filteredPosts.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-                {filteredPosts.map((post, index) => (
-                  <ScrollReveal key={post.id} animation="fade-up" delay={index * 100}>
-                    <article className="flex flex-col bg-white rounded-[2.5rem] shadow-sm border border-slate-200 overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group h-full">
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                {visiblePosts.map((post, index) => (
+                  <ScrollReveal key={post.id} animation="fade-up" delay={(index % 3) * 100} duration={500}>
+                    <article className="flex flex-col bg-white rounded-[2.5rem] shadow-sm border border-slate-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group h-full" style={{ contentVisibility: 'auto' }}>
                       <Link to={`/blog/${post.id}`} className="block h-64 overflow-hidden bg-slate-200 relative">
                         {post.imageUrl ? (
                           <img 
                             src={post.imageUrl} 
                             alt={t(post.title)} 
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s]"
+                            loading={index < 3 ? "eager" : "lazy"}
+                            fetchpriority={index < 3 ? "high" : "auto"}
+                            decoding="async"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
@@ -155,6 +177,18 @@ const Blog: React.FC = () => {
                   </ScrollReveal>
                 ))}
               </div>
+              
+              {visibleCount < filteredPosts.length && (
+                <div className="mt-16 text-center">
+                  <button 
+                    onClick={handleLoadMore}
+                    className="inline-flex items-center justify-center px-8 py-4 bg-white border border-slate-200 text-slate-900 rounded-xl font-bold hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm hover:shadow"
+                  >
+                    {ui("blog.load_more") || "Load More"}
+                  </button>
+                </div>
+              )}
+              </>
             ) : (
               <div className="text-center py-24 bg-white rounded-[3rem] border border-slate-100">
                 <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 mx-auto mb-6">

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Linkedin, Mail, ShoppingCart, BookOpen, TreeDeciduous, Globe, ShoppingBag } from 'lucide-react';
+import { Linkedin, Mail, ShoppingCart, BookOpen, TreeDeciduous, ShoppingBag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 

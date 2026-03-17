@@ -1,5 +1,5 @@
 
-import { Branch, BlogPost } from '../types';
+import { Branch, BlogPost } from '../src/types';
 
 export const branches: Branch[] = [
   {
@@ -18,6 +18,10 @@ export const branches: Branch[] = [
       { id: 5, title: { de: "Zentrales Feature-Toggle-Framework", en: "Central Feature Toggle Framework" }, description: { de: "Einheitliche Steuerung, Transparenz und Lebenszyklusmanagement aller Toggles.", en: "Unified control, transparency, and lifecycle management of all toggles." }, tools: ["LaunchDarkly"] },
       { id: 6, title: { de: "Centralized Feature Toggle Management", en: "Centralized Feature Toggle Management" }, description: { de: "Metadatengetriebenes Toggle-Management und Integration in Observability.", en: "Metadata-driven toggle management and integration into observability." }, tools: [] },
       { id: 7, title: { de: "Progressive Exposure via Audience Targeting", en: "Progressive Exposure via Audience Targeting" }, description: { de: "Sichere Experimente in Produktion durch gezielte Nutzergruppen.", en: "Safe experiments in production through targeted user groups." }, tools: [] },
+      { id: 8, title: { de: "Infrastructure as Code (IaC) Versioning", en: "Infrastructure as Code (IaC) Versioning" }, description: { de: "Infrastruktur-Definitionen als versionierter Code.", en: "Infrastructure definitions as versioned code." }, tools: ["Terraform"] },
+      { id: 8, title: { de: "Configuration Drift Detection", en: "Configuration Drift Detection" }, description: { de: "Automatische Erkennung von Abweichungen zwischen Code und Realität.", en: "Automatic detection of drift between code and reality." }, tools: [] },
+      { id: 9, title: { de: "Automated Compliance as Code", en: "Automated Compliance as Code" }, description: { de: "Compliance-Regeln als ausführbarer Code.", en: "Compliance rules as executable code." }, tools: ["OPA"] },
+      { id: 9, title: { de: "AI-Driven Configuration Optimization", en: "AI-Driven Configuration Optimization" }, description: { de: "KI-gestützte Optimierung von Konfigurationen.", en: "AI-supported optimization of configurations." }, tools: [] }
     ]
   },
   {
@@ -34,6 +38,12 @@ export const branches: Branch[] = [
       { id: 3, title: { de: "Unit-Test-Abdeckung: 25–80 %", en: "Unit Test Coverage: 25–80%" }, description: { de: "Breitere Abdeckung kritischer Pfade und Geschäftslogik.", en: "Broader coverage of critical paths and business logic." }, tools: ["JaCoCo"] },
       { id: 4, title: { de: "Unit-Test-Abdeckung > 80 %", en: "Unit Test Coverage > 80%" }, description: { de: "Maximale Sicherheit durch Absicherung fast aller Codepfade inkl. Randfälle.", en: "Maximum security by covering almost all code paths including edge cases." }, tools: [] },
       { id: 5, title: { de: "Test-Driven Development (TDD)", en: "Test-Driven Development (TDD)" }, description: { de: "Tests werden vor dem Code geschrieben (Rot-Grün-Refactor).", en: "Tests are written before code (Red-Green-Refactor)." }, tools: [] },
+      { id: 6, title: { de: "Mutation Testing", en: "Mutation Testing" }, description: { de: "Überprüfung der Testqualität durch gezielte Code-Mutationen.", en: "Checking test quality through targeted code mutations." }, tools: ["Pitest"] },
+      { id: 7, title: { de: "Behavior-Driven Development (BDD)", en: "Behavior-Driven Development (BDD)" }, description: { de: "Tests basierend auf erwartetem Verhalten.", en: "Tests based on expected behavior." }, tools: ["Cucumber"] },
+      { id: 7, title: { de: "Property-Based Testing", en: "Property-Based Testing" }, description: { de: "Generierung von Testfällen basierend auf Eigenschaften.", en: "Generation of test cases based on properties." }, tools: [] },
+      { id: 8, title: { de: "Automated Test Maintenance", en: "Automated Test Maintenance" }, description: { de: "Automatische Aktualisierung von Tests bei Code-Änderungen.", en: "Automatic update of tests on code changes." }, tools: [] },
+      { id: 9, title: { de: "AI-Assisted Test Generation", en: "AI-Assisted Test Generation" }, description: { de: "KI-gestützte Generierung von Unit-Tests.", en: "AI-supported generation of unit tests." }, tools: ["GitHub Copilot"] },
+      { id: 9, title: { de: "Predictive Test Selection", en: "Predictive Test Selection" }, description: { de: "Auswahl der relevantesten Tests durch Machine Learning.", en: "Selection of the most relevant tests through machine learning." }, tools: [] }
     ]
   },
   {
@@ -52,6 +62,10 @@ export const branches: Branch[] = [
       { id: 5, title: { de: "Build Artifact Repository", en: "Build Artifact Repository" }, description: { de: "Zentrale Verwaltung versionierter Artefakte.", en: "Central management of versioned artifacts." }, tools: ["Nexus", "Artifactory"] },
       { id: 6, title: { de: "Build on Commit", en: "Build on Commit" }, description: { de: "SCM-Trigger, Performance Monitoring und Advanced Configuration Management.", en: "SCM triggers, performance monitoring, and advanced configuration management." }, tools: [] },
       { id: 7, title: { de: "Continuous Integration (CI)", en: "Continuous Integration (CI)" }, description: { de: "Jeder Commit ein potenzieller Release-Kandidat. Vollständige Automatisierung.", en: "Every commit is a potential release candidate. Full automation." }, tools: [] },
+      { id: 8, title: { de: "Reproducible Builds", en: "Reproducible Builds" }, description: { de: "Garantierte Reproduzierbarkeit von Builds.", en: "Guaranteed reproducibility of builds." }, tools: [] },
+      { id: 8, title: { de: "Distributed Build Caching", en: "Distributed Build Caching" }, description: { de: "Beschleunigung durch verteiltes Caching.", en: "Acceleration through distributed caching." }, tools: [] },
+      { id: 9, title: { de: "Build Pipeline as Code", en: "Build Pipeline as Code" }, description: { de: "Pipelines als versionierter Code.", en: "Pipelines as versioned code." }, tools: [] },
+      { id: 9, title: { de: "AI-Optimized Build Pipelines", en: "AI-Optimized Build Pipelines" }, description: { de: "KI-gestützte Optimierung von Build-Zeiten.", en: "AI-supported optimization of build times." }, tools: [] }
     ]
   },
   {
@@ -65,11 +79,15 @@ export const branches: Branch[] = [
     levels: [
       { id: 1, title: { de: "Automatisierte Bereitstellung statischer Testdaten", en: "Automated Provisioning of Static Test Data" }, description: { de: "Datenfundament für realistische Tests.", en: "Data foundation for realistic tests." }, tools: [] },
       { id: 2, title: { de: "Automatisierte Validierung", en: "Automated Validation" }, description: { de: "Post-Deployment Smoke Tests und automatisiertes Datenbank-Deployment.", en: "Post-deployment smoke tests and automated database deployment." }, tools: ["Flyway"] },
+      { id: 3, title: { de: "Blue-Green Deployments", en: "Blue-Green Deployments" }, description: { de: "Nahtlose Deployments ohne Downtime.", en: "Seamless deployments without downtime." }, tools: [] },
+      { id: 4, title: { de: "Canary Releases", en: "Canary Releases" }, description: { de: "Schrittweise Ausrollung an Nutzergruppen.", en: "Gradual rollout to user groups." }, tools: [] },
       { id: 5, title: { de: "Standardisierung und Resilienz", en: "Standardization and Resilience" }, description: { de: "Automatisiertes Rollback und standardisierte Deployments in Pre-UAT.", en: "Automated rollback and standardized deployments in Pre-UAT." }, tools: [] },
       { id: 6, title: { de: "Standardisierte Deployments überall", en: "Standardized Deployments Everywhere" }, description: { de: "Einheitliche Prozesse für alle Umgebungen inkl. Produktion.", en: "Unified processes for all environments including production." }, tools: [] },
       { id: 7, title: { de: "Gesteuerte UAT & Promotion", en: "Controlled UAT & Promotion" }, description: { de: "Self-Service in UAT und Auto-Deploy nach Quality Gate.", en: "Self-service in UAT and auto-deploy after quality gate." }, tools: [] },
       { id: 8, title: { de: "Produktionsreife Automatisierung", en: "Production-Ready Automation" }, description: { de: "Self-Service Deployments in Production und Auto-Deploy in UAT bei Check-in.", en: "Self-service deployments in production and auto-deploy in UAT on check-in." }, tools: [] },
       { id: 9, title: { de: "Continuous Delivery", en: "Continuous Delivery" }, description: { de: "Jede Änderung kann automatisch und sicher in Produktion gehen.", en: "Every change can automatically and safely go to production." }, tools: [] },
+      { id: 9, title: { de: "GitOps Deployment", en: "GitOps Deployment" }, description: { de: "Infrastruktur und Deployments über Git gesteuert.", en: "Infrastructure and deployments managed via Git." }, tools: ["ArgoCD"] },
+      { id: 9, title: { de: "AI-Driven Rollback & Recovery", en: "AI-Driven Rollback & Recovery" }, description: { de: "Automatische Fehlererkennung und Rollback.", en: "Automatic error detection and rollback." }, tools: [] }
     ]
   },
   {
@@ -86,10 +104,13 @@ export const branches: Branch[] = [
       { id: 3, title: { de: "Integration und Sanity", en: "Integration and Sanity" }, description: { de: "Automatisierte Sanity-Regression und Akzeptanztests für mehrere Anwendungen.", en: "Automated sanity regression and acceptance tests for multiple applications." }, tools: [] },
       { id: 4, title: { de: "Automatisierte Testdatenbereitstellung", en: "Automated Test Data Provisioning" }, description: { de: "Für integrierte Umgebungen mit abgestimmten Daten.", en: "For integrated environments with aligned data." }, tools: ["Delphix"] },
       { id: 5, title: { de: "Automatisiertes Progressionstesting", en: "Automated Progression Testing" }, description: { de: "Inklusive Last-, Stress- und Security-Testing in Pre-UAT.", en: "Including load, stress, and security testing in Pre-UAT." }, tools: ["JMeter", "OWASP ZAP"] },
+      { id: 5, title: { de: "Visual Regression Testing", en: "Visual Regression Testing" }, description: { de: "Automatisierte Prüfung der Benutzeroberfläche auf visuelle Abweichungen.", en: "Automated checking of the user interface for visual deviations." }, tools: ["Applitools"] },
       { id: 6, title: { de: "Accessibility & Synthetic Data", en: "Accessibility & Synthetic Data" }, description: { de: "Automatisiertes Accessibility Testing und Self-Service Testdaten.", en: "Automated accessibility testing and self-service test data." }, tools: ["Axe", "Mockaroo"] },
+      { id: 6, title: { de: "API Contract Testing", en: "API Contract Testing" }, description: { de: "Sicherstellung der Kompatibilität zwischen Microservices.", en: "Ensuring compatibility between microservices." }, tools: ["Pact"] },
       { id: 7, title: { de: "Integration in UAT", en: "Integration in UAT" }, description: { de: "Automatisierte Akzeptanz- und Progressionstests in UAT und Systemverifikation.", en: "Automated acceptance and progression tests in UAT and system verification." }, tools: [] },
       { id: 8, title: { de: "Automatisiertes Abnahmetesten", en: "Automated Acceptance Testing" }, description: { de: "Validierung der Business-Kriterien in UAT.", en: "Validation of business criteria in UAT." }, tools: [] },
       { id: 9, title: { de: "AI-Testautomatisierung", en: "AI Test Automation" }, description: { de: "KI-gestützte Testautomatisierung, Self-Healing und Analytik.", en: "AI-supported test automation, self-healing, and analytics." }, tools: ["Applitools"] },
+      { id: 9, title: { de: "Chaos Engineering", en: "Chaos Engineering" }, description: { de: "Proaktives Testen der Systemresilienz durch Fehler-Injektion.", en: "Proactive testing of system resilience through fault injection." }, tools: ["Gremlin"] }
     ]
   },
   {
@@ -104,9 +125,14 @@ export const branches: Branch[] = [
       { id: 1, title: { de: "Virtuelle Services / Smart Stubs", en: "Virtual Services / Smart Stubs" }, description: { de: "Simulation realer Services für unterbrechungsfreies Arbeiten.", en: "Simulation of real services for uninterrupted work." }, tools: ["WireMock"] },
       { id: 2, title: { de: "Automatisierte Infrastruktur", en: "Automated Infrastructure" }, description: { de: "Bereitstellung von Umgebungen als Code und strategischer Einsatz.", en: "Provisioning of environments as code and strategic usage." }, tools: ["Terraform"] },
       { id: 3, title: { de: "Self-Service & Middleware", en: "Self-Service & Middleware" }, description: { de: "Self-Service Virtual Services und automatisierte Middleware-Provisionierung.", en: "Self-service virtual services and automated middleware provisioning." }, tools: ["Ansible"] },
+      { id: 4, title: { de: "Containerized Test Environments", en: "Containerized Test Environments" }, description: { de: "Isolierte Testumgebungen in Containern.", en: "Isolated test environments in containers." }, tools: ["Docker"] },
+      { id: 5, title: { de: "Ephemeral Environments", en: "Ephemeral Environments" }, description: { de: "Kurzlebige Umgebungen pro Pull-Request.", en: "Short-lived environments per pull request." }, tools: [] },
       { id: 6, title: { de: "Dynamische Skalierung", en: "Dynamic Scaling" }, description: { de: "Automatisierte Testumgebungen auf virtueller Infrastruktur.", en: "Automated test environments on virtual infrastructure." }, tools: ["Kubernetes"] },
       { id: 7, title: { de: "Integration & Fortgeschrittene Automatisierung", en: "Integration & Advanced Automation" }, description: { de: "Virtuelle Services in CI-Pipelines integriert.", en: "Virtual services integrated into CI pipelines." }, tools: [] },
       { id: 8, title: { de: "Integrierte Testumgebungen", en: "Integrated Test Environments" }, description: { de: "Automatisierte Bereitstellung komplexer Systemlandschaften.", en: "Automated provisioning of complex system landscapes." }, tools: [] },
+      { id: 8, title: { de: "Service Mesh Simulation", en: "Service Mesh Simulation" }, description: { de: "Simulation von Netzwerkverhalten und Latenzen.", en: "Simulation of network behavior and latencies." }, tools: ["Istio"] },
+      { id: 9, title: { de: "Production Traffic Replay", en: "Production Traffic Replay" }, description: { de: "Testen mit echtem Produktions-Traffic in isolierten Umgebungen.", en: "Testing with real production traffic in isolated environments." }, tools: [] },
+      { id: 9, title: { de: "AI-Driven Environment Provisioning", en: "AI-Driven Environment Provisioning" }, description: { de: "KI-gesteuerte Bereitstellung optimaler Testumgebungen.", en: "AI-driven provisioning of optimal test environments." }, tools: [] }
     ]
   },
   {
@@ -124,7 +150,11 @@ export const branches: Branch[] = [
       { id: 4, title: { de: "Qualitätsreviews", en: "Quality Reviews" }, description: { de: "Strukturierte Reviews von Regressionstest-Sets.", en: "Structured reviews of regression test sets." }, tools: [] },
       { id: 5, title: { de: "Kontextgetriebenes Testen", en: "Context-Driven Testing" }, description: { de: "Low Code / KI-unterstütztes manuelles Testen.", en: "Low Code / AI-supported manual testing." }, tools: [] },
       { id: 6, title: { de: "UX & Inklusivität", en: "UX & Inclusivity" }, description: { de: "Richtlinien für UX, Inklusivität und Produktqualitätsreviews.", en: "Guidelines for UX, inclusivity, and product quality reviews." }, tools: [] },
+      { id: 7, title: { de: "Crowdtesting", en: "Crowdtesting" }, description: { de: "Testen durch eine breite Nutzerbasis unter realen Bedingungen.", en: "Testing by a broad user base under real conditions." }, tools: [] },
       { id: 8, title: { de: "Umfassendes Qualitätsengineering", en: "Comprehensive Quality Engineering" }, description: { de: "Sprint Testing in agilen Projekten und Produktstreams.", en: "Sprint testing in agile projects and product streams." }, tools: [] },
+      { id: 8, title: { de: "Session-Based Testing", en: "Session-Based Testing" }, description: { de: "Strukturiertes exploratives Testen in zeitlich begrenzten Sessions.", en: "Structured exploratory testing in time-boxed sessions." }, tools: [] },
+      { id: 9, title: { de: "Usability Lab Testing", en: "Usability Lab Testing" }, description: { de: "Detaillierte Analyse der Nutzerinteraktion im Labor.", en: "Detailed analysis of user interaction in the lab." }, tools: [] },
+      { id: 9, title: { de: "AI-Assisted Exploratory Testing", en: "AI-Assisted Exploratory Testing" }, description: { de: "KI-Unterstützung bei der Testfallfindung und Dokumentation.", en: "AI support in test case discovery and documentation." }, tools: [] }
     ]
   },
   {
@@ -144,6 +174,10 @@ export const branches: Branch[] = [
       { id: 6, title: { de: "Automated Cross-Siled Reports", en: "Automated Cross-Siled Reports" }, description: { de: "Automatisierte Berichte über Abteilungsgrenzen hinweg.", en: "Automated reports across department boundaries." }, tools: [] },
       { id: 7, title: { de: "Real-Time Graphs", en: "Real-Time Graphs" }, description: { de: "Echtzeit-Trends über die Zeit.", en: "Real-time trends over time." }, tools: ["Grafana"] },
       { id: 8, title: { de: "Self-Service Reports", en: "Self-Service Reports" }, description: { de: "Dashboards für alle Stakeholder.", en: "Dashboards for all stakeholders." }, tools: [] },
+      { id: 8, title: { de: "Value Stream Mapping", en: "Value Stream Mapping" }, description: { de: "Visualisierung und Optimierung des Wertstroms.", en: "Visualization and optimization of the value stream." }, tools: [] },
+      { id: 9, title: { de: "Predictive Quality Analytics", en: "Predictive Quality Analytics" }, description: { de: "Vorhersage von Qualitätsproblemen basierend auf historischen Daten.", en: "Prediction of quality issues based on historical data." }, tools: [] },
+      { id: 9, title: { de: "AI-Driven Defect Triage", en: "AI-Driven Defect Triage" }, description: { de: "Automatische Klassifizierung und Zuweisung von Fehlern.", en: "Automatic classification and assignment of defects." }, tools: [] },
+      { id: 9, title: { de: "Continuous Quality Governance", en: "Continuous Quality Governance" }, description: { de: "Automatisierte Überwachung der Qualitätsrichtlinien.", en: "Automated monitoring of quality guidelines." }, tools: [] }
     ]
   }
 ];
@@ -300,7 +334,7 @@ Thanks to Testing United — and to everyone who discussed, challenged, and tran
   {
     id: "book-release-date-announce",
     title: {
-      de: "Save the Date: Das Quality Tree Framework erscheint am 11. Mai 2026",
+      de: "Save the Date: Das Quality Tree Framework als Buch erscheint am 11. Mai 2026",
       en: "Save the Date: The Quality Tree Framework releases on May 11, 2026"
     },
     date: "2026-02-14",
