@@ -9,10 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "autoprefixer": "^10.4.27",
     "canvas-confetti": "^1.9.2",
     "firebase": "^10.9.0",
     "framer-motion": "^12.35.1",
     "lucide-react": "^0.363.0",
+    "postcss": "^8.5.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-helmet-async": "^2.0.4",
