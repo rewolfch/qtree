@@ -138,6 +138,22 @@ const BlogPostDetail: React.FC = () => {
     return content.split('\n').map((line, index) => {
         const trimmed = line.trim();
         if (trimmed === '') return <div key={index} className="h-4"></div>;
+        const imgMatch = trimmed.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+        if (imgMatch) {
+          return (
+            <div key={index} className="my-6 rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-white p-2">
+              <img src={imgMatch[2]} alt={imgMatch[1]} className="w-full h-auto rounded-xl object-contain mx-auto max-h-[550px]" loading="lazy" />
+              {imgMatch[1] && <p className="text-xs text-center text-slate-500 mt-2 font-mono">{imgMatch[1]}</p>}
+            </div>
+          );
+        }
+        if (trimmed.startsWith('> ')) {
+          return (
+            <blockquote key={index} className="my-4 border-l-4 border-brand-500 bg-brand-50/60 p-4 rounded-r-xl text-slate-800 font-medium italic">
+              {parseMarkdown(trimmed.replace(/^>\s*/, ''))}
+            </blockquote>
+          );
+        }
         if (trimmed.startsWith('### ')) return <h3 key={index} className="text-xl font-bold text-slate-900 mt-8 mb-4">{parseMarkdown(trimmed.replace('### ', ''))}</h3>;
         if (trimmed.startsWith('## ')) return <h2 key={index} className="text-2xl font-bold text-slate-800 mt-10 mb-5 pb-2 border-b border-slate-100">{parseMarkdown(trimmed.replace('## ', ''))}</h2>;
         if (trimmed.startsWith('• ') || trimmed.startsWith('- ')) return <li key={index} className="ml-4 list-disc text-slate-700 mb-2 pl-2">{parseMarkdown(trimmed.substring(2))}</li>

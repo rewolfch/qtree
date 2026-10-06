@@ -184,6 +184,172 @@ export const branches: Branch[] = [
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "documented-vs-demonstrated",
+    title: {
+      de: "Documented ≠ Demonstrated: A Control Report Is a Claim – Not Evidence",
+      en: "Documented ≠ Demonstrated: A Control Report Is a Claim – Not Evidence"
+    },
+    date: "2026-10-06",
+    author: "Serge Baumberger",
+    imageUrl: "/images/quality-tree-documented-vs-demonstrated.png",
+    excerpt: {
+      de: "A control can be perfectly documented—and still provide no evidence that it worked. Warum lückenlose operative Nachweisbarkeit im Zeitalter von KI entscheidend ist.",
+      en: "A control can be perfectly documented—and still provide no evidence that it worked. Why traceable operational evidence is essential in modern Quality Engineering."
+    },
+    content: {
+      de: `![Documented vs Demonstrated](/images/quality-tree-documented-vs-demonstrated.png)
+
+A control can be perfectly documented—and still provide no evidence that it worked.
+
+Many governance programmes optimise for the presence of artefacts:
+• policy available
+• test report completed
+• approval recorded
+• audit field marked green
+
+That proves a process produced documents. It does not yet prove the system behaved as intended.
+
+When I apply the Quality Tree Framework™, I look for a specific dependency across branches:
+• Governance defines the claim.
+• Test design and observability produce the signal.
+• Ownership turns that signal into a decision.
+
+If one connection is missing, the evidence chain breaks.
+
+My decision rule for every critical control is therefore:
+> **Claim → Runtime signal → Threshold → Owner → Decision**
+
+A policy can define intent.
+A report can capture a snapshot.
+A sign-off can record acceptance.
+
+But only traceable operational evidence can demonstrate that the control was effective when it mattered.
+
+This distinction becomes essential with AI systems. Models, prompts, data and tool access can change the system’s behaviour while the governance document remains untouched.
+
+A green compliance dashboard can therefore coexist with unknown operational risk.
+
+Can you trace each of your critical controls from the written requirement to the actual signal—and to the decision it triggered?`,
+      en: `![Documented vs Demonstrated](/images/quality-tree-documented-vs-demonstrated.png)
+
+A control can be perfectly documented—and still provide no evidence that it worked.
+
+Many governance programmes optimise for the presence of artefacts:
+• policy available
+• test report completed
+• approval recorded
+• audit field marked green
+
+That proves a process produced documents. It does not yet prove the system behaved as intended.
+
+When I apply the Quality Tree Framework™, I look for a specific dependency across branches:
+• Governance defines the claim.
+• Test design and observability produce the signal.
+• Ownership turns that signal into a decision.
+
+If one connection is missing, the evidence chain breaks.
+
+My decision rule for every critical control is therefore:
+> **Claim → Runtime signal → Threshold → Owner → Decision**
+
+A policy can define intent.
+A report can capture a snapshot.
+A sign-off can record acceptance.
+
+But only traceable operational evidence can demonstrate that the control was effective when it mattered.
+
+This distinction becomes essential with AI systems. Models, prompts, data and tool access can change the system’s behaviour while the governance document remains untouched.
+
+A green compliance dashboard can therefore coexist with unknown operational risk.
+
+Can you trace each of your critical controls from the written requirement to the actual signal—and to the decision it triggered?`
+    }
+  },
+  {
+    id: "raketenstart-auf-platz-1-amazon-charts",
+    title: {
+      de: "Raketenstart auf Platz 1: „Das Quality Tree Framework“ erobert die Amazon-Charts",
+      en: "Rocket Start at #1: 'The Quality Tree Framework' Conquers the Amazon Charts"
+    },
+    date: "2026-10-06",
+    author: "Serge Baumberger",
+    imageUrl: "/images/quality-tree-amazon-neuerscheinungen-platz-1.jpg",
+    excerpt: {
+      de: "Sensationeller Erfolg für das Fachbuch von Serge Baumberger: „Das Quality Tree Framework“ (Springer Vieweg) klettert direkt auf Platz 1 der Amazon-Neuerscheinungen und Platz 3 der Bestseller im Bereich Netzwerke.",
+      en: "Sensational success for Serge Baumberger's new book: 'The Quality Tree Framework' (Springer Vieweg) directly hits #1 in Amazon New Releases and #3 in Bestsellers in Networks."
+    },
+    content: {
+      de: `## Ein Meilenstein für systematisches Quality Engineering: Das Quality Tree Buch stürmt an die Spitze
+
+Was für ein Start für unser neues Standardwerk zur modernen Softwarequalität! Nur wenige Tage nach Veröffentlichung hat das Fachbuch **„Das Quality Tree Framework: Der Weg zu skalierbarer Qualität – von Unit-Tests bis AI-gestützter Automatisierung“** (erschienen bei Springer Vieweg) die Amazon-Verkaufscharts im Sturm erobert.
+
+Das Buch kletterte direkt auf:
+• 🥇 **Platz 1** der Amazon-Neuerscheinungen in der Kategorie *Netzwerke*
+• 🥉 **Platz 3** der Amazon-Bestseller in der Kategorie *Netzwerke*
+
+![Das Quality Tree Framework auf Platz 1 der Amazon Neuerscheinungen in Netzwerke](/images/quality-tree-amazon-neuerscheinungen-platz-1.jpg)
+
+### Warum das Quality Tree Framework den Nerv der Zeit trifft
+
+In zahllosen Unternehmen erleben wir derzeit das gleiche Dilemma: Softwareentwicklung beschleunigt sich rasant durch Cloud-Transformation, Continuous Delivery und generative KI. Doch die Qualitätssicherung hält oft nicht Schritt. Teams investieren viel Geld in isolierte Testwerkzeuge, schreiben Hunderte automatisierte Skripte – und stehen am Ende dennoch vor instabilen Releases, unklaren Zuständigkeiten und lückenhafter Compliance.
+
+Das **Quality Tree Framework™** setzt genau an dieser Schwachstelle an. Anstelle von isolierten Insellösungen bietet es eine durchgängige, methodische Architektur:
+
+• **Wurzeln (Roots):** Kultur, Qualitätsmindset und gemeinsame Verantwortung von Dev & Ops.
+• **Stamm (Trunk):** Trunk-Based Development, robuste CI/CD-Pipelines, Testumgebungen und Release-Governance.
+• **Krone (Canopy):** 8 Kern-Disziplinen, 9 Reifegrade und 90 messbare Praktiken – von stabilen Unit- und API-Tests bis hin zu autonomem Self-Healing und KI-gestützter Fehlerprognose.
+
+![Das Quality Tree Framework auf Platz 3 der Amazon Bestseller in Netzwerke](/images/quality-tree-amazon-bestseller-platz-3.jpg)
+
+### Von der Keynote zum Fachbuch-Bestseller
+
+Die Reise begann mit praktischen Assessments bei führenden Enterprise-Kunden und führte über eine ausverkaufte Mainstage-Keynote am Swiss Testing Day bis hin zur Veröffentlichung bei Springer Vieweg.
+
+Dass das Buch nun direkt in den Amazon-Charts an der Spitze steht, zeigt eines ganz deutlich: Der Markt verlangt nach Klarheit, Transparenz und Messbarkeit. Qualität darf kein vages Bauchgefühl sein, sondern muss wie ein gesunder Baum systematisch gepflegt werden und wachsen.
+
+### Jetzt Exemplar sichern
+
+Möchtet auch ihr eure Qualitätsstrategie auf ein solides, zukunftssicheres Fundament stellen?
+
+• 📖 [Amazon: Das Quality Tree Framework](https://www.amazon.de/Das-Quality-Tree-Framework-Automatisierung/dp/3658510404)
+• 🏢 [Springer Vieweg Verlag](https://link.springer.com/book/10.1007/978-3-658-51041-1)`,
+      en: `## A Milestone for Systematic Quality Engineering: The Quality Tree Book Conquers the Charts
+
+What an incredible launch for our comprehensive guide to modern software quality! Just days after publication, **"The Quality Tree Framework: The Path to Scalable Quality – from Unit Tests to AI-driven Automation"** (published by Springer Vieweg) stormed the Amazon sales charts.
+
+The book shot directly to:
+• 🥇 **#1** in Amazon New Releases in the *Networks* category
+• 🥉 **#3** in Amazon Bestsellers in the *Networks* category
+
+![The Quality Tree Framework at #1 in Amazon New Releases in Networks](/images/quality-tree-amazon-neuerscheinungen-platz-1.jpg)
+
+### Why the Quality Tree Framework Hits the Nerve of the Time
+
+In countless enterprises, we see the exact same dilemma: software delivery accelerates exponentially through cloud transformation, continuous delivery, and generative AI. Yet quality assurance rarely keeps pace. Teams pour budget into isolated testing tools and hundreds of test scripts—only to face flaky releases, broken accountability, and compliance gaps.
+
+The **Quality Tree Framework™** addresses this structural flaw with an end-to-end architectural roadmap:
+
+• **Roots:** Culture, quality mindset, and shared Dev & Ops ownership.
+• **Trunk:** Trunk-based development, robust CI/CD pipelines, stable environments, and release governance.
+• **Canopy:** 8 core disciplines, 9 maturity levels, and 90 measurable practices—from unit and contract testing to autonomous self-healing and AI-driven defect prediction.
+
+![The Quality Tree Framework at #3 in Amazon Bestsellers in Networks](/images/quality-tree-amazon-bestseller-platz-3.jpg)
+
+### From the Keynote to Bestseller
+
+From field assessments across enterprise architectures and a sold-out mainstage keynote at Swiss Testing Day to official publication with Springer Vieweg, this journey demonstrates that the engineering community demands clarity, transparency, and structure.
+
+Quality cannot remain a vague gut feeling—it needs to grow like a healthy tree.
+
+### Get Your Copy Now
+
+Ready to anchor your software quality on a rock-solid, future-proof foundation?
+
+• 📖 [Order on Amazon](https://www.amazon.de/Das-Quality-Tree-Framework-Automatisierung/dp/3658510404)
+• 🏢 [Springer Vieweg Publishing](https://link.springer.com/book/10.1007/978-3-658-51041-1)`
+    }
+  },
+  {
     id: "dwx-2026-announcement",
     title: {
       de: "Speaker auf der Developer Week 2026 (DWX): Digital Quality & Trust",
